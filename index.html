@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GORGE in — Personal Workspace</title>
+<title>Command Center — Personal Workspace</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -20,38 +20,28 @@
   --sidebar-w:260px;
   --transition:all .25s cubic-bezier(.4,0,.2,1);
 }
-html.light{
-  --bg:#f5f4f0;--bg2:#ffffff;--bg3:#eeeee9;--bg4:#ddddd6;
-  --text:#1a1a1a;--text2:#555550;--text3:#8a8a82;
-  --accent:#4a8c00;--accent2:#3d7400;--accent-dim:rgba(74,140,0,.08);
-  --border:#d4d4cc;--border2:#bbbbb3;
-}
+html.light{--bg:#f5f4f0;--bg2:#ffffff;--bg3:#eeeee9;--bg4:#ddddd6;--text:#1a1a1a;--text2:#555550;--text3:#8a8a82;--accent:#4a8c00;--accent2:#3d7400;--accent-dim:rgba(74,140,0,.08);--border:#d4d4cc;--border2:#bbbbb3;}
 html{scroll-behavior:smooth}
 body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
-::-webkit-scrollbar-thumb:hover{background:var(--text3)}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 
-/* LOGIN SCREEN */
-.login-screen{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;align-items:center;justify-content:center;transition:opacity .4s ease}
+/* LOGIN */
+.login-screen{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;align-items:center;justify-content:center;transition:opacity .4s}
 .login-screen.hidden{opacity:0;pointer-events:none}
 .login-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:40px;width:90%;max-width:400px;animation:slideUp .4s cubic-bezier(.4,0,.2,1)}
 .login-logo{display:flex;align-items:center;gap:12px;margin-bottom:32px}
 .login-logo-icon{width:40px;height:40px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#0a0a0c;font-weight:700;font-size:18px}
 .login-logo-text{font-size:18px;font-weight:600;letter-spacing:-.02em}
 .login-box h2{font-family:var(--serif);font-size:24px;font-weight:400;margin-bottom:6px}
-.login-box p{color:var(--text2);font-size:13px;margin-bottom:28px}
+.login-box>p{color:var(--text2);font-size:13px;margin-bottom:28px}
 .login-error{background:rgba(255,77,79,.1);border:1px solid rgba(255,77,79,.3);color:var(--red);padding:10px 14px;border-radius:var(--radius-sm);font-size:13px;margin-bottom:16px;display:none}
 .login-error.show{display:block}
 .login-btn{width:100%;padding:12px;background:var(--accent);color:#0a0a0c;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font);transition:var(--transition);margin-top:8px}
-.login-btn:hover{background:var(--accent2)}
-.login-btn:disabled{opacity:.5;cursor:not-allowed}
+.login-btn:hover{background:var(--accent2)}.login-btn:disabled{opacity:.5;cursor:not-allowed}
 .change-pass-link{text-align:center;margin-top:16px;font-size:12px;color:var(--text3)}
-.change-pass-link a{color:var(--accent);cursor:pointer;text-decoration:none}
-.change-pass-link a:hover{color:var(--accent2)}
+.change-pass-link a{color:var(--accent);cursor:pointer}
 
-/* SYNC STATUS */
+/* SYNC */
 .sync-indicator{position:fixed;top:12px;right:16px;z-index:999;display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono);color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:5px 10px;border-radius:20px;transition:all .3s;opacity:0;pointer-events:none}
 .sync-indicator.show{opacity:1}
 .sync-dot{width:6px;height:6px;border-radius:50%;background:var(--text3);flex-shrink:0;transition:background .3s}
@@ -59,7 +49,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 .sync-indicator.saved .sync-dot{background:var(--teal)}
 .sync-indicator.error .sync-dot{background:var(--red)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
+/* SIDEBAR */
 .sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:transform .3s cubic-bezier(.4,0,.2,1)}
 .sidebar-header{padding:28px 24px 20px;border-bottom:1px solid var(--border)}
 .logo{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;letter-spacing:-.02em}
@@ -78,81 +71,144 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 .sidebar-footer{padding:16px 12px;border-top:1px solid var(--border)}
 .sidebar-footer .nav-item{color:var(--text3)}
 
-.main{margin-left:var(--sidebar-w);min-height:100vh;position:relative}
-.topbar{position:sticky;top:0;z-index:50;background:rgba(10,10,12,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 36px;height:60px;display:flex;align-items:center;justify-content:space-between;transition:background .3s}
+/* MAIN */
+.main{margin-left:var(--sidebar-w);min-height:100vh}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(10,10,12,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 36px;height:60px;display:flex;align-items:center;justify-content:space-between;transition:background .3s}
 html.light .topbar{background:rgba(245,244,240,.85)}
 .topbar-left{display:flex;align-items:center;gap:16px}
 .menu-btn{display:none;background:none;border:none;color:var(--text);cursor:pointer;padding:6px}
-.breadcrumb{font-size:13px;color:var(--text3)}
-.breadcrumb span{color:var(--text)}
+.breadcrumb{font-size:13px;color:var(--text3)}.breadcrumb span{color:var(--text)}
 .topbar-right{display:flex;align-items:center;gap:12px}
-.search-box{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 14px;font-size:13px;color:var(--text2);cursor:text;transition:var(--transition);min-width:220px}
-.search-box:hover{border-color:var(--border2)}
+.search-box{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 14px;font-size:13px;color:var(--text2);min-width:200px}
 .search-box kbd{font-family:var(--mono);font-size:11px;background:var(--bg4);padding:2px 6px;border-radius:4px;color:var(--text3)}
 .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#0a0a0c;cursor:pointer}
-
 .content{padding:36px;max-width:1100px}
-.page{display:none;animation:fadeIn .35s ease}
-.page.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
+.page{display:none;animation:fadeIn .35s ease}.page.active{display:block}
 .page-title{font-family:var(--serif);font-size:32px;font-weight:400;margin-bottom:6px;letter-spacing:-.02em}
 .page-subtitle{color:var(--text2);font-size:14px;margin-bottom:32px}
-
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:36px}
-.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;transition:var(--transition);cursor:default}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;transition:var(--transition)}
 .stat-card:hover{border-color:var(--border2);transform:translateY(-2px)}
 .stat-card .label{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
 .stat-card .value{font-size:28px;font-weight:600;letter-spacing:-.03em}
-.stat-card .change{font-size:12px;margin-top:6px;display:flex;align-items:center;gap:4px}
-.stat-card .change.up{color:var(--teal)}
-.stat-card .change.down{color:var(--red)}
-
+.stat-card .change{font-size:12px;margin-top:6px}.stat-card .change.up{color:var(--teal)}.stat-card .change.down{color:var(--red)}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .section-title{font-size:16px;font-weight:600;letter-spacing:-.01em}
-.section-action{font-size:13px;color:var(--accent);cursor:pointer;transition:var(--transition)}
+.section-action{font-size:13px;color:var(--accent);cursor:pointer}
 .section-action:hover{color:var(--accent2)}
-
 .courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:36px}
 .course-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:var(--transition);cursor:pointer}
 .course-card:hover{border-color:var(--border2);transform:translateY(-3px)}
-.course-card .banner{height:6px}
-.course-card .body{padding:20px}
+.course-card .banner{height:6px}.course-card .body{padding:20px}
 .course-card .tag{font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:8px}
 .course-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
 .course-card p{font-size:13px;color:var(--text2);margin-bottom:14px}
 .progress-bar{height:4px;background:var(--bg4);border-radius:2px;overflow:hidden}
 .progress-fill{height:100%;border-radius:2px;transition:width .6s cubic-bezier(.4,0,.2,1)}
-.course-meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:12px;color:var(--text3)}
+.course-meta{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--text3)}
 
-.notes-list{display:flex;flex-direction:column;gap:10px}
-.note-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;display:flex;align-items:center;gap:16px;transition:var(--transition);cursor:pointer}
-.note-item:hover{border-color:var(--border2);background:var(--bg3)}
-.note-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.note-content{flex:1;min-width:0}
-.note-content h4{font-size:14px;font-weight:500;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.note-content p{font-size:12px;color:var(--text3)}
-.note-date{font-size:11px;color:var(--text3);font-family:var(--mono);white-space:nowrap}
+/* NOTES */
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.notes-search-bar{display:flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 14px;margin-bottom:20px}
+.notes-search-bar input{background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:var(--font);width:100%}
+.notes-search-bar input::placeholder{color:var(--text3)}
+.notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.note-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;cursor:pointer;transition:var(--transition);position:relative}
+.note-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.note-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.note-card-title{font-size:14px;font-weight:600;flex:1;margin-right:8px;line-height:1.4}
+.note-card-actions{display:flex;gap:5px;opacity:0;transition:opacity .2s}
+.note-card:hover .note-card-actions{opacity:1}
+.icon-btn{background:var(--bg4);border:none;color:var(--text3);width:26px;height:26px;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0}
+.icon-btn:hover{background:var(--border2);color:var(--text)}
+.icon-btn.del:hover{background:rgba(255,77,79,.15);color:var(--red)}
+.note-card-body{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-wrap}
+.note-card-footer{display:flex;align-items:center;justify-content:space-between}
+.note-color-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.note-date-label{font-size:11px;color:var(--text3);font-family:var(--mono)}
+.note-tag-badge{font-size:10px;background:var(--bg4);color:var(--text3);padding:2px 8px;border-radius:10px}
+.notes-empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text3);font-size:13px}
 
+/* NOTE EDITOR */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);z-index:300;display:none;align-items:center;justify-content:center}
+.overlay.show{display:flex}
+.editor-modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);width:90%;max-width:680px;max-height:90vh;display:flex;flex-direction:column;animation:slideUp .3s cubic-bezier(.4,0,.2,1)}
+.editor-header{padding:20px 24px 0;display:flex;align-items:center;gap:12px}
+.editor-title-input{flex:1;background:none;border:none;outline:none;font-size:20px;font-weight:600;color:var(--text);font-family:var(--font)}
+.editor-title-input::placeholder{color:var(--text3)}
+.close-btn{background:var(--bg4);border:none;color:var(--text3);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0}
+.close-btn:hover{background:var(--border2);color:var(--text)}
+.editor-meta{padding:10px 24px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.color-picker{display:flex;gap:6px}
+.color-dot{width:18px;height:18px;border-radius:50%;cursor:pointer;transition:transform .2s;border:2px solid transparent;flex-shrink:0}
+.color-dot:hover{transform:scale(1.2)}.color-dot.active{border-color:var(--text);transform:scale(1.15)}
+.tag-input{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:5px 10px;font-size:12px;color:var(--text2);font-family:var(--font);outline:none;width:130px}
+.tag-input:focus{border-color:var(--accent)}
+.editor-toolbar{display:flex;gap:4px;padding:10px 24px 0;flex-wrap:wrap}
+.editor-toolbar button{background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:6px;font-size:12px;cursor:pointer;font-family:var(--mono);transition:var(--transition)}
+.editor-toolbar button:hover{background:var(--bg4);color:var(--text)}
+.editor-body{padding:10px 24px;flex:1;overflow-y:auto}
+.editor-textarea{width:100%;min-height:260px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;color:var(--text);font-size:14px;font-family:var(--font);line-height:1.7;resize:vertical;outline:none;transition:border-color .2s}
+.editor-textarea:focus{border-color:var(--accent)}
+.editor-footer{padding:14px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+
+/* TASKS KANBAN */
+.kanban-board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+.kanban-col{background:var(--bg3);border-radius:var(--radius);padding:16px;min-height:180px;border:2px solid transparent;transition:all .2s}
+.kanban-col.drag-over{background:var(--bg4);border-color:var(--accent)}
+.kanban-col-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.kanban-col-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);display:flex;align-items:center;gap:8px}
+.kanban-cnt{background:var(--bg4);font-size:11px;padding:2px 8px;border-radius:10px;color:var(--text2)}
+.kanban-add-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:20px;line-height:1;padding:0 4px;border-radius:6px;transition:var(--transition)}
+.kanban-add-btn:hover{background:var(--bg4);color:var(--text)}
+.task-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:10px;cursor:grab;transition:var(--transition);position:relative}
+.task-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.task-card.dragging{opacity:.35;cursor:grabbing}
+.task-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px}
+.task-card-title{font-size:13px;font-weight:500;flex:1;margin-right:8px;line-height:1.4}
+.task-card-title.striked{text-decoration:line-through;color:var(--text3)}
+.task-card-actions{display:flex;gap:4px;opacity:0;transition:opacity .2s;flex-shrink:0}
+.task-card:hover .task-card-actions{opacity:1}
+.task-card-desc{font-size:12px;color:var(--text3);margin-bottom:10px;line-height:1.5}
+.task-card-footer{display:flex;align-items:center;justify-content:space-between}
+.priority-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;text-transform:uppercase}
+.priority-high{background:rgba(255,77,79,.12);color:var(--red)}
+.priority-medium{background:rgba(255,176,32,.12);color:var(--amber)}
+.priority-low{background:rgba(0,212,170,.12);color:var(--teal)}
+.task-due{font-size:11px;color:var(--text3);font-family:var(--mono)}
+.task-empty{text-align:center;padding:20px 12px;color:var(--text3);font-size:12px}
+
+/* TASK MODAL */
+.task-modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);width:90%;max-width:460px;padding:28px;animation:slideUp .3s cubic-bezier(.4,0,.2,1)}
+.task-modal h2{font-size:17px;font-weight:600;margin-bottom:20px}
+
+/* FORMS */
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:11px;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text);font-size:14px;font-family:var(--font);outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
+.form-group textarea{resize:vertical;min-height:70px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+.btn{padding:9px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;transition:var(--transition);border:none;font-family:var(--font)}
+.btn-primary{background:var(--accent);color:#0a0a0c;font-weight:600}.btn-primary:hover{background:var(--accent2)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}.btn-ghost:hover{background:var(--bg3)}
+.btn-danger{background:rgba(255,77,79,.1);color:var(--red);border:1px solid rgba(255,77,79,.2)}.btn-danger:hover{background:rgba(255,77,79,.2)}
+
+/* TIMELINE */
 .timeline-hero{margin-bottom:32px}
 .timeline-hero h2{font-family:var(--serif);font-size:26px;font-weight:400;margin-bottom:4px}
 .timeline-hero p{color:var(--text2);font-size:14px}
-
 .tl-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:28px}
 .tl-stat{background:var(--bg3);border-radius:var(--radius-sm);padding:16px;text-align:center}
 .tl-stat .num{font-size:24px;font-weight:600;color:var(--accent)}
 .tl-stat .lbl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
-
 .tl-legend{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:20px;font-size:12px;color:var(--text2)}
-.tl-legend span{display:flex;align-items:center;gap:6px}
-.tl-legend .dot{width:8px;height:8px;border-radius:2px}
-
+.tl-legend span{display:flex;align-items:center;gap:6px}.tl-legend .dot{width:8px;height:8px;border-radius:2px}
 .course-progress-wrap{margin-bottom:28px}
 .course-progress-label{display:flex;justify-content:space-between;font-size:13px;color:var(--text2);margin-bottom:6px}
 .course-progress-label span:last-child{color:var(--accent);font-weight:600;font-family:var(--mono)}
 .course-progress-track{height:8px;background:var(--bg4);border-radius:4px;overflow:hidden}
-.course-progress-fill{height:100%;border-radius:4px;background:var(--accent);transition:width .5s cubic-bezier(.4,0,.2,1);width:0%}
-
+.course-progress-fill{height:100%;border-radius:4px;background:var(--accent);transition:width .5s;width:0%}
 .module-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;transition:var(--transition)}
 .module-card:hover{border-color:var(--border2)}
 .module-head{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
@@ -161,10 +217,10 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .module-head .hours{font-size:13px;color:var(--text2);font-family:var(--mono);white-space:nowrap}
 .module-progress-row{display:flex;align-items:center;gap:10px;padding:10px 22px 0}
 .module-progress-track{flex:1;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
-.module-progress-fill{height:100%;border-radius:3px;background:var(--accent);transition:width .5s cubic-bezier(.4,0,.2,1);width:0%}
-.module-progress-pct{font-size:12px;font-family:var(--mono);font-weight:600;color:var(--text3);min-width:36px;text-align:right;transition:color .3s}
+.module-progress-fill{height:100%;border-radius:3px;background:var(--accent);transition:width .5s;width:0%}
+.module-progress-pct{font-size:12px;font-family:var(--mono);font-weight:600;color:var(--text3);min-width:36px;text-align:right}
 .module-bar{height:4px;background:var(--bg4);display:flex;overflow:hidden;border-radius:2px;margin:6px 22px 0}
-.module-bar-seg{height:100%;transition:width .5s cubic-bezier(.4,0,.2,1);min-width:0}
+.module-bar-seg{height:100%;transition:width .5s;min-width:0}
 .module-cat-stats{display:flex;gap:14px;padding:8px 22px 0;flex-wrap:wrap}
 .module-cat-stat{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)}
 .module-cat-stat .cat-dot{width:6px;height:6px;border-radius:2px;flex-shrink:0}
@@ -173,96 +229,41 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .module-card.open .module-body{max-height:3000px;padding:16px 22px 20px}
 .module-chevron{transition:transform .3s;color:var(--text3)}
 .module-card.open .module-chevron{transform:rotate(180deg)}
-
-.checklist{margin-top:12px}
-.checklist-section{margin-bottom:16px}
+.checklist{margin-top:12px}.checklist-section{margin-bottom:16px}
 .checklist-section-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:8px;font-weight:600;display:flex;align-items:center;gap:8px}
-.checklist-section-title svg{flex-shrink:0}
 .check-item{display:flex;align-items:center;gap:10px;padding:9px 0;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border);cursor:pointer;transition:var(--transition);user-select:none}
-.check-item:last-child{border-bottom:none}
-.check-item:hover{color:var(--text)}
+.check-item:last-child{border-bottom:none}.check-item:hover{color:var(--text)}
 .check-item input[type=checkbox]{appearance:none;-webkit-appearance:none;width:16px;height:16px;border:1.5px solid var(--border2);border-radius:4px;flex-shrink:0;cursor:pointer;transition:var(--transition);position:relative;background:transparent}
 .check-item input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent)}
 .check-item input[type=checkbox]:checked::after{content:'✓';position:absolute;top:-1px;left:2px;font-size:11px;color:#0a0a0c;font-weight:700}
 .check-item.done .check-text{text-decoration:line-through;color:var(--text3)}
-.check-item .check-text{flex:1;min-width:0}
-.check-item .duration{font-size:11px;color:var(--text3);font-family:var(--mono);white-space:nowrap;flex-shrink:0}
+.check-item .check-text{flex:1}.check-item .duration{font-size:11px;color:var(--text3);font-family:var(--mono);white-space:nowrap;flex-shrink:0}
 .cat-tag{font-size:9px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0;line-height:1.4}
-.cat-tag.vid{background:rgba(160,124,255,.15);color:var(--purple)}
-.cat-tag.read{background:rgba(0,212,170,.12);color:var(--teal)}
-.cat-tag.assign{background:rgba(255,176,32,.12);color:var(--amber)}
-.cat-tag.plug{background:rgba(107,106,100,.15);color:var(--text3)}
-
+.cat-tag.vid{background:rgba(160,124,255,.15);color:var(--purple)}.cat-tag.read{background:rgba(0,212,170,.12);color:var(--teal)}.cat-tag.assign{background:rgba(255,176,32,.12);color:var(--amber)}.cat-tag.plug{background:rgba(107,106,100,.15);color:var(--text3)}
 .module-topics{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
 .module-topics h4{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:8px}
 .topic-list{display:flex;flex-wrap:wrap;gap:6px}
 .topic-tag{font-size:11px;background:var(--bg4);color:var(--text2);padding:4px 10px;border-radius:20px}
 
-.tasks-board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.task-col h3{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.task-col h3 .cnt{background:var(--bg4);font-size:11px;padding:2px 8px;border-radius:10px;font-weight:500}
-.task-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:10px;transition:var(--transition);cursor:grab}
-.task-item:hover{border-color:var(--border2);transform:translateY(-1px)}
-.task-item .task-priority{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px}
-.task-item h4{font-size:13px;font-weight:500;margin-bottom:6px;display:flex;align-items:center}
-.task-item p{font-size:12px;color:var(--text3)}
-.task-item .task-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:11px;color:var(--text3)}
-
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;animation:fadeIn .2s ease}
-.modal-overlay.show{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);width:90%;max-width:480px;padding:28px;animation:slideUp .3s cubic-bezier(.4,0,.2,1)}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.modal h2{font-size:18px;font-weight:600;margin-bottom:20px}
-.form-group{margin-bottom:16px}
-.form-group label{display:block;font-size:12px;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em}
-.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text);font-size:14px;font-family:var(--font);transition:var(--transition);outline:none}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
-.form-group textarea{resize:vertical;min-height:80px}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px}
-.btn{padding:9px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;transition:var(--transition);border:none;font-family:var(--font)}
-.btn-primary{background:var(--accent);color:#0a0a0c;font-weight:600}
-.btn-primary:hover{background:var(--accent2)}
-.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}
-.btn-ghost:hover{background:var(--bg3)}
-
+/* SETTINGS */
 .settings-saved{display:none;background:var(--accent-dim);color:var(--accent);border:1px solid rgba(200,255,0,.2);padding:12px 18px;border-radius:var(--radius-sm);font-size:13px;margin-top:16px;font-weight:500;align-items:center;gap:8px}
 .settings-saved.show{display:flex}
 
 .fab{position:fixed;bottom:28px;right:28px;width:52px;height:52px;background:var(--accent);color:#0a0a0c;border:none;border-radius:50%;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(200,255,0,.25);transition:var(--transition);z-index:150}
-.fab:hover{transform:scale(1.08);box-shadow:0 6px 32px rgba(200,255,0,.35)}
-
-@media(max-width:768px){
-  .sidebar{transform:translateX(-100%)}
-  .sidebar.open{transform:translateX(0)}
-  .main{margin-left:0}
-  .menu-btn{display:block}
-  .tasks-board{grid-template-columns:1fr}
-  .search-box{display:none}
-  .content{padding:20px}
-}
+.fab:hover{transform:scale(1.08)}
 
 .anim-item{opacity:0;transform:translateY(12px);animation:fadeIn .4s ease forwards}
-.anim-item:nth-child(1){animation-delay:.05s}
-.anim-item:nth-child(2){animation-delay:.1s}
-.anim-item:nth-child(3){animation-delay:.15s}
-.anim-item:nth-child(4){animation-delay:.2s}
-.anim-item:nth-child(5){animation-delay:.25s}
-.anim-item:nth-child(6){animation-delay:.3s}
-.anim-item:nth-child(7){animation-delay:.35s}
-.anim-item:nth-child(8){animation-delay:.4s}
-.anim-item:nth-child(9){animation-delay:.45s}
-.anim-item:nth-child(10){animation-delay:.5s}
+.anim-item:nth-child(1){animation-delay:.05s}.anim-item:nth-child(2){animation-delay:.1s}.anim-item:nth-child(3){animation-delay:.15s}.anim-item:nth-child(4){animation-delay:.2s}.anim-item:nth-child(5){animation-delay:.25s}.anim-item:nth-child(6){animation-delay:.3s}.anim-item:nth-child(7){animation-delay:.35s}.anim-item:nth-child(8){animation-delay:.4s}
+
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.menu-btn{display:block}.kanban-board{grid-template-columns:1fr}.search-box{display:none}.content{padding:20px}.notes-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN -->
 <div class="login-screen" id="login-screen">
   <div class="login-box">
-    <div class="login-logo">
-      <div class="login-logo-icon">G</div>
-      <span class="login-logo-text">GORGE in</span>
-    </div>
+    <div class="login-logo"><div class="login-logo-icon">G</div><span class="login-logo-text">Command Center</span></div>
     <h2>Welcome back</h2>
     <p>Sign in to access your workspace</p>
     <div class="login-error" id="login-error">Incorrect email or password.</div>
@@ -273,80 +274,57 @@ html.light .topbar{background:rgba(245,244,240,.85)}
   </div>
 </div>
 
-<!-- CHANGE PASSWORD SCREEN -->
+<!-- CHANGE PASSWORD -->
 <div class="login-screen hidden" id="changepass-screen">
   <div class="login-box">
-    <div class="login-logo">
-      <div class="login-logo-icon">G</div>
-      <span class="login-logo-text">GORGE in</span>
-    </div>
-    <h2>Change password</h2>
-    <p>Enter your current password and choose a new one</p>
+    <div class="login-logo"><div class="login-logo-icon">G</div><span class="login-logo-text">Command Center</span></div>
+    <h2>Change password</h2><p>Re-authenticate then set a new password</p>
     <div class="login-error" id="cp-error"></div>
     <div class="form-group"><label>Email</label><input type="email" id="cp-email" placeholder="note@GORGE.com"/></div>
     <div class="form-group"><label>Current password</label><input type="password" id="cp-current" placeholder="Current password"/></div>
-    <div class="form-group"><label>New password</label><input type="password" id="cp-new" placeholder="New password (min 6 chars)"/></div>
+    <div class="form-group"><label>New password</label><input type="password" id="cp-new" placeholder="Min 6 characters"/></div>
     <button class="login-btn" id="cp-btn" onclick="doChangePass()">Update password</button>
     <div class="change-pass-link"><a onclick="showLogin()">← Back to sign in</a></div>
   </div>
 </div>
 
-<!-- SYNC INDICATOR -->
-<div class="sync-indicator" id="sync-indicator">
-  <div class="sync-dot"></div>
-  <span id="sync-text">Saving...</span>
-</div>
+<div class="sync-indicator" id="sync-indicator"><div class="sync-dot"></div><span id="sync-text">Saving...</span></div>
 
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
-  <div class="sidebar-header">
-    <div class="logo">
-      <div class="logo-icon" id="logo-letter">W</div>
-      <span id="logo-text">Workspace</span>
-    </div>
-  </div>
+  <div class="sidebar-header"><div class="logo"><div class="logo-icon" id="logo-letter">W</div><span>Workspace</span></div></div>
   <nav class="sidebar-nav">
     <div class="nav-section">
       <div class="nav-label">Overview</div>
       <div class="nav-item active" onclick="showPage('dashboard')">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-        Dashboard
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Dashboard
       </div>
     </div>
     <div class="nav-section">
       <div class="nav-label">Learning</div>
       <div class="nav-item" onclick="showPage('courses')">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-        Courses
-        <span class="nav-badge">9</span>
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Courses<span class="nav-badge">9</span>
       </div>
       <div class="nav-item" onclick="showPage('timeline')">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Course 1 Timeline
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Course 1 Timeline
       </div>
     </div>
     <div class="nav-section">
       <div class="nav-label">Productivity</div>
-      <div class="nav-item" onclick="showPage('work')">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-        Tasks
-        <span class="nav-badge" id="task-badge">5</span>
+      <div class="nav-item" onclick="showPage('tasks')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Tasks<span class="nav-badge" id="task-badge">0</span>
       </div>
       <div class="nav-item" onclick="showPage('notes')">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        Notes
-        <span class="nav-badge" id="notes-badge">4</span>
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Notes<span class="nav-badge" id="notes-badge">0</span>
       </div>
     </div>
   </nav>
   <div class="sidebar-footer">
     <div class="nav-item" onclick="showPage('settings')">
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-      Settings
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Settings
     </div>
     <div class="nav-item" onclick="doLogout()" style="color:var(--red);margin-top:4px">
-      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="opacity:1"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      Sign out
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="opacity:1"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out
     </div>
   </div>
 </aside>
@@ -355,14 +333,12 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
-      <button class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
+      <button class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
       <div class="breadcrumb" id="breadcrumb">Home / <span>Dashboard</span></div>
     </div>
     <div class="topbar-right">
-      <div class="search-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Search workspace...</span><kbd>/</kbd></div>
-      <div class="avatar" id="avatar-el">Y</div>
+      <div class="search-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Search...</span><kbd>/</kbd></div>
+      <div class="avatar" id="avatar-el">G</div>
     </div>
   </div>
 
@@ -371,51 +347,21 @@ html.light .topbar{background:rgba(245,244,240,.85)}
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <h1 class="page-title anim-item" id="greeting">Good evening</h1>
-      <p class="page-subtitle anim-item">Here's your workspace overview — stay sharp.</p>
+      <p class="page-subtitle anim-item">Here's your workspace overview.</p>
       <div class="stats-grid">
         <div class="stat-card anim-item"><div class="label">Active courses</div><div class="value">9</div><div class="change up">Google certificate</div></div>
         <div class="stat-card anim-item"><div class="label">Course 1 progress</div><div class="value" style="color:var(--accent)" id="dash-progress">0%</div><div class="change" id="dash-progress-sub">Not started</div></div>
-        <div class="stat-card anim-item"><div class="label">Open tasks</div><div class="value">5</div><div class="change down" style="color:var(--red)">2 due today</div></div>
-        <div class="stat-card anim-item"><div class="label">Notes saved</div><div class="value" id="dash-notes">4</div><div class="change up">Last: today</div></div>
+        <div class="stat-card anim-item"><div class="label">Open tasks</div><div class="value" id="dash-tasks-count">0</div><div class="change up">Kanban board</div></div>
+        <div class="stat-card anim-item"><div class="label">Notes saved</div><div class="value" id="dash-notes-count">0</div><div class="change up">All synced</div></div>
       </div>
       <div class="section-header anim-item"><div class="section-title">Recent courses</div><div class="section-action" onclick="showPage('courses')">View all →</div></div>
       <div class="courses-grid">
-        <div class="course-card anim-item" onclick="showPage('timeline')">
-          <div class="banner" style="background:linear-gradient(90deg,var(--accent),var(--teal))"></div>
-          <div class="body">
-            <div class="tag" style="color:var(--accent)">Course 1 — Active</div>
-            <h3>Foundations: Data, Data, Everywhere</h3>
-            <p>Key concepts, analytical thinking, tools overview</p>
-            <div class="progress-bar"><div class="progress-fill" id="dash-c1-bar" style="width:0%;background:var(--accent)"></div></div>
-            <div class="course-meta"><span>13 hours</span><span id="dash-c1-pct">0%</span></div>
-          </div>
-        </div>
-        <div class="course-card anim-item">
-          <div class="banner" style="background:linear-gradient(90deg,var(--blue),var(--purple))"></div>
-          <div class="body">
-            <div class="tag" style="color:var(--blue)">Course 2 — Locked</div>
-            <h3>Ask Questions to Make Data-Driven Decisions</h3>
-            <p>Problem-solving, spreadsheets, structured thinking</p>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%;background:var(--blue)"></div></div>
-            <div class="course-meta"><span>15 hours</span><span>0%</span></div>
-          </div>
-        </div>
-        <div class="course-card anim-item">
-          <div class="banner" style="background:linear-gradient(90deg,var(--amber),var(--red))"></div>
-          <div class="body">
-            <div class="tag" style="color:var(--amber)">Course 3 — Locked</div>
-            <h3>Prepare Data for Exploration</h3>
-            <p>Data collection, databases, bias, organization</p>
-            <div class="progress-bar"><div class="progress-fill" style="width:0%;background:var(--amber)"></div></div>
-            <div class="course-meta"><span>19 hours</span><span>0%</span></div>
-          </div>
-        </div>
+        <div class="course-card anim-item" onclick="showPage('timeline')"><div class="banner" style="background:linear-gradient(90deg,var(--accent),var(--teal))"></div><div class="body"><div class="tag" style="color:var(--accent)">Course 1 — Active</div><h3>Foundations: Data, Data, Everywhere</h3><p>Key concepts, analytical thinking, tools overview</p><div class="progress-bar"><div class="progress-fill" id="dash-c1-bar" style="width:0%;background:var(--accent)"></div></div><div class="course-meta"><span>13 hours</span><span id="dash-c1-pct">0%</span></div></div></div>
+        <div class="course-card anim-item"><div class="banner" style="background:linear-gradient(90deg,var(--blue),var(--purple))"></div><div class="body"><div class="tag" style="color:var(--blue)">Course 2 — Locked</div><h3>Ask Questions to Make Data-Driven Decisions</h3><p>Problem-solving, spreadsheets, structured thinking</p><div class="progress-bar"><div class="progress-fill" style="width:0%;background:var(--blue)"></div></div><div class="course-meta"><span>15 hours</span><span>0%</span></div></div></div>
+        <div class="course-card anim-item"><div class="banner" style="background:linear-gradient(90deg,var(--amber),var(--red))"></div><div class="body"><div class="tag" style="color:var(--amber)">Course 3 — Locked</div><h3>Prepare Data for Exploration</h3><p>Data collection, databases, bias, organization</p><div class="progress-bar"><div class="progress-fill" style="width:0%;background:var(--amber)"></div></div><div class="course-meta"><span>19 hours</span><span>0%</span></div></div></div>
       </div>
       <div class="section-header anim-item"><div class="section-title">Recent notes</div><div class="section-action" onclick="showPage('notes')">View all →</div></div>
-      <div class="notes-list">
-        <div class="note-item anim-item" onclick="showPage('notes')"><div class="note-dot" style="background:var(--accent)"></div><div class="note-content"><h4>Data lifecycle vs Analysis process</h4><p>Key differences and when each applies</p></div><div class="note-date">Today</div></div>
-        <div class="note-item anim-item" onclick="showPage('notes')"><div class="note-dot" style="background:var(--purple)"></div><div class="note-content"><h4>SQL quick reference</h4><p>SELECT, FROM, WHERE, ORDER BY basics</p></div><div class="note-date">Yesterday</div></div>
-      </div>
+      <div id="dash-notes-preview" class="notes-grid" style="margin-bottom:0"></div>
     </div>
 
     <!-- COURSES -->
@@ -427,118 +373,115 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 
     <!-- TIMELINE -->
     <div class="page" id="page-timeline">
-      <div class="timeline-hero anim-item">
-        <h2>Course 1 — Foundations: Data, Data, Everywhere</h2>
-        <p>Track your progress — synced across all your devices in real time</p>
-      </div>
-      <div class="course-progress-wrap anim-item">
-        <div class="course-progress-label"><span>Overall course progress</span><span id="overall-pct">0%</span></div>
-        <div class="course-progress-track"><div class="course-progress-fill" id="overall-bar"></div></div>
-      </div>
+      <div class="timeline-hero anim-item"><h2>Course 1 — Foundations: Data, Data, Everywhere</h2><p>Track your progress — synced across all devices in real time</p></div>
+      <div class="course-progress-wrap anim-item"><div class="course-progress-label"><span>Overall course progress</span><span id="overall-pct">0%</span></div><div class="course-progress-track"><div class="course-progress-fill" id="overall-bar"></div></div></div>
       <div class="tl-stats anim-item">
         <div class="tl-stat"><div class="num">~13</div><div class="lbl">Hours</div></div>
         <div class="tl-stat"><div class="num">4</div><div class="lbl">Modules</div></div>
         <div class="tl-stat"><div class="num" id="completed-count">0</div><div class="lbl">Completed</div></div>
         <div class="tl-stat"><div class="num" id="remaining-count">62</div><div class="lbl">Remaining</div></div>
       </div>
-      <div class="tl-legend anim-item">
-        <span><span class="dot" style="background:var(--purple)"></span>Videos</span>
-        <span><span class="dot" style="background:var(--teal)"></span>Readings</span>
-        <span><span class="dot" style="background:var(--amber)"></span>Assignments</span>
-        <span><span class="dot" style="background:var(--text3)"></span>Plugins</span>
-      </div>
+      <div class="tl-legend anim-item"><span><span class="dot" style="background:var(--purple)"></span>Videos</span><span><span class="dot" style="background:var(--teal)"></span>Readings</span><span><span class="dot" style="background:var(--amber)"></span>Assignments</span><span><span class="dot" style="background:var(--text3)"></span>Plugins</span></div>
       <div id="modules-container"></div>
-      <div style="margin-top:20px;background:var(--bg3);border-radius:var(--radius);padding:20px;font-size:13px;color:var(--text2);line-height:1.7" class="anim-item">
-        <strong style="color:var(--text);font-weight:600">Full certificate context</strong><br>
-        Course 1 is 13h of 152h total (9 courses). At 2h/day the full certificate takes ~11 weeks. At Coursera's suggested 10h/week, ~6 months.
-      </div>
     </div>
 
     <!-- TASKS -->
-    <div class="page" id="page-work">
-      <h1 class="page-title anim-item">Tasks</h1>
-      <p class="page-subtitle anim-item">Kanban board — organize your work</p>
-      <div class="tasks-board">
-        <div class="task-col anim-item">
-          <h3><span style="color:var(--amber)">●</span> To do <span class="cnt">2</span></h3>
-          <div class="task-item"><h4><span class="task-priority" style="background:var(--red)"></span>Start Course 1 Module 1</h4><p>Watch intro videos and take notes</p><div class="task-footer"><span>Due: Today</span><span style="color:var(--red)">High</span></div></div>
-          <div class="task-item"><h4><span class="task-priority" style="background:var(--amber)"></span>Set up study schedule</h4><p>Block 2 hours daily for learning</p><div class="task-footer"><span>Due: Tomorrow</span><span style="color:var(--amber)">Medium</span></div></div>
+    <div class="page" id="page-tasks">
+      <div class="page-header anim-item">
+        <div><h1 class="page-title" style="margin-bottom:4px">Tasks</h1><p class="page-subtitle" style="margin-bottom:0">Drag cards between columns · Click to edit</p></div>
+        <button class="btn btn-primary" onclick="openTaskModal()">+ Add task</button>
+      </div>
+      <div class="kanban-board anim-item">
+        <div class="kanban-col" id="col-todo" ondragover="ev.preventDefault();this.classList.add('drag-over')" ondrop="dropTask(event,'todo')" ondragleave="this.classList.remove('drag-over')">
+          <div class="kanban-col-header"><div class="kanban-col-title"><span style="color:var(--amber)">●</span>To do<span class="kanban-cnt" id="cnt-todo">0</span></div><button class="kanban-add-btn" onclick="openTaskModal('todo')">+</button></div>
+          <div id="tasks-todo"></div><div class="task-empty" id="empty-todo">No tasks yet</div>
         </div>
-        <div class="task-col anim-item">
-          <h3><span style="color:var(--blue)">●</span> In progress <span class="cnt">2</span></h3>
-          <div class="task-item"><h4><span class="task-priority" style="background:var(--blue)"></span>Review course syllabus</h4><p>Understand all 9 courses structure</p><div class="task-footer"><span>Started: Today</span><span style="color:var(--blue)">Normal</span></div></div>
-          <div class="task-item"><h4><span class="task-priority" style="background:var(--amber)"></span>Organize workspace</h4><p>Set up folders and note system</p><div class="task-footer"><span>Due: Friday</span><span style="color:var(--amber)">Medium</span></div></div>
+        <div class="kanban-col" id="col-inprogress" ondragover="ev.preventDefault();this.classList.add('drag-over')" ondrop="dropTask(event,'inprogress')" ondragleave="this.classList.remove('drag-over')">
+          <div class="kanban-col-header"><div class="kanban-col-title"><span style="color:var(--blue)">●</span>In progress<span class="kanban-cnt" id="cnt-inprogress">0</span></div><button class="kanban-add-btn" onclick="openTaskModal('inprogress')">+</button></div>
+          <div id="tasks-inprogress"></div><div class="task-empty" id="empty-inprogress">No tasks yet</div>
         </div>
-        <div class="task-col anim-item">
-          <h3><span style="color:var(--teal)">●</span> Done <span class="cnt">1</span></h3>
-          <div class="task-item" style="opacity:.6"><h4><span class="task-priority" style="background:var(--teal)"></span>Enroll in Google certificate</h4><p>Coursera enrollment complete</p><div class="task-footer"><span>Completed</span><span style="color:var(--teal)">Done</span></div></div>
+        <div class="kanban-col" id="col-done" ondragover="ev.preventDefault();this.classList.add('drag-over')" ondrop="dropTask(event,'done')" ondragleave="this.classList.remove('drag-over')">
+          <div class="kanban-col-header"><div class="kanban-col-title"><span style="color:var(--teal)">●</span>Done<span class="kanban-cnt" id="cnt-done">0</span></div><button class="kanban-add-btn" onclick="openTaskModal('done')">+</button></div>
+          <div id="tasks-done"></div><div class="task-empty" id="empty-done">No tasks yet</div>
         </div>
       </div>
     </div>
 
     <!-- NOTES -->
     <div class="page" id="page-notes">
-      <h1 class="page-title anim-item">Notes</h1>
-      <p class="page-subtitle anim-item">Important notes, organized by topic</p>
-      <div class="notes-list" id="notes-list-main">
-        <div class="note-item anim-item"><div class="note-dot" style="background:var(--accent)"></div><div class="note-content"><h4>Data lifecycle vs Analysis process</h4><p>Lifecycle = plan, capture, manage, analyze, archive, destroy. Process = ask, prepare, process, analyze, share, act.</p></div><div class="note-date">May 15</div></div>
-        <div class="note-item anim-item"><div class="note-dot" style="background:var(--purple)"></div><div class="note-content"><h4>SQL quick reference</h4><p>SELECT columns FROM table WHERE condition ORDER BY column — the bread and butter of querying.</p></div><div class="note-date">May 14</div></div>
-        <div class="note-item anim-item"><div class="note-dot" style="background:var(--teal)"></div><div class="note-content"><h4>Analytical thinking — five aspects</h4><p>Visualization, strategy, problem-orientation, correlation, big-picture + detail-oriented thinking.</p></div><div class="note-date">May 13</div></div>
-        <div class="note-item anim-item"><div class="note-dot" style="background:var(--amber)"></div><div class="note-content"><h4>Data analyst tools cheat sheet</h4><p>Spreadsheets (Sheets/Excel), SQL (BigQuery), Tableau, Python — when to use which tool.</p></div><div class="note-date">May 12</div></div>
+      <div class="page-header anim-item">
+        <div><h1 class="page-title" style="margin-bottom:4px">Notes</h1><p class="page-subtitle" style="margin-bottom:0">Click any note to edit · Auto-saved to cloud</p></div>
+        <button class="btn btn-primary" onclick="openNoteEditor()">+ New note</button>
       </div>
+      <div class="notes-search-bar anim-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="notes-search-input" placeholder="Search notes..." oninput="filterNotes()"/></div>
+      <div class="notes-grid anim-item" id="notes-grid"></div>
     </div>
 
     <!-- SETTINGS -->
     <div class="page" id="page-settings">
       <h1 class="page-title anim-item">Settings</h1>
-      <p class="page-subtitle anim-item">Customize your workspace — changes apply instantly</p>
+      <p class="page-subtitle anim-item">Customize your workspace</p>
       <div style="max-width:520px">
-        <div class="form-group anim-item"><label>Display name</label><input type="text" id="set-name" value="" placeholder="Your Name"/></div>
+        <div class="form-group anim-item"><label>Display name</label><input type="text" id="set-name" placeholder="Your Name"/></div>
         <div class="form-group anim-item"><label>Theme</label><select id="set-theme"><option value="dark">Dark</option><option value="light">Light</option></select></div>
         <div class="form-group anim-item"><label>Study pace (hours/day)</label><input type="number" id="set-pace" value="2" min="1" max="12"/></div>
-        <div class="form-group anim-item"><label>Time zone</label>
-          <select id="set-tz">
-            <option value="AST">AST — Arabia Standard Time (UTC+3)</option>
-            <option value="EST">EST — Eastern (UTC-5)</option>
-            <option value="CST">CST — Central (UTC-6)</option>
-            <option value="PST">PST — Pacific (UTC-8)</option>
-            <option value="GMT">GMT — Greenwich (UTC+0)</option>
-            <option value="CET">CET — Central European (UTC+1)</option>
-            <option value="IST">IST — India (UTC+5:30)</option>
-          </select>
-        </div>
-        <div class="form-group anim-item"><label>Accent color</label>
-          <select id="set-color">
-            <option value="#c8ff00">Lime (Default)</option>
-            <option value="#4d9fff">Blue</option>
-            <option value="#00d4aa">Teal</option>
-            <option value="#a07cff">Purple</option>
-            <option value="#ffb020">Amber</option>
-            <option value="#ff4d4f">Red</option>
-          </select>
-        </div>
+        <div class="form-group anim-item"><label>Time zone</label><select id="set-tz"><option value="AST">AST — Arabia Standard Time (UTC+3)</option><option value="EST">EST — Eastern (UTC-5)</option><option value="PST">PST — Pacific (UTC-8)</option><option value="GMT">GMT (UTC+0)</option><option value="CET">CET — Central European (UTC+1)</option></select></div>
+        <div class="form-group anim-item"><label>Accent color</label><select id="set-color"><option value="#c8ff00">Lime (Default)</option><option value="#4d9fff">Blue</option><option value="#00d4aa">Teal</option><option value="#a07cff">Purple</option><option value="#ffb020">Amber</option><option value="#ff4d4f">Red</option></select></div>
         <button class="btn btn-primary anim-item" onclick="saveSettings()">Save changes</button>
         <button class="btn btn-ghost anim-item" onclick="resetSettings()" style="margin-left:8px">Reset defaults</button>
-        <div class="settings-saved" id="save-toast">Settings saved successfully</div>
+        <div class="settings-saved" id="save-toast">Settings saved ✓</div>
       </div>
     </div>
 
   </div>
 </div>
 
-<!-- FAB -->
-<button class="fab" onclick="openModal()" title="Quick add">+</button>
+<button class="fab" id="fab" onclick="fabClick()" title="Quick add">+</button>
 
-<!-- ADD MODAL -->
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <h2>Quick add</h2>
-    <div class="form-group"><label>Type</label><select id="add-type"><option>Note</option><option>Task</option></select></div>
-    <div class="form-group"><label>Title</label><input type="text" placeholder="What's on your mind?" id="add-title"/></div>
-    <div class="form-group"><label>Details</label><textarea placeholder="Add details, links, or context..." id="add-details"></textarea></div>
+<!-- NOTE EDITOR OVERLAY -->
+<div class="overlay" id="editor-overlay">
+  <div class="editor-modal">
+    <div class="editor-header">
+      <input type="text" class="editor-title-input" id="editor-title" placeholder="Note title..."/>
+      <button class="close-btn" onclick="closeNoteEditor()">×</button>
+    </div>
+    <div class="editor-meta">
+      <div class="color-picker" id="color-picker"></div>
+      <input type="text" class="tag-input" id="editor-tag" placeholder="Tag (optional)"/>
+    </div>
+    <div class="editor-toolbar">
+      <button onclick="insertMd('**','**')"><b>B</b></button>
+      <button onclick="insertMd('*','*')"><i>I</i></button>
+      <button onclick="insertMd('# ','')">H1</button>
+      <button onclick="insertMd('## ','')">H2</button>
+      <button onclick="insertMd('- ','')">List</button>
+      <button onclick="insertMd('> ','')">Quote</button>
+      <button onclick="insertMd('\`','\`')">Code</button>
+    </div>
+    <div class="editor-body">
+      <textarea class="editor-textarea" id="editor-body" placeholder="Write your note... (supports markdown)"></textarea>
+    </div>
+    <div class="editor-footer">
+      <button class="btn btn-danger" id="editor-delete-btn" style="display:none" onclick="deleteCurrentNote()">Delete</button>
+      <button class="btn btn-ghost" onclick="closeNoteEditor()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveNote()">Save note</button>
+    </div>
+  </div>
+</div>
+
+<!-- TASK MODAL OVERLAY -->
+<div class="overlay" id="task-overlay">
+  <div class="task-modal">
+    <h2 id="task-modal-title">Add task</h2>
+    <div class="form-group"><label>Title</label><input type="text" id="task-title-input" placeholder="Task title..."/></div>
+    <div class="form-group"><label>Description</label><textarea id="task-desc-input" placeholder="Optional description..." style="min-height:60px"></textarea></div>
+    <div class="form-group"><label>Priority</label><select id="task-priority-input"><option value="high">High</option><option value="medium" selected>Medium</option><option value="low">Low</option></select></div>
+    <div class="form-group"><label>Due</label><input type="text" id="task-due-input" placeholder="Today, Tomorrow, May 20..."/></div>
+    <div class="form-group"><label>Status</label><select id="task-status-input"><option value="todo">To do</option><option value="inprogress">In progress</option><option value="done">Done</option></select></div>
     <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="addItem()">Add item</button>
+      <button class="btn btn-danger" id="task-delete-btn" style="display:none" onclick="deleteCurrentTask()">Delete</button>
+      <button class="btn btn-ghost" onclick="closeTaskModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveTask()">Save task</button>
     </div>
   </div>
 </div>
@@ -546,567 +489,451 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 <!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc, onSnapshot, collection, addDoc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCv7KJ9uzUr7qTRbAKQagkIWSYjJxvr6OA",
-  authDomain: "note-called-gorge.firebaseapp.com",
-  projectId: "note-called-gorge",
-  storageBucket: "note-called-gorge.firebasestorage.app",
-  messagingSenderId: "171384757901",
-  appId: "1:171384757901:web:842b85b5e8c7281655ccc4",
-  measurementId: "G-H5G3ZLRRK2"
-};
-
-const app = initializeApp(firebaseConfig);
+const app = initializeApp({
+  apiKey:"AIzaSyCv7KJ9uzUr7qTRbAKQagkIWSYjJxvr6OA",
+  authDomain:"note-called-gorge.firebaseapp.com",
+  projectId:"note-called-gorge",
+  storageBucket:"note-called-gorge.firebasestorage.app",
+  messagingSenderId:"171384757901",
+  appId:"1:171384757901:web:842b85b5e8c7281655ccc4"
+});
 const db = getFirestore(app);
 const auth = getAuth(app);
-const DOC_ID = 'workspace-progress';
-let unsubscribeSnapshot = null;
 
-// Sync indicator
-function showSync(state, text) {
+function syncStatus(state, text) {
   const el = document.getElementById('sync-indicator');
-  const txt = document.getElementById('sync-text');
   el.className = 'sync-indicator show ' + state;
-  txt.textContent = text;
+  document.getElementById('sync-text').textContent = text;
   if (state === 'saved') setTimeout(() => el.classList.remove('show'), 2000);
 }
 
-// Save to Firestore
-let saveTimer = null;
-window.saveToFirestore = function(checks) {
-  showSync('saving', 'Saving...');
+// Progress
+let saveTimer;
+window.saveProgress = function(checks) {
+  syncStatus('saving','Saving...');
   clearTimeout(saveTimer);
   saveTimer = setTimeout(async () => {
-    try {
-      await setDoc(doc(db, 'progress', DOC_ID), { checks, updatedAt: Date.now() });
-      showSync('saved', 'Saved ✓');
-      try { localStorage.setItem('ws-checks', JSON.stringify(checks)); } catch(e){}
-    } catch(err) {
-      showSync('error', 'Sync error');
-      console.error(err);
-    }
+    try { await setDoc(doc(db,'progress','main'),{checks,t:Date.now()}); syncStatus('saved','Saved ✓'); try{localStorage.setItem('ws-checks',JSON.stringify(checks));}catch(e){} }
+    catch(e) { syncStatus('error','Error'); }
   }, 600);
 };
 
-// Real-time listener
-function startListener() {
-  let isFirstLoad = true;
-  unsubscribeSnapshot = onSnapshot(doc(db, 'progress', DOC_ID), (snap) => {
-    if (snap.exists()) {
-      const data = snap.data();
-      if (data.checks) {
-        applyChecks(data.checks);
-        if (!isFirstLoad) showSync('saved', 'Synced ✓');
-      }
-    }
-    isFirstLoad = false;
-  });
-}
+// Notes
+window.FB = {
+  addNote: async (d) => addDoc(collection(db,'notes'), d),
+  updateNote: async (id,d) => { await updateDoc(doc(db,'notes',id),d); syncStatus('saved','Saved ✓'); },
+  deleteNote: async (id) => deleteDoc(doc(db,'notes',id)),
+  addTask: async (d) => addDoc(collection(db,'tasks'), d),
+  updateTask: async (id,d) => { await updateDoc(doc(db,'tasks',id),d); syncStatus('saved','Saved ✓'); },
+  deleteTask: async (id) => deleteDoc(doc(db,'tasks',id)),
+};
 
-function applyChecks(saved) {
-  const all = document.querySelectorAll('#modules-container input[type=checkbox]');
-  if (!all.length) { setTimeout(() => applyChecks(saved), 150); return; }
-  all.forEach((cb, i) => { cb.checked = !!saved[i]; });
-  window.onCheck(false);
-}
-
-// Auth state
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, user => {
   if (user) {
-    // Logged in — hide login, show app
     document.getElementById('login-screen').classList.add('hidden');
     document.getElementById('changepass-screen').classList.add('hidden');
-    startListener();
+    // Listeners
+    let firstProgress = true;
+    onSnapshot(doc(db,'progress','main'), snap => {
+      if (snap.exists() && snap.data().checks) { applyChecks(snap.data().checks); if(!firstProgress)syncStatus('saved','Synced ✓'); }
+      firstProgress = false;
+    });
+    onSnapshot(query(collection(db,'notes'),orderBy('createdAt','desc')), snap => {
+      window._notes = snap.docs.map(d => ({id:d.id,...d.data()}));
+      renderNotes(); updateDashStats();
+    });
+    onSnapshot(query(collection(db,'tasks'),orderBy('createdAt','asc')), snap => {
+      window._tasks = snap.docs.map(d => ({id:d.id,...d.data()}));
+      renderTasks(); updateDashStats();
+    });
   } else {
-    // Logged out — show login, hide app
     document.getElementById('login-screen').classList.remove('hidden');
-    if (unsubscribeSnapshot) { unsubscribeSnapshot(); unsubscribeSnapshot = null; }
   }
 });
 
-// Login
+function applyChecks(saved) {
+  const all = document.querySelectorAll('#modules-container input[type=checkbox]');
+  if (!all.length) { setTimeout(() => applyChecks(saved), 200); return; }
+  all.forEach((cb,i) => cb.checked = !!saved[i]);
+  window.onCheck(false);
+}
+
 window.doLogin = async function() {
-  const email = document.getElementById('login-email').value.trim();
-  const pass = document.getElementById('login-pass').value;
-  const btn = document.getElementById('login-btn');
-  const err = document.getElementById('login-error');
-  err.classList.remove('show');
-  btn.disabled = true;
-  btn.textContent = 'Signing in...';
-  try {
-    await signInWithEmailAndPassword(auth, email, pass);
-  } catch(e) {
-    err.textContent = 'Incorrect email or password.';
-    err.classList.add('show');
-    btn.disabled = false;
-    btn.textContent = 'Sign in';
-  }
+  const em=document.getElementById('login-email').value.trim(), pw=document.getElementById('login-pass').value;
+  const btn=document.getElementById('login-btn'), err=document.getElementById('login-error');
+  err.classList.remove('show'); btn.disabled=true; btn.textContent='Signing in...';
+  try { await signInWithEmailAndPassword(auth,em,pw); }
+  catch(e) { err.classList.add('show'); btn.disabled=false; btn.textContent='Sign in'; }
 };
-
-// Logout
-window.doLogout = async function() {
-  await signOut(auth);
-};
-
-// Change password
+window.doLogout = () => signOut(auth);
 window.doChangePass = async function() {
-  const email = document.getElementById('cp-email').value.trim();
-  const current = document.getElementById('cp-current').value;
-  const newPass = document.getElementById('cp-new').value;
-  const btn = document.getElementById('cp-btn');
-  const err = document.getElementById('cp-error');
-  err.classList.remove('show');
-  if (newPass.length < 6) { err.textContent = 'New password must be at least 6 characters.'; err.classList.add('show'); return; }
-  btn.disabled = true;
-  btn.textContent = 'Updating...';
+  const em=document.getElementById('cp-email').value.trim(), cur=document.getElementById('cp-current').value, nw=document.getElementById('cp-new').value;
+  const btn=document.getElementById('cp-btn'), err=document.getElementById('cp-error');
+  if(nw.length<6){err.textContent='Min 6 chars';err.classList.add('show');return;}
+  btn.disabled=true; btn.textContent='Updating...';
   try {
-    const credential = EmailAuthProvider.credential(email, current);
-    await reauthenticateWithCredential(auth.currentUser, credential);
-    await updatePassword(auth.currentUser, newPass);
-    err.style.background = 'rgba(0,212,170,.1)';
-    err.style.borderColor = 'rgba(0,212,170,.3)';
-    err.style.color = 'var(--teal)';
-    err.textContent = 'Password updated successfully!';
-    err.classList.add('show');
-    btn.textContent = 'Updated ✓';
-    setTimeout(() => { window.showLogin(); }, 2000);
-  } catch(e) {
-    err.textContent = 'Current password is incorrect.';
-    err.style.background = '';err.style.borderColor = '';err.style.color = '';
-    err.classList.add('show');
-    btn.disabled = false;
-    btn.textContent = 'Update password';
-  }
+    await reauthenticateWithCredential(auth.currentUser, EmailAuthProvider.credential(em,cur));
+    await updatePassword(auth.currentUser,nw);
+    err.style.cssText='background:rgba(0,212,170,.1);border-color:rgba(0,212,170,.3);color:var(--teal)';
+    err.textContent='Password updated!'; err.classList.add('show');
+    setTimeout(()=>window.showLogin(),2000);
+  } catch(e) { err.style.cssText=''; err.textContent='Current password incorrect'; err.classList.add('show'); btn.disabled=false; btn.textContent='Update password'; }
 };
-
-// Show/hide screens
-window.showChangePass = function() {
-  document.getElementById('login-screen').classList.add('hidden');
-  document.getElementById('changepass-screen').classList.remove('hidden');
-};
-window.showLogin = function() {
-  document.getElementById('changepass-screen').classList.add('hidden');
-  document.getElementById('login-screen').classList.remove('hidden');
-};
-
-// Enter key support
+window.showChangePass = () => { document.getElementById('login-screen').classList.add('hidden'); document.getElementById('changepass-screen').classList.remove('hidden'); };
+window.showLogin = () => { document.getElementById('changepass-screen').classList.add('hidden'); document.getElementById('login-screen').classList.remove('hidden'); };
 document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') window.doLogin(); });
 document.getElementById('login-email').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('login-pass').focus(); });
 </script>
 
 <script>
-// ============ MODULE DATA ============
-const moduleData = [
-  {
-    num: 1, title: 'Intro to data analytics & analytical thinking', hours: '~4h', days: 'Days 1–2',
-    topics: ['Data ecosystems','Analytical thinking','Five whys','Data-driven decisions','Root cause analysis'],
-    sections: [
-      { type:'Videos', tag:'vid', color:'var(--purple)', icon:'M5 3l14 9-14 9V3z', items: [
-        {t:'Welcome to the Google Data Analytics Certificate',d:'9 min'},
-        {t:'Introduction to the course',d:'5 min'},
-        {t:'Get started with your Google Data Analytics Certificate',d:'2 min'},
-        {t:'Data analytics in everyday life',d:'4 min'},
-        {t:'Cassie: Dimensions of data analytics',d:'5 min'},
-        {t:'What is the data ecosystem?',d:'5 min'},
-        {t:'How data informs better decisions',d:'4 min'},
-        {t:'Discover data skill sets',d:'1 min'},
-        {t:'Key data analyst skills',d:'6 min'},
-        {t:'All about thinking analytically',d:'5 min'},
-        {t:'Explore core analytical skills',d:'4 min'},
-        {t:'Data drives successful outcomes',d:'5 min'},
-        {t:'Witness data magic',d:'6 min'},
-        {t:'What to expect moving forward',d:'2 min'},
-      ]},
-      { type:'Readings', tag:'read', color:'var(--teal)', icon:'M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z', items: [
-        {t:'Course 1 overview',d:'8 min'},
-        {t:'Helpful resources and tips',d:'4 min'},
-        {t:'Evaluate your current data analytics skills',d:'8 min'},
-        {t:'New data perspectives',d:'8 min'},
-        {t:'How data analysts approach tasks',d:'8 min'},
-        {t:'Origins of the data analysis process',d:'8 min'},
-        {t:'Data and gut instinct',d:'4 min'},
-        {t:'Use data analytics skills in a business scenario',d:'8 min'},
-        {t:'Use the five whys for root cause analysis',d:'8 min'},
-        {t:'Glossary terms from course 1, module 1',d:'4 min'},
-        {t:'Assessment-taking strategies',d:'4 min'},
-      ]},
-      { type:'Assignments', tag:'assign', color:'var(--amber)', icon:'M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11', items: [
-        {t:'Identify data types in a spreadsheet',d:'30 min'},
-        {t:'Test your knowledge on the data ecosystem',d:'8 min'},
-        {t:'Test your knowledge on data analyst skills',d:'8 min'},
-        {t:'Test your knowledge on analytical thinking and outcomes',d:'8 min'},
-        {t:'Module 1 challenge',d:'40 min'},
-      ]},
-      { type:'Plugins', tag:'plug', color:'var(--text3)', icon:'M12 2a10 10 0 100 20 10 10 0 000-20zM8 12l2 2 4-4', items: [
-        {t:'Google Data Analytics Certificate participant entry survey',d:'10 min'},
-        {t:'Practice data analyst skills',d:'10 min'},
-      ]},
-    ]
-  },
-  {
-    num: 2, title: 'The wonderful world of data', hours: '~3h', days: 'Days 3–4',
-    topics: ['Data life cycle','Analysis phases','Analyst tools','Spreadsheets vs SQL'],
-    sections: [
-      { type:'Videos', tag:'vid', color:'var(--purple)', icon:'M5 3l14 9-14 9V3z', items: [
-        {t:'Learn about data phases and tools',d:'2 min'},
-        {t:'Stages of the data life cycle',d:'5 min'},
-        {t:'The phases of data analysis and this program',d:'6 min'},
-        {t:'Molly: Example of the data analysis process',d:'6 min'},
-        {t:'Explore data analyst tools',d:'6 min'},
-      ]},
-      { type:'Readings', tag:'read', color:'var(--teal)', icon:'M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z', items: [
-        {t:'Variations of the data life cycle',d:'8 min'},
-        {t:'More on the phases of data analysis and this program',d:'8 min'},
-        {t:'Key data analyst tools',d:'4 min'},
-        {t:'Choose the right tool for the job',d:'4 min'},
-        {t:'Glossary terms from course 1, module 2',d:'2 min'},
-      ]},
-      { type:'Assignments', tag:'assign', color:'var(--amber)', icon:'M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11', items: [
-        {t:'Test your knowledge on the data life cycle',d:'8 min'},
-        {t:'Test your knowledge on the data analysis process',d:'8 min'},
-        {t:'Self-Reflection: Review past concepts',d:'20 min'},
-        {t:'Test your knowledge on the data analysis toolbox',d:'8 min'},
-        {t:'Module 2 challenge',d:'50 min'},
-      ]},
-      { type:'Plugins', tag:'plug', color:'var(--text3)', icon:'M12 2a10 10 0 100 20 10 10 0 000-20zM8 12l2 2 4-4', items: [
-        {t:'Phases of data analysis',d:'10 min'},
-      ]},
-    ]
-  },
-  {
-    num: 3, title: 'Set up your data analytics toolbox', hours: '~3h', days: 'Days 4–5',
-    topics: ['Google Sheets','SQL basics','Data visualization','Tableau intro'],
-    sections: [
-      { type:'Videos', tag:'vid', color:'var(--purple)', icon:'M5 3l14 9-14 9V3z', items: [
-        {t:'The ins and outs of core data tools',d:'2 min'},
-        {t:'Make spreadsheets your friend',d:'9 min'},
-        {t:'SQL in action',d:'4 min'},
-        {t:'Angie: Everyday struggles when learning new skills',d:'2 min'},
-        {t:'Become a data viz whiz',d:'6 min'},
-        {t:'Lilah: The power of a visualization',d:'2 min'},
-      ]},
-      { type:'Readings', tag:'read', color:'var(--teal)', icon:'M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z', items: [
-        {t:'Step-by-Step: Make spreadsheets your friend',d:'4 min'},
-        {t:'More spreadsheet resources',d:'4 min'},
-        {t:'SQL guide: Getting started',d:'8 min'},
-        {t:'Endless SQL possibilities',d:'8 min'},
-        {t:'Plan a data visualization',d:'8 min'},
-        {t:'Glossary terms from course 1, module 3',d:'2 min'},
-      ]},
-      { type:'Assignments', tag:'assign', color:'var(--amber)', icon:'M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11', items: [
-        {t:'Hands-On Activity: Generate a chart from a spreadsheet',d:'60 min'},
-        {t:'Test your knowledge on spreadsheet basics',d:'8 min'},
-        {t:'Test your knowledge on SQL and data visualization',d:'8 min'},
-        {t:'Module 3 challenge',d:'50 min'},
-      ]},
-    ]
-  },
-  {
-    num: 4, title: 'Become a fair & impactful data professional', hours: '~3h', days: 'Days 6–7',
-    topics: ['Data ethics','Fairness','Analyst roles','Industry applications','Job search prep'],
-    sections: [
-      { type:'Videos', tag:'vid', color:'var(--purple)', icon:'M5 3l14 9-14 9V3z', items: [
-        {t:'Let\'s get down to business',d:'1 min'},
-        {t:'The job of a data analyst',d:'5 min'},
-        {t:'Joey: Path to becoming a data analyst',d:'2 min'},
-        {t:'Tony: Supporting careers in data analytics',d:'2 min'},
-        {t:'The power of data in business',d:'4 min'},
-        {t:'Rachel: Data detectives',d:'2 min'},
-        {t:'Understand data and fairness',d:'6 min'},
-        {t:'Alex: Fair and ethical data decisions',d:'3 min'},
-        {t:'Data analysts in different industries',d:'6 min'},
-        {t:'Samah: Interview best practices',d:'3 min'},
-        {t:'Congratulations! Course wrap-up',d:'3 min'},
-      ]},
-      { type:'Readings', tag:'read', color:'var(--teal)', icon:'M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z', items: [
-        {t:'Consider fairness',d:'8 min'},
-        {t:'Data analyst roles and job descriptions',d:'8 min'},
-        {t:'Beyond the numbers: A data analyst journey',d:'14 min'},
-        {t:'Glossary terms from course 1, module 4',d:'2 min'},
-        {t:'Join the community',d:'2 min'},
-        {t:'Course 1 glossary',d:'2 min'},
-        {t:'Coming up next...',d:'4 min'},
-      ]},
-      { type:'Assignments', tag:'assign', color:'var(--amber)', icon:'M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11', items: [
-        {t:'Self-Reflection: Business use of data',d:'20 min'},
-        {t:'Self-Reflection: Business cases',d:'20 min'},
-        {t:'Test your knowledge on making fair business decisions',d:'8 min'},
-        {t:'Module 4 challenge',d:'40 min'},
-      ]},
-      { type:'Plugins', tag:'plug', color:'var(--text3)', icon:'M12 2a10 10 0 100 20 10 10 0 000-20zM8 12l2 2 4-4', items: [
-        {t:'Test your knowledge on data analyst roles',d:'10 min'},
-      ]},
-    ]
-  },
+window._notes = [];
+window._tasks = [];
+window.currentPage = 'dashboard';
+let editingNoteId = null, editingTaskId = null, dragId = null;
+const NOTE_COLORS = ['#c8ff00','#4d9fff','#00d4aa','#a07cff','#ffb020','#ff4d4f'];
+let noteColor = NOTE_COLORS[0];
+
+// ============ NOTES ============
+function renderNotes(q='') {
+  const grid = document.getElementById('notes-grid');
+  grid.innerHTML = '';
+  const list = q ? window._notes.filter(n => (n.title+n.body+n.tag).toLowerCase().includes(q.toLowerCase())) : window._notes;
+  if (!list.length) { grid.innerHTML = '<div class="notes-empty">No notes yet — click "+ New note" to start</div>'; return; }
+  list.forEach(n => grid.appendChild(makeNoteCard(n)));
+  document.getElementById('notes-badge').textContent = window._notes.length;
+}
+
+function makeNoteCard(n) {
+  const card = document.createElement('div');
+  card.className = 'note-card';
+  card.innerHTML = `
+    <div class="note-card-top">
+      <div class="note-card-title">${esc(n.title||'Untitled')}</div>
+      <div class="note-card-actions">
+        <button class="icon-btn" title="Edit" onclick="event.stopPropagation();openNoteEditor('${n.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="icon-btn del" title="Delete" onclick="event.stopPropagation();deleteNote('${n.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></button>
+      </div>
+    </div>
+    <div class="note-card-body">${esc(n.body||'')}</div>
+    <div class="note-card-footer">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="note-color-dot" style="background:${n.color||'var(--accent)'}"></div>
+        ${n.tag?`<span class="note-tag-badge">${esc(n.tag)}</span>`:''}
+      </div>
+      <span class="note-date-label">${fmtDate(n.createdAt)}</span>
+    </div>`;
+  card.onclick = () => openNoteEditor(n.id);
+  return card;
+}
+
+function filterNotes() { renderNotes(document.getElementById('notes-search-input').value); }
+
+window.openNoteEditor = function(id=null) {
+  editingNoteId = id;
+  noteColor = NOTE_COLORS[0];
+  // Build color picker
+  const cp = document.getElementById('color-picker');
+  cp.innerHTML = '';
+  NOTE_COLORS.forEach(c => {
+    const d = document.createElement('div');
+    d.className = 'color-dot';
+    d.style.background = c;
+    d.onclick = () => { noteColor=c; cp.querySelectorAll('.color-dot').forEach(x=>x.classList.remove('active')); d.classList.add('active'); };
+    cp.appendChild(d);
+  });
+  if (id) {
+    const n = window._notes.find(x=>x.id===id);
+    if (!n) return;
+    document.getElementById('editor-title').value = n.title||'';
+    document.getElementById('editor-body').value = n.body||'';
+    document.getElementById('editor-tag').value = n.tag||'';
+    noteColor = n.color||NOTE_COLORS[0];
+    cp.querySelectorAll('.color-dot').forEach(d => { if(d.style.background===noteColor||d.style.backgroundColor===noteColor) d.classList.add('active'); });
+    document.getElementById('editor-delete-btn').style.display = 'block';
+  } else {
+    document.getElementById('editor-title').value='';
+    document.getElementById('editor-body').value='';
+    document.getElementById('editor-tag').value='';
+    cp.firstChild && cp.firstChild.classList.add('active');
+    document.getElementById('editor-delete-btn').style.display = 'none';
+  }
+  document.getElementById('editor-overlay').classList.add('show');
+  setTimeout(()=>document.getElementById('editor-title').focus(),100);
+};
+
+window.closeNoteEditor = function() { document.getElementById('editor-overlay').classList.remove('show'); editingNoteId=null; };
+
+window.saveNote = async function() {
+  const title = document.getElementById('editor-title').value.trim();
+  const body = document.getElementById('editor-body').value;
+  const tag = document.getElementById('editor-tag').value.trim();
+  if (!title && !body) return;
+  if (editingNoteId) {
+    await window.FB.updateNote(editingNoteId, {title:title||'Untitled',body,tag,color:noteColor,updatedAt:Date.now()});
+  } else {
+    await window.FB.addNote({title:title||'Untitled',body,tag,color:noteColor,createdAt:Date.now(),updatedAt:Date.now()});
+  }
+  closeNoteEditor();
+};
+
+window.deleteNote = async function(id) { if(confirm('Delete this note?')) await window.FB.deleteNote(id); };
+window.deleteCurrentNote = async function() { if(editingNoteId){await deleteNote(editingNoteId);closeNoteEditor();} };
+
+function insertMd(b,a) {
+  const ta=document.getElementById('editor-body'), s=ta.selectionStart, e=ta.selectionEnd, sel=ta.value.substring(s,e);
+  ta.value=ta.value.substring(0,s)+b+sel+a+ta.value.substring(e);
+  ta.selectionStart=s+b.length; ta.selectionEnd=s+b.length+sel.length; ta.focus();
+}
+
+// ============ TASKS ============
+function renderTasks() {
+  ['todo','inprogress','done'].forEach(status => {
+    const cont=document.getElementById('tasks-'+status), emp=document.getElementById('empty-'+status);
+    cont.innerHTML='';
+    const list=window._tasks.filter(t=>t.status===status);
+    document.getElementById('cnt-'+status).textContent=list.length;
+    emp.style.display=list.length?'none':'block';
+    list.forEach(t=>{const c=makeTaskCard(t);cont.appendChild(c);});
+  });
+  const open=window._tasks.filter(t=>t.status!=='done').length;
+  document.getElementById('task-badge').textContent=open;
+}
+
+function makeTaskCard(t) {
+  const card=document.createElement('div');
+  card.className='task-card'+(t.status==='done'?' done':'');
+  card.draggable=true;
+  card.dataset.id=t.id;
+  card.innerHTML=`
+    <div class="task-card-top">
+      <div class="task-card-title${t.status==='done'?' striked':''}">${esc(t.title||'')}</div>
+      <div class="task-card-actions">
+        <button class="icon-btn" title="Edit" onclick="event.stopPropagation();openTaskModal(null,'${t.id}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="icon-btn del" title="Delete" onclick="event.stopPropagation();deleteTask('${t.id}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></button>
+      </div>
+    </div>
+    ${t.desc?`<div class="task-card-desc">${esc(t.desc)}</div>`:''}
+    <div class="task-card-footer">
+      <span class="priority-badge priority-${t.priority||'medium'}">${t.priority||'medium'}</span>
+      ${t.due?`<span class="task-due">${esc(t.due)}</span>`:''}
+    </div>`;
+  card.addEventListener('dragstart',e=>{dragId=t.id;card.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
+  card.addEventListener('dragend',()=>{card.classList.remove('dragging');dragId=null;});
+  return card;
+}
+
+window.openTaskModal = function(defaultStatus=null, id=null) {
+  editingTaskId=id;
+  document.getElementById('task-modal-title').textContent=id?'Edit task':'Add task';
+  document.getElementById('task-delete-btn').style.display=id?'block':'none';
+  if(id){
+    const t=window._tasks.find(x=>x.id===id); if(!t) return;
+    document.getElementById('task-title-input').value=t.title||'';
+    document.getElementById('task-desc-input').value=t.desc||'';
+    document.getElementById('task-priority-input').value=t.priority||'medium';
+    document.getElementById('task-due-input').value=t.due||'';
+    document.getElementById('task-status-input').value=t.status||'todo';
+  } else {
+    document.getElementById('task-title-input').value='';
+    document.getElementById('task-desc-input').value='';
+    document.getElementById('task-priority-input').value='medium';
+    document.getElementById('task-due-input').value='';
+    document.getElementById('task-status-input').value=defaultStatus||'todo';
+  }
+  document.getElementById('task-overlay').classList.add('show');
+  setTimeout(()=>document.getElementById('task-title-input').focus(),100);
+};
+
+window.closeTaskModal = function() { document.getElementById('task-overlay').classList.remove('show'); editingTaskId=null; };
+
+window.saveTask = async function() {
+  const title=document.getElementById('task-title-input').value.trim();
+  if(!title) return;
+  const data={title,desc:document.getElementById('task-desc-input').value.trim(),priority:document.getElementById('task-priority-input').value,due:document.getElementById('task-due-input').value.trim(),status:document.getElementById('task-status-input').value};
+  if(editingTaskId) { await window.FB.updateTask(editingTaskId,data); }
+  else { await window.FB.addTask({...data,createdAt:Date.now()}); }
+  closeTaskModal();
+};
+
+window.deleteTask = async function(id) { if(confirm('Delete this task?')) await window.FB.deleteTask(id); };
+window.deleteCurrentTask = async function() { if(editingTaskId){await deleteTask(editingTaskId);closeTaskModal();} };
+
+window.dropTask = async function(e, status) {
+  e.preventDefault();
+  document.querySelectorAll('.kanban-col').forEach(c=>c.classList.remove('drag-over'));
+  if(dragId) await window.FB.updateTask(dragId,{status});
+};
+
+// ============ DASHBOARD ============
+function updateDashStats() {
+  document.getElementById('dash-notes-count').textContent=window._notes.length;
+  document.getElementById('dash-tasks-count').textContent=window._tasks.filter(t=>t.status!=='done').length;
+  // Preview notes
+  const preview=document.getElementById('dash-notes-preview');
+  preview.innerHTML='';
+  if(!window._notes.length){preview.innerHTML='<p style="font-size:13px;color:var(--text3);grid-column:1/-1">No notes yet — <a style="color:var(--accent);cursor:pointer" onclick="showPage(\'notes\')">create your first note</a></p>';return;}
+  window._notes.slice(0,3).forEach(n=>{const c=makeNoteCard(n);preview.appendChild(c);});
+}
+
+// ============ MODULE / PROGRESS ============
+const moduleData=[
+  {num:1,title:'Intro to data analytics & analytical thinking',hours:'~4h',days:'Days 1–2',topics:['Data ecosystems','Analytical thinking','Five whys','Data-driven decisions'],sections:[
+    {type:'Videos',tag:'vid',color:'var(--purple)',icon:'M5 3l14 9-14 9V3z',items:[{t:'Welcome to the Google Data Analytics Certificate',d:'9 min'},{t:'Introduction to the course',d:'5 min'},{t:'Get started with your Google Data Analytics Certificate',d:'2 min'},{t:'Data analytics in everyday life',d:'4 min'},{t:'Cassie: Dimensions of data analytics',d:'5 min'},{t:'What is the data ecosystem?',d:'5 min'},{t:'How data informs better decisions',d:'4 min'},{t:'Discover data skill sets',d:'1 min'},{t:'Key data analyst skills',d:'6 min'},{t:'All about thinking analytically',d:'5 min'},{t:'Explore core analytical skills',d:'4 min'},{t:'Data drives successful outcomes',d:'5 min'},{t:'Witness data magic',d:'6 min'},{t:'What to expect moving forward',d:'2 min'}]},
+    {type:'Readings',tag:'read',color:'var(--teal)',icon:'M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z',items:[{t:'Course 1 overview',d:'8 min'},{t:'Helpful resources and tips',d:'4 min'},{t:'Evaluate your current data analytics skills',d:'8 min'},{t:'New data perspectives',d:'8 min'},{t:'How data analysts approach tasks',d:'8 min'},{t:'Origins of the data analysis process',d:'8 min'},{t:'Data and gut instinct',d:'4 min'},{t:'Use data analytics skills in a business scenario',d:'8 min'},{t:'Use the five whys for root cause analysis',d:'8 min'},{t:'Glossary terms from course 1, module 1',d:'4 min'},{t:'Assessment-taking strategies',d:'4 min'}]},
+    {type:'Assignments',tag:'assign',color:'var(--amber)',icon:'M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11',items:[{t:'Identify data types in a spreadsheet',d:'30 min'},{t:'Test your knowledge on the data ecosystem',d:'8 min'},{t:'Test your knowledge on data analyst skills',d:'8 min'},{t:'Test your knowledge on analytical thinking',d:'8 min'},{t:'Module 1 challenge',d:'40 min'}]},
+    {type:'Plugins',tag:'plug',color:'var(--text3)',icon:'M12 2a10 10 0 100 20 10 10 0 000-20zM8 12l2 2 4-4',items:[{t:'Google Data Analytics Certificate participant entry survey',d:'10 min'},{t:'Practice data analyst skills',d:'10 min'}]}
+  ]},
+  {num:2,title:'The wonderful world of data',hours:'~3h',days:'Days 3–4',topics:['Data life cycle','Analysis phases','Analyst tools'],sections:[
+    {type:'Videos',tag:'vid',color:'var(--purple)',icon:'M5 3l14 9-14 9V3z',items:[{t:'Learn about data phases and tools',d:'2 min'},{t:'Stages of the data life cycle',d:'5 min'},{t:'The phases of data analysis and this program',d:'6 min'},{t:'Molly: Example of the data analysis process',d:'6 min'},{t:'Explore data analyst tools',d:'6 min'}]},
+    {type:'Readings',tag:'read',color:'var(--teal)',icon:'M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z',items:[{t:'Variations of the data life cycle',d:'8 min'},{t:'More on the phases of data analysis',d:'8 min'},{t:'Key data analyst tools',d:'4 min'},{t:'Choose the right tool for the job',d:'4 min'},{t:'Glossary terms from course 1, module 2',d:'2 min'}]},
+    {type:'Assignments',tag:'assign',color:'var(--amber)',icon:'M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11',items:[{t:'Test your knowledge on the data life cycle',d:'8 min'},{t:'Test your knowledge on the data analysis process',d:'8 min'},{t:'Self-Reflection: Review past concepts',d:'20 min'},{t:'Test your knowledge on the data analysis toolbox',d:'8 min'},{t:'Module 2 challenge',d:'50 min'}]},
+    {type:'Plugins',tag:'plug',color:'var(--text3)',icon:'M12 2a10 10 0 100 20 10 10 0 000-20zM8 12l2 2 4-4',items:[{t:'Phases of data analysis',d:'10 min'}]}
+  ]},
+  {num:3,title:'Set up your data analytics toolbox',hours:'~3h',days:'Days 4–5',topics:['Google Sheets','SQL basics','Data visualization'],sections:[
+    {type:'Videos',tag:'vid',color:'var(--purple)',icon:'M5 3l14 9-14 9V3z',items:[{t:'The ins and outs of core data tools',d:'2 min'},{t:'Make spreadsheets your friend',d:'9 min'},{t:'SQL in action',d:'4 min'},{t:'Angie: Everyday struggles when learning new skills',d:'2 min'},{t:'Become a data viz whiz',d:'6 min'},{t:'Lilah: The power of a visualization',d:'2 min'}]},
+    {type:'Readings',tag:'read',color:'var(--teal)',icon:'M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z',items:[{t:'Step-by-Step: Make spreadsheets your friend',d:'4 min'},{t:'More spreadsheet resources',d:'4 min'},{t:'SQL guide: Getting started',d:'8 min'},{t:'Endless SQL possibilities',d:'8 min'},{t:'Plan a data visualization',d:'8 min'},{t:'Glossary terms from course 1, module 3',d:'2 min'}]},
+    {type:'Assignments',tag:'assign',color:'var(--amber)',icon:'M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11',items:[{t:'Hands-On Activity: Generate a chart from a spreadsheet',d:'60 min'},{t:'Test your knowledge on spreadsheet basics',d:'8 min'},{t:'Test your knowledge on SQL and data visualization',d:'8 min'},{t:'Module 3 challenge',d:'50 min'}]}
+  ]},
+  {num:4,title:'Become a fair & impactful data professional',hours:'~3h',days:'Days 6–7',topics:['Data ethics','Fairness','Analyst roles'],sections:[
+    {type:'Videos',tag:'vid',color:'var(--purple)',icon:'M5 3l14 9-14 9V3z',items:[{t:"Let's get down to business",d:'1 min'},{t:'The job of a data analyst',d:'5 min'},{t:'Joey: Path to becoming a data analyst',d:'2 min'},{t:'Tony: Supporting careers in data analytics',d:'2 min'},{t:'The power of data in business',d:'4 min'},{t:'Rachel: Data detectives',d:'2 min'},{t:'Understand data and fairness',d:'6 min'},{t:'Alex: Fair and ethical data decisions',d:'3 min'},{t:'Data analysts in different industries',d:'6 min'},{t:'Samah: Interview best practices',d:'3 min'},{t:'Congratulations! Course wrap-up',d:'3 min'}]},
+    {type:'Readings',tag:'read',color:'var(--teal)',icon:'M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z',items:[{t:'Consider fairness',d:'8 min'},{t:'Data analyst roles and job descriptions',d:'8 min'},{t:'Beyond the numbers: A data analyst journey',d:'14 min'},{t:'Glossary terms from course 1, module 4',d:'2 min'},{t:'Join the community',d:'2 min'},{t:'Course 1 glossary',d:'2 min'},{t:'Coming up next...',d:'4 min'}]},
+    {type:'Assignments',tag:'assign',color:'var(--amber)',icon:'M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11',items:[{t:'Self-Reflection: Business use of data',d:'20 min'},{t:'Self-Reflection: Business cases',d:'20 min'},{t:'Test your knowledge on making fair business decisions',d:'8 min'},{t:'Module 4 challenge',d:'40 min'}]},
+    {type:'Plugins',tag:'plug',color:'var(--text3)',icon:'M12 2a10 10 0 100 20 10 10 0 000-20zM8 12l2 2 4-4',items:[{t:'Test your knowledge on data analyst roles',d:'10 min'}]}
+  ]}
 ];
 
-let totalItems = 0;
-moduleData.forEach(m => m.sections.forEach(s => totalItems += s.items.length));
-
-// Build modules
-const container = document.getElementById('modules-container');
-let globalIdx = 0;
-moduleData.forEach(m => {
-  let sectionsHtml = '';
-  m.sections.forEach(sec => {
-    let itemsHtml = '';
-    const tagLabel = sec.type === 'Videos' ? 'Video' : sec.type === 'Readings' ? 'Read' : sec.type === 'Assignments' ? 'Quiz' : 'Plugin';
-    sec.items.forEach(item => {
-      const id = 'chk-' + globalIdx;
-      itemsHtml += `<label class="check-item" id="item-${globalIdx}" for="${id}">
-        <input type="checkbox" id="${id}" data-idx="${globalIdx}" onchange="onCheck(true)">
-        <span class="cat-tag ${sec.tag}">${tagLabel}</span>
-        <span class="check-text">${item.t}</span>
-        <span class="duration">${item.d}</span>
-      </label>`;
-      globalIdx++;
+let totalItems=0; moduleData.forEach(m=>m.sections.forEach(s=>totalItems+=s.items.length));
+const container=document.getElementById('modules-container'); let gIdx=0;
+moduleData.forEach(m=>{
+  let sHtml=''; const catC={};
+  m.sections.forEach(s=>{
+    catC[s.tag]=s.items.length; let iHtml='';
+    const tl=s.type==='Videos'?'Video':s.type==='Readings'?'Read':s.type==='Assignments'?'Quiz':'Plugin';
+    s.items.forEach(item=>{
+      const id='chk-'+gIdx;
+      iHtml+=`<label class="check-item" id="item-${gIdx}" for="${id}"><input type="checkbox" id="${id}" data-idx="${gIdx}" onchange="onCheck(true)"><span class="cat-tag ${s.tag}">${tl}</span><span class="check-text">${item.t}</span><span class="duration">${item.d}</span></label>`;
+      gIdx++;
     });
-    sectionsHtml += `<div class="checklist-section">
-      <div class="checklist-section-title">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${sec.color}" stroke-width="2"><path d="${sec.icon}"/></svg>
-        ${sec.type} (${sec.items.length})
-      </div>${itemsHtml}</div>`;
+    sHtml+=`<div class="checklist-section"><div class="checklist-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${s.color}" stroke-width="2"><path d="${s.icon}"/></svg>${s.type} (${s.items.length})</div>${iHtml}</div>`;
   });
-
-  const catCounts = {};
-  m.sections.forEach(s => { catCounts[s.tag] = s.items.length; });
-
-  container.innerHTML += `<div class="module-card anim-item" id="mod-${m.num}">
+  container.innerHTML+=`<div class="module-card anim-item" id="mod-${m.num}">
     <div class="module-head" onclick="this.parentElement.classList.toggle('open')">
-      <h3><span class="num">M${m.num}</span> ${m.title}</h3>
-      <div style="display:flex;align-items:center;gap:12px">
-        <span class="hours">${m.hours} · ${m.days}</span>
-        <svg class="module-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <h3><span class="num">M${m.num}</span>${m.title}</h3>
+      <div style="display:flex;align-items:center;gap:12px"><span class="hours">${m.hours} · ${m.days}</span><svg class="module-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
-    <div class="module-progress-row">
-      <div class="module-progress-track"><div class="module-progress-fill" id="mfull-${m.num}"></div></div>
-      <span class="module-progress-pct" id="mfull-pct-${m.num}">0%</span>
-    </div>
-    <div class="module-bar">
-      <div class="module-bar-seg" id="mbar-${m.num}-vid" style="width:0%;background:var(--purple)"></div>
-      <div class="module-bar-seg" id="mbar-${m.num}-read" style="width:0%;background:var(--teal)"></div>
-      <div class="module-bar-seg" id="mbar-${m.num}-assign" style="width:0%;background:var(--amber)"></div>
-      <div class="module-bar-seg" id="mbar-${m.num}-plug" style="width:0%;background:var(--text3)"></div>
-    </div>
+    <div class="module-progress-row"><div class="module-progress-track"><div class="module-progress-fill" id="mfull-${m.num}"></div></div><span class="module-progress-pct" id="mfull-pct-${m.num}">0%</span></div>
+    <div class="module-bar"><div class="module-bar-seg" id="mbar-${m.num}-vid" style="width:0%;background:var(--purple)"></div><div class="module-bar-seg" id="mbar-${m.num}-read" style="width:0%;background:var(--teal)"></div><div class="module-bar-seg" id="mbar-${m.num}-assign" style="width:0%;background:var(--amber)"></div><div class="module-bar-seg" id="mbar-${m.num}-plug" style="width:0%;background:var(--text3)"></div></div>
     <div class="module-cat-stats">
-      ${catCounts.vid ? `<div class="module-cat-stat"><span class="cat-dot" style="background:var(--purple)"></span>Videos <span id="mcnt-${m.num}-vid" style="color:var(--text2)">0/${catCounts.vid}</span> <span class="cat-pct" id="mpct-${m.num}-vid">0%</span></div>` : ''}
-      ${catCounts.read ? `<div class="module-cat-stat"><span class="cat-dot" style="background:var(--teal)"></span>Readings <span id="mcnt-${m.num}-read" style="color:var(--text2)">0/${catCounts.read}</span> <span class="cat-pct" id="mpct-${m.num}-read">0%</span></div>` : ''}
-      ${catCounts.assign ? `<div class="module-cat-stat"><span class="cat-dot" style="background:var(--amber)"></span>Assignments <span id="mcnt-${m.num}-assign" style="color:var(--text2)">0/${catCounts.assign}</span> <span class="cat-pct" id="mpct-${m.num}-assign">0%</span></div>` : ''}
-      ${catCounts.plug ? `<div class="module-cat-stat"><span class="cat-dot" style="background:var(--text3)"></span>Plugins <span id="mcnt-${m.num}-plug" style="color:var(--text2)">0/${catCounts.plug}</span> <span class="cat-pct" id="mpct-${m.num}-plug">0%</span></div>` : ''}
+      ${catC.vid?`<div class="module-cat-stat"><span class="cat-dot" style="background:var(--purple)"></span>Videos <span id="mcnt-${m.num}-vid">0/${catC.vid}</span> <span class="cat-pct" id="mpct-${m.num}-vid">0%</span></div>`:''}
+      ${catC.read?`<div class="module-cat-stat"><span class="cat-dot" style="background:var(--teal)"></span>Readings <span id="mcnt-${m.num}-read">0/${catC.read}</span> <span class="cat-pct" id="mpct-${m.num}-read">0%</span></div>`:''}
+      ${catC.assign?`<div class="module-cat-stat"><span class="cat-dot" style="background:var(--amber)"></span>Assignments <span id="mcnt-${m.num}-assign">0/${catC.assign}</span> <span class="cat-pct" id="mpct-${m.num}-assign">0%</span></div>`:''}
+      ${catC.plug?`<div class="module-cat-stat"><span class="cat-dot" style="background:var(--text3)"></span>Plugins <span id="mcnt-${m.num}-plug">0/${catC.plug}</span> <span class="cat-pct" id="mpct-${m.num}-plug">0%</span></div>`:''}
     </div>
-    <div class="module-body">
-      <div class="checklist">${sectionsHtml}</div>
-      <div class="module-topics">
-        <h4>Key topics</h4>
-        <div class="topic-list">${m.topics.map(t=>`<span class="topic-tag">${t}</span>`).join('')}</div>
-      </div>
-    </div>
+    <div class="module-body"><div class="checklist">${sHtml}</div><div class="module-topics"><h4>Key topics</h4><div class="topic-list">${m.topics.map(t=>`<span class="topic-tag">${t}</span>`).join('')}</div></div></div>
   </div>`;
 });
 
-// onCheck: pass true to save, false to just update UI
-window.onCheck = function(shouldSave = true) {
-  const all = document.querySelectorAll('#modules-container input[type=checkbox]');
-  let checked = 0;
-  const state = [];
-  all.forEach(cb => {
-    const lbl = cb.closest('.check-item');
-    if (cb.checked) { lbl.classList.add('done'); checked++; }
-    else { lbl.classList.remove('done'); }
-    state.push(cb.checked);
-  });
-
-  const pct = Math.round((checked / totalItems) * 100);
-  document.getElementById('overall-pct').textContent = pct + '%';
-  document.getElementById('overall-bar').style.width = pct + '%';
-  document.getElementById('completed-count').textContent = checked;
-  document.getElementById('remaining-count').textContent = totalItems - checked;
-  document.getElementById('dash-progress').textContent = pct + '%';
-  document.getElementById('dash-c1-bar').style.width = pct + '%';
-  document.getElementById('dash-c1-pct').textContent = pct + '%';
-  const sub = document.getElementById('dash-progress-sub');
-  if (pct === 0) { sub.textContent = 'Not started'; sub.className = 'change'; }
-  else if (pct === 100) { sub.textContent = 'Completed!'; sub.className = 'change up'; }
-  else { sub.textContent = 'In progress'; sub.className = 'change up'; }
-
-  // Per-module bars
-  let idx = 0;
-  moduleData.forEach(m => {
-    let mTotal = 0, mChecked = 0;
-    const catStats = {};
-    m.sections.forEach(s => {
-      let sChecked = 0;
-      s.items.forEach(() => {
-        if (all[idx] && all[idx].checked) { sChecked++; mChecked++; }
-        mTotal++; idx++;
-      });
-      catStats[s.tag] = { total: s.items.length, checked: sChecked };
-    });
-    const mPct = mTotal > 0 ? Math.round((mChecked / mTotal) * 100) : 0;
-    const fullBar = document.getElementById('mfull-' + m.num);
-    const fullPct = document.getElementById('mfull-pct-' + m.num);
-    if (fullBar) fullBar.style.width = mPct + '%';
-    if (fullPct) {
-      fullPct.textContent = mPct + '%';
-      fullPct.style.color = mPct === 100 ? 'var(--accent)' : mPct > 0 ? 'var(--text2)' : 'var(--text3)';
-    }
-    ['vid','read','assign','plug'].forEach(tag => {
-      const bar = document.getElementById('mbar-' + m.num + '-' + tag);
-      const lbl = document.getElementById('mpct-' + m.num + '-' + tag);
-      const cnt = document.getElementById('mcnt-' + m.num + '-' + tag);
-      if (bar && catStats[tag]) bar.style.width = mTotal > 0 ? (catStats[tag].checked / mTotal) * 100 + '%' : '0%';
-      if (lbl && catStats[tag]) {
-        const cp = catStats[tag].total > 0 ? Math.round((catStats[tag].checked / catStats[tag].total) * 100) : 0;
-        lbl.textContent = cp + '%';
-        lbl.style.color = cp === 100 ? 'var(--accent)' : 'var(--text2)';
-      }
-      if (cnt && catStats[tag]) {
-        cnt.textContent = catStats[tag].checked + '/' + catStats[tag].total;
-        cnt.style.color = catStats[tag].checked === catStats[tag].total && catStats[tag].total > 0 ? 'var(--accent)' : 'var(--text2)';
-      }
+window.onCheck = function(save=true) {
+  const all=document.querySelectorAll('#modules-container input[type=checkbox]');
+  let checked=0; const state=[];
+  all.forEach(cb=>{const l=cb.closest('.check-item');if(cb.checked){l.classList.add('done');checked++;}else l.classList.remove('done');state.push(cb.checked);});
+  const pct=Math.round((checked/totalItems)*100);
+  ['overall-pct','dash-progress'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=pct+'%';});
+  const ob=document.getElementById('overall-bar'),cb1=document.getElementById('dash-c1-bar'),cp1=document.getElementById('dash-c1-pct');
+  if(ob)ob.style.width=pct+'%'; if(cb1)cb1.style.width=pct+'%'; if(cp1)cp1.textContent=pct+'%';
+  document.getElementById('completed-count').textContent=checked;
+  document.getElementById('remaining-count').textContent=totalItems-checked;
+  const sub=document.getElementById('dash-progress-sub');
+  if(sub){if(pct===0){sub.textContent='Not started';sub.className='change';}else if(pct===100){sub.textContent='Completed!';sub.className='change up';}else{sub.textContent='In progress';sub.className='change up';}}
+  let idx=0;
+  moduleData.forEach(m=>{
+    let mT=0,mC=0; const cs={};
+    m.sections.forEach(s=>{let sc=0;s.items.forEach(()=>{if(all[idx]&&all[idx].checked){sc++;mC++;}mT++;idx++;});cs[s.tag]={total:s.items.length,checked:sc};});
+    const mp=mT>0?Math.round((mC/mT)*100):0;
+    const fb=document.getElementById('mfull-'+m.num),fp=document.getElementById('mfull-pct-'+m.num);
+    if(fb)fb.style.width=mp+'%'; if(fp){fp.textContent=mp+'%';fp.style.color=mp===100?'var(--accent)':mp>0?'var(--text2)':'var(--text3)';}
+    ['vid','read','assign','plug'].forEach(tag=>{
+      const bar=document.getElementById('mbar-'+m.num+'-'+tag);
+      const lbl=document.getElementById('mpct-'+m.num+'-'+tag);
+      const cnt=document.getElementById('mcnt-'+m.num+'-'+tag);
+      if(bar&&cs[tag])bar.style.width=mT>0?(cs[tag].checked/mT)*100+'%':'0%';
+      if(lbl&&cs[tag]){const p=cs[tag].total>0?Math.round((cs[tag].checked/cs[tag].total)*100):0;lbl.textContent=p+'%';lbl.style.color=p===100?'var(--accent)':'var(--text2)';}
+      if(cnt&&cs[tag]){cnt.textContent=cs[tag].checked+'/'+cs[tag].total;cnt.style.color=cs[tag].checked===cs[tag].total&&cs[tag].total>0?'var(--accent)':'var(--text2)';}
     });
   });
-
-  // Save to Firestore (only when user actually checks something)
-  if (shouldSave && window.saveToFirestore) {
-    window.saveToFirestore(state);
-  }
+  if(save&&window.saveProgress) window.saveProgress(state);
 };
 
-// Settings
-function loadSettings() {
-  try {
-    const s = JSON.parse(localStorage.getItem('ws-settings'));
-    if (!s) return;
-    if (s.name) { document.getElementById('set-name').value = s.name; document.getElementById('avatar-el').textContent = s.name.charAt(0).toUpperCase(); document.getElementById('logo-letter').textContent = s.name.charAt(0).toUpperCase(); }
-    if (s.theme) { document.getElementById('set-theme').value = s.theme; document.documentElement.classList.toggle('light', s.theme === 'light'); }
-    if (s.pace) document.getElementById('set-pace').value = s.pace;
-    if (s.tz) document.getElementById('set-tz').value = s.tz;
-    if (s.color) { document.getElementById('set-color').value = s.color; applyAccentColor(s.color); }
-  } catch(e){}
-}
-
-function applyAccentColor(hex) {
-  document.documentElement.style.setProperty('--accent', hex);
-  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-  document.documentElement.style.setProperty('--accent2', `rgb(${Math.round(r*.8)},${Math.round(g*.8)},${Math.round(b*.8)})`);
-  document.documentElement.style.setProperty('--accent-dim', hex + '14');
-}
-
-function saveSettings() {
-  const name = document.getElementById('set-name').value.trim();
-  const theme = document.getElementById('set-theme').value;
-  const pace = document.getElementById('set-pace').value;
-  const tz = document.getElementById('set-tz').value;
-  const color = document.getElementById('set-color').value;
-  document.documentElement.classList.toggle('light', theme === 'light');
-  if (name) { document.getElementById('avatar-el').textContent = name.charAt(0).toUpperCase(); document.getElementById('logo-letter').textContent = name.charAt(0).toUpperCase(); }
-  applyAccentColor(color);
-  try { localStorage.setItem('ws-settings', JSON.stringify({name, theme, pace, tz, color})); } catch(e){}
-  const toast = document.getElementById('save-toast');
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2500);
-}
-
-function resetSettings() {
-  try { localStorage.removeItem('ws-settings'); } catch(e){}
-  document.getElementById('set-name').value = '';
-  document.getElementById('set-theme').value = 'dark';
-  document.getElementById('set-pace').value = '2';
-  document.getElementById('set-tz').value = 'AST';
-  document.getElementById('set-color').value = '#c8ff00';
-  document.documentElement.classList.remove('light');
-  document.documentElement.style.removeProperty('--accent');
-  document.documentElement.style.removeProperty('--accent2');
-  document.documentElement.style.removeProperty('--accent-dim');
-  document.getElementById('avatar-el').textContent = 'Y';
-  document.getElementById('logo-letter').textContent = 'W';
-  const toast = document.getElementById('save-toast');
-  toast.textContent = 'Settings reset to defaults';
-  toast.classList.add('show');
-  setTimeout(() => { toast.classList.remove('show'); toast.textContent = 'Settings saved successfully'; }, 2500);
-}
-
 // Navigation
-const pages = {dashboard:'Dashboard',courses:'Courses',timeline:'Course 1 Timeline',work:'Tasks',notes:'Notes',settings:'Settings'};
-function showPage(id) {
+const pageNames={dashboard:'Dashboard',courses:'Courses',timeline:'Course 1 Timeline',tasks:'Tasks',notes:'Notes',settings:'Settings'};
+function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.sidebar-nav .nav-item, .sidebar-footer .nav-item').forEach(n=>n.classList.remove('active'));
-  const navItems = document.querySelectorAll('.sidebar-nav .nav-item, .sidebar-footer .nav-item');
-  const map = {dashboard:0,courses:1,timeline:2,work:3,notes:4,settings:5};
-  if (map[id] !== undefined) navItems[map[id]].classList.add('active');
-  document.getElementById('breadcrumb').innerHTML = 'Home / <span>'+(pages[id]||id)+'</span>';
+  document.querySelectorAll('.sidebar-nav .nav-item,.sidebar-footer .nav-item').forEach(n=>n.classList.remove('active'));
+  const ni=document.querySelectorAll('.sidebar-nav .nav-item,.sidebar-footer .nav-item');
+  const map={dashboard:0,courses:1,timeline:2,tasks:3,notes:4,settings:5};
+  if(map[id]!==undefined)ni[map[id]].classList.add('active');
+  document.getElementById('breadcrumb').innerHTML='Home / <span>'+(pageNames[id]||id)+'</span>';
   document.getElementById('sidebar').classList.remove('open');
+  window.currentPage=id;
   document.querySelectorAll('#page-'+id+' .anim-item').forEach(el=>{el.style.animation='none';el.offsetHeight;el.style.animation='';});
 }
 
-// Courses list
-const coursesData=[
-  {n:1,t:'Foundations: Data, Data, Everywhere',h:13,c1:'var(--accent)',c2:'var(--teal)',s:'Active'},
-  {n:2,t:'Ask Questions to Make Data-Driven Decisions',h:15,c1:'var(--blue)',c2:'var(--purple)',s:'Locked'},
-  {n:3,t:'Prepare Data for Exploration',h:19,c1:'var(--amber)',c2:'var(--red)',s:'Locked'},
-  {n:4,t:'Process Data from Dirty to Clean',h:16,c1:'var(--teal)',c2:'var(--blue)',s:'Locked'},
-  {n:5,t:'Analyze Data to Answer Questions',h:26,c1:'var(--purple)',c2:'var(--accent)',s:'Locked'},
-  {n:6,t:'Share Data Through the Art of Visualization',h:19,c1:'var(--red)',c2:'var(--amber)',s:'Locked'},
-  {n:7,t:'Introduction to Data Analysis Using Python',h:27,c1:'var(--blue)',c2:'var(--teal)',s:'Locked'},
-  {n:8,t:'Google Data Analytics Capstone',h:11,c1:'var(--accent)',c2:'var(--purple)',s:'Locked'},
-  {n:9,t:'Accelerate Your Job Search with AI',h:6,c1:'var(--amber)',c2:'var(--teal)',s:'Locked'},
-];
-const cl = document.getElementById('courses-list');
-coursesData.forEach((c,i) => {
-  cl.innerHTML += `<div class="course-card anim-item" style="animation-delay:${i*.06}s" ${c.n===1?'onclick="showPage(\'timeline\')"':''}>
-    <div class="banner" style="background:linear-gradient(90deg,${c.c1},${c.c2})"></div>
-    <div class="body">
-      <div class="tag" style="color:${c.c1}">Course ${c.n} — ${c.s}</div>
-      <h3>${c.t}</h3>
-      <div class="progress-bar"><div class="progress-fill" style="width:0%;background:${c.c1}"></div></div>
-      <div class="course-meta"><span>${c.h} hours</span><span>0%</span></div>
-    </div>
-  </div>`;
-});
+// Courses
+const cData=[{n:1,t:'Foundations: Data, Data, Everywhere',h:13,c1:'var(--accent)',c2:'var(--teal)',s:'Active'},{n:2,t:'Ask Questions to Make Data-Driven Decisions',h:15,c1:'var(--blue)',c2:'var(--purple)',s:'Locked'},{n:3,t:'Prepare Data for Exploration',h:19,c1:'var(--amber)',c2:'var(--red)',s:'Locked'},{n:4,t:'Process Data from Dirty to Clean',h:16,c1:'var(--teal)',c2:'var(--blue)',s:'Locked'},{n:5,t:'Analyze Data to Answer Questions',h:26,c1:'var(--purple)',c2:'var(--accent)',s:'Locked'},{n:6,t:'Share Data Through the Art of Visualization',h:19,c1:'var(--red)',c2:'var(--amber)',s:'Locked'},{n:7,t:'Introduction to Data Analysis Using Python',h:27,c1:'var(--blue)',c2:'var(--teal)',s:'Locked'},{n:8,t:'Google Data Analytics Capstone',h:11,c1:'var(--accent)',c2:'var(--purple)',s:'Locked'},{n:9,t:'Accelerate Your Job Search with AI',h:6,c1:'var(--amber)',c2:'var(--teal)',s:'Locked'}];
+const cl=document.getElementById('courses-list');
+cData.forEach((c,i)=>{ cl.innerHTML+=`<div class="course-card anim-item" style="animation-delay:${i*.06}s" ${c.n===1?'onclick="showPage(\'timeline\')"':''}><div class="banner" style="background:linear-gradient(90deg,${c.c1},${c.c2})"></div><div class="body"><div class="tag" style="color:${c.c1}">Course ${c.n} — ${c.s}</div><h3>${c.t}</h3><div class="progress-bar"><div class="progress-fill" style="width:0%;background:${c.c1}"></div></div><div class="course-meta"><span>${c.h} hours</span><span>0%</span></div></div></div>`; });
 
-// Modal
-function openModal(){document.getElementById('modal').classList.add('show')}
-function closeModal(){document.getElementById('modal').classList.remove('show')}
-document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
-
-function addItem() {
-  const type = document.getElementById('add-type').value;
-  const title = document.getElementById('add-title').value;
-  if (!title) return;
-  const colors = ['var(--accent)','var(--purple)','var(--teal)','var(--amber)','var(--blue)'];
-  const color = colors[Math.floor(Math.random()*colors.length)];
-  if (type === 'Note') {
-    const list = document.getElementById('notes-list-main');
-    const item = document.createElement('div');
-    item.className = 'note-item';
-    item.innerHTML = `<div class="note-dot" style="background:${color}"></div><div class="note-content"><h4>${title}</h4><p>${document.getElementById('add-details').value||'No details'}</p></div><div class="note-date">Just now</div>`;
-    list.prepend(item);
-    const badge = document.getElementById('notes-badge');
-    badge.textContent = parseInt(badge.textContent)+1;
-    document.getElementById('dash-notes').textContent = badge.textContent;
-  } else {
-    const col = document.querySelector('.task-col');
-    col.querySelector('.cnt').textContent = parseInt(col.querySelector('.cnt').textContent)+1;
-    const item = document.createElement('div');
-    item.className = 'task-item';
-    item.innerHTML = `<h4><span class="task-priority" style="background:var(--amber)"></span>${title}</h4><p>${document.getElementById('add-details').value||'No details'}</p><div class="task-footer"><span>Just added</span><span style="color:var(--amber)">New</span></div>`;
-    col.appendChild(item);
-    document.getElementById('task-badge').textContent = parseInt(document.getElementById('task-badge').textContent)+1;
-  }
-  document.getElementById('add-title').value = '';
-  document.getElementById('add-details').value = '';
-  closeModal();
+// Settings
+function loadSettings(){
+  try{const s=JSON.parse(localStorage.getItem('ws-settings'));if(!s)return;
+    if(s.name){document.getElementById('set-name').value=s.name;document.getElementById('avatar-el').textContent=s.name.charAt(0).toUpperCase();document.getElementById('logo-letter').textContent=s.name.charAt(0).toUpperCase();}
+    if(s.theme){document.getElementById('set-theme').value=s.theme;document.documentElement.classList.toggle('light',s.theme==='light');}
+    if(s.pace)document.getElementById('set-pace').value=s.pace;
+    if(s.tz)document.getElementById('set-tz').value=s.tz;
+    if(s.color){document.getElementById('set-color').value=s.color;applyColor(s.color);}
+  }catch(e){}
+}
+function applyColor(hex){
+  document.documentElement.style.setProperty('--accent',hex);
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  document.documentElement.style.setProperty('--accent2',`rgb(${Math.round(r*.8)},${Math.round(g*.8)},${Math.round(b*.8)})`);
+  document.documentElement.style.setProperty('--accent-dim',hex+'14');
+}
+function saveSettings(){
+  const n=document.getElementById('set-name').value.trim(),th=document.getElementById('set-theme').value,p=document.getElementById('set-pace').value,tz=document.getElementById('set-tz').value,c=document.getElementById('set-color').value;
+  document.documentElement.classList.toggle('light',th==='light');
+  if(n){document.getElementById('avatar-el').textContent=n.charAt(0).toUpperCase();document.getElementById('logo-letter').textContent=n.charAt(0).toUpperCase();}
+  applyColor(c);
+  try{localStorage.setItem('ws-settings',JSON.stringify({name:n,theme:th,pace:p,tz,color:c}));}catch(e){}
+  const t=document.getElementById('save-toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
+}
+function resetSettings(){
+  try{localStorage.removeItem('ws-settings');}catch(e){}
+  document.getElementById('set-name').value='';document.getElementById('set-theme').value='dark';document.getElementById('set-pace').value='2';document.getElementById('set-tz').value='AST';document.getElementById('set-color').value='#c8ff00';
+  document.documentElement.classList.remove('light');
+  ['--accent','--accent2','--accent-dim'].forEach(v=>document.documentElement.style.removeProperty(v));
+  document.getElementById('avatar-el').textContent='G';document.getElementById('logo-letter').textContent='W';
+  const t=document.getElementById('save-toast');t.textContent='Reset ✓';t.classList.add('show');setTimeout(()=>{t.classList.remove('show');t.textContent='Settings saved ✓';},2500);
 }
 
-document.addEventListener('keydown', function(e){if(e.key==='Escape')closeModal()});
-const h = new Date().getHours();
-document.getElementById('greeting').textContent = h<12?'Good morning':h<18?'Good afternoon':'Good evening';
+// FAB
+function fabClick(){if(window.currentPage==='notes')openNoteEditor();else openTaskModal();}
+
+// Helpers
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function fmtDate(ts){if(!ts)return'';const d=new Date(ts),now=new Date(),diff=now-d;if(diff<86400000)return'Today';if(diff<172800000)return'Yesterday';return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
+
+// Close on overlay click
+document.getElementById('editor-overlay').addEventListener('click',function(e){if(e.target===this)closeNoteEditor();});
+document.getElementById('task-overlay').addEventListener('click',function(e){if(e.target===this)closeTaskModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeNoteEditor();closeTaskModal();}});
+
+const h=new Date().getHours();
+document.getElementById('greeting').textContent=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
 loadSettings();
 </script>
 </body>
