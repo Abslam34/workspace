@@ -249,6 +249,47 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .settings-saved{display:none;background:var(--accent-dim);color:var(--accent);border:1px solid rgba(200,255,0,.2);padding:12px 18px;border-radius:var(--radius-sm);font-size:13px;margin-top:16px;font-weight:500;align-items:center;gap:8px}
 .settings-saved.show{display:flex}
 
+/* AI ASSISTANT */
+.ai-layout{display:flex;gap:20px;height:calc(100vh - 160px);min-height:500px}
+.ai-sidebar{width:220px;flex-shrink:0;display:flex;flex-direction:column;gap:12px}
+.ai-context-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.ai-context-card h4{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:12px;font-weight:600}
+.ai-context-item{display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid var(--border);color:var(--text2)}
+.ai-context-item:last-child{border-bottom:none}
+.ai-context-val{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:600}
+.ai-prompts{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;flex:1;overflow-y:auto}
+.ai-prompts h4{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:12px;font-weight:600}
+.ai-prompt-chip{display:block;width:100%;text-align:left;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;font-size:12px;color:var(--text2);cursor:pointer;transition:var(--transition);margin-bottom:6px;font-family:var(--font);line-height:1.4}
+.ai-prompt-chip:hover{background:var(--bg4);border-color:var(--accent);color:var(--accent)}
+.ai-chat{flex:1;display:flex;flex-direction:column;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.ai-messages{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px}
+.ai-msg{display:flex;gap:12px;animation:fadeIn .3s ease}
+.ai-msg.user{flex-direction:row-reverse}
+.ai-msg-avatar{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
+.ai-msg.ai .ai-msg-avatar{background:linear-gradient(135deg,var(--accent),var(--teal));color:#0a0a0c}
+.ai-msg.user .ai-msg-avatar{background:var(--bg4);color:var(--text2)}
+.ai-msg-bubble{max-width:75%;background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.7;color:var(--text)}
+.ai-msg.user .ai-msg-bubble{background:var(--accent-dim);border-color:rgba(200,255,0,.2);color:var(--text)}
+.ai-msg-bubble p{margin-bottom:8px}.ai-msg-bubble p:last-child{margin-bottom:0}
+.ai-msg-bubble strong{color:var(--accent);font-weight:600}
+.ai-msg-bubble ul,.ai-msg-bubble ol{padding-left:20px;margin-bottom:8px}
+.ai-msg-bubble li{margin-bottom:4px}
+.ai-msg-bubble code{background:var(--bg4);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:12px;color:var(--teal)}
+.ai-msg-bubble h3{font-size:14px;font-weight:600;margin-bottom:6px;color:var(--text)}
+.ai-thinking{display:flex;align-items:center;gap:6px;color:var(--text3);font-size:13px;padding:4px 0}
+.ai-thinking-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:aiDot 1.2s ease infinite}
+.ai-thinking-dot:nth-child(2){animation-delay:.2s}.ai-thinking-dot:nth-child(3){animation-delay:.4s}
+@keyframes aiDot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
+.ai-input-row{padding:16px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:flex-end}
+.ai-input{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;color:var(--text);font-size:14px;font-family:var(--font);outline:none;resize:none;line-height:1.5;max-height:120px;transition:border-color .2s}
+.ai-input:focus{border-color:var(--accent)}
+.ai-send-btn{background:var(--accent);border:none;color:#0a0a0c;width:40px;height:40px;border-radius:var(--radius-sm);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--transition);flex-shrink:0}
+.ai-send-btn:hover{background:var(--accent2)}.ai-send-btn:disabled{opacity:.4;cursor:not-allowed}
+.ai-welcome{text-align:center;padding:40px 20px;color:var(--text3)}
+.ai-welcome .ai-welcome-icon{font-size:48px;margin-bottom:12px}
+.ai-welcome h3{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--text);margin-bottom:8px}
+.ai-welcome p{font-size:13px;line-height:1.6;max-width:360px;margin:0 auto}
+
 .fab{position:fixed;bottom:28px;right:28px;width:52px;height:52px;background:var(--accent);color:#0a0a0c;border:none;border-radius:50%;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(200,255,0,.25);transition:var(--transition);z-index:150}
 .fab:hover{transform:scale(1.08)}
 
@@ -316,6 +357,9 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       </div>
       <div class="nav-item" onclick="showPage('notes')">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Notes<span class="nav-badge" id="notes-badge">0</span>
+      </div>
+      <div class="nav-item" onclick="showPage('ai')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M7 8V6a5 5 0 0110 0v2"/><circle cx="9" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1" fill="currentColor" stroke="none"/></svg>AI Assistant
       </div>
     </div>
   </nav>
@@ -415,6 +459,57 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       </div>
       <div class="notes-search-bar anim-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="notes-search-input" placeholder="Search notes..." oninput="filterNotes()"/></div>
       <div class="notes-grid anim-item" id="notes-grid"></div>
+    </div>
+
+    <!-- AI ASSISTANT -->
+    <div class="page" id="page-ai">
+      <div class="page-header anim-item">
+        <div>
+          <h1 class="page-title" style="margin-bottom:4px">AI Assistant</h1>
+          <p class="page-subtitle" style="margin-bottom:0">Powered by Claude · Knows your progress, notes &amp; tasks</p>
+        </div>
+        <button class="btn btn-ghost" onclick="clearAiChat()" style="font-size:12px">Clear chat</button>
+      </div>
+      <div class="ai-layout anim-item">
+        <!-- LEFT: context + quick prompts -->
+        <div class="ai-sidebar">
+          <div class="ai-context-card">
+            <h4>Your context</h4>
+            <div class="ai-context-item"><span>Course 1</span><span class="ai-context-val" id="ai-ctx-pct">0%</span></div>
+            <div class="ai-context-item"><span>Completed</span><span class="ai-context-val" id="ai-ctx-done">0/62</span></div>
+            <div class="ai-context-item"><span>Open tasks</span><span class="ai-context-val" id="ai-ctx-tasks">0</span></div>
+            <div class="ai-context-item"><span>Notes</span><span class="ai-context-val" id="ai-ctx-notes">0</span></div>
+          </div>
+          <div class="ai-prompts">
+            <h4>Quick prompts</h4>
+            <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">How am I doing on Course 1?</button>
+            <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">What should I study next?</button>
+            <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">Give me a study plan for this week</button>
+            <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">Summarize what I've learned so far</button>
+            <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">Quiz me on data analytics basics</button>
+            <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">What are my open tasks?</button>
+            <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">Tips to stay consistent with studying</button>
+            <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">Explain the data life cycle simply</button>
+            <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">What is SQL and why does it matter?</button>
+          </div>
+        </div>
+        <!-- RIGHT: chat -->
+        <div class="ai-chat">
+          <div class="ai-messages" id="ai-messages">
+            <div class="ai-welcome" id="ai-welcome">
+              <div class="ai-welcome-icon">🤖</div>
+              <h3>Your study assistant</h3>
+              <p>I know your current progress, notes, and tasks. Ask me anything — study tips, progress analysis, concept explanations, or a quick quiz.</p>
+            </div>
+          </div>
+          <div class="ai-input-row">
+            <textarea class="ai-input" id="ai-input" placeholder="Ask anything about your studies..." rows="1" onkeydown="aiKeyDown(event)" oninput="autoResize(this)"></textarea>
+            <button class="ai-send-btn" id="ai-send-btn" onclick="sendAiMessage()" title="Send">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- SETTINGS -->
@@ -868,13 +963,13 @@ window.onCheck = function(save=true) {
 };
 
 // Navigation
-const pageNames={dashboard:'Dashboard',courses:'Courses',timeline:'Course 1 Timeline',tasks:'Tasks',notes:'Notes',settings:'Settings'};
+const pageNames={dashboard:'Dashboard',courses:'Courses',timeline:'Course 1 Timeline',tasks:'Tasks',notes:'Notes',ai:'AI Assistant',settings:'Settings'};
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   document.querySelectorAll('.sidebar-nav .nav-item,.sidebar-footer .nav-item').forEach(n=>n.classList.remove('active'));
   const ni=document.querySelectorAll('.sidebar-nav .nav-item,.sidebar-footer .nav-item');
-  const map={dashboard:0,courses:1,timeline:2,tasks:3,notes:4,settings:5};
+  const map={dashboard:0,courses:1,timeline:2,tasks:3,notes:4,ai:5,settings:6};
   if(map[id]!==undefined)ni[map[id]].classList.add('active');
   document.getElementById('breadcrumb').innerHTML='Home / <span>'+(pageNames[id]||id)+'</span>';
   document.getElementById('sidebar').classList.remove('open');
@@ -926,6 +1021,217 @@ function fabClick(){if(window.currentPage==='notes')openNoteEditor();else openTa
 // Helpers
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fmtDate(ts){if(!ts)return'';const d=new Date(ts),now=new Date(),diff=now-d;if(diff<86400000)return'Today';if(diff<172800000)return'Yesterday';return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
+
+// ============ AI ASSISTANT ============
+let aiHistory = [];
+let aiTyping = false;
+
+function buildSystemPrompt() {
+  // Gather live context
+  const all = document.querySelectorAll('#modules-container input[type=checkbox]');
+  let checked = 0;
+  const completedItems = [], remainingItems = [];
+  all.forEach((cb, i) => { if (cb.checked) { checked++; completedItems.push(cb.closest('.check-item')?.querySelector('.check-text')?.textContent?.trim()); } else { remainingItems.push(cb.closest('.check-item')?.querySelector('.check-text')?.textContent?.trim()); } });
+  const pct = Math.round((checked / totalItems) * 100);
+  const openTasks = window._tasks.filter(t => t.status !== 'done');
+  const doneTasks = window._tasks.filter(t => t.status === 'done');
+  const notesTitles = window._notes.map(n => n.title).join(', ') || 'None';
+
+  return `You are a personal study assistant embedded inside the user's learning workspace. You are helpful, encouraging, concise, and smart.
+
+== USER'S CURRENT PROGRESS ==
+Course: Google Data Analytics Professional Certificate (9 courses, 152 hours total)
+Currently active: Course 1 — "Foundations: Data, Data, Everywhere" (13 hours, 62 items)
+Course 1 progress: ${pct}% (${checked} of ${totalItems} items completed)
+
+Completed items (${completedItems.filter(Boolean).length}): ${completedItems.filter(Boolean).slice(0, 20).join('; ') || 'None yet'}${completedItems.length > 20 ? ` ...and ${completedItems.length - 20} more` : ''}
+
+Remaining items (next up): ${remainingItems.filter(Boolean).slice(0, 10).join('; ') || 'All done!'}
+
+== TASKS ==
+Open tasks (${openTasks.length}): ${openTasks.map(t => `"${t.title}" [${t.priority} priority${t.due ? ', due: ' + t.due : ''}]`).join('; ') || 'None'}
+Completed tasks: ${doneTasks.length}
+
+== NOTES ==
+Total notes: ${window._notes.length}
+Note titles: ${notesTitles}
+
+== COURSE OVERVIEW (for context) ==
+Course 2: Ask Questions to Make Data-Driven Decisions (15h)
+Course 3: Prepare Data for Exploration (19h)
+Course 4: Process Data from Dirty to Clean (16h)
+Course 5: Analyze Data to Answer Questions (26h)
+Course 6: Share Data Through the Art of Visualization (19h)
+Course 7: Introduction to Data Analysis Using Python (27h)
+Course 8: Google Data Analytics Capstone (11h)
+Course 9: Accelerate Your Job Search with AI (6h)
+
+== INSTRUCTIONS ==
+- Answer in a warm, clear, structured way. Use bullet points and bold for key terms.
+- When asked about progress, use the exact numbers above.
+- When giving study tips, be specific to their current position in the course.
+- Keep responses concise — under 300 words unless asked to elaborate.
+- If asked to quiz the user, ask one question at a time and wait for their answer.
+- You can reference their notes and tasks naturally in your responses.`;
+}
+
+function updateAiContext() {
+  const all = document.querySelectorAll('#modules-container input[type=checkbox]');
+  let checked = 0; all.forEach(cb => { if (cb.checked) checked++; });
+  const pct = totalItems > 0 ? Math.round((checked / totalItems) * 100) : 0;
+  const ctxPct = document.getElementById('ai-ctx-pct');
+  const ctxDone = document.getElementById('ai-ctx-done');
+  const ctxTasks = document.getElementById('ai-ctx-tasks');
+  const ctxNotes = document.getElementById('ai-ctx-notes');
+  if (ctxPct) ctxPct.textContent = pct + '%';
+  if (ctxDone) ctxDone.textContent = checked + '/' + totalItems;
+  if (ctxTasks) ctxTasks.textContent = (window._tasks || []).filter(t => t.status !== 'done').length;
+  if (ctxNotes) ctxNotes.textContent = (window._notes || []).length;
+}
+
+function aiQuickPrompt(btn) {
+  const input = document.getElementById('ai-input');
+  input.value = btn.textContent.trim();
+  autoResize(input);
+  sendAiMessage();
+}
+
+function aiKeyDown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendAiMessage(); }
+}
+
+function autoResize(ta) {
+  ta.style.height = 'auto';
+  ta.style.height = Math.min(ta.scrollHeight, 120) + 'px';
+}
+
+function addAiMessage(role, content) {
+  const welcome = document.getElementById('ai-welcome');
+  if (welcome) welcome.remove();
+
+  const msgs = document.getElementById('ai-messages');
+  const wrap = document.createElement('div');
+  wrap.className = 'ai-msg ' + role;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'ai-msg-avatar';
+  avatar.textContent = role === 'ai' ? '🤖' : '👤';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'ai-msg-bubble';
+  bubble.innerHTML = formatAiText(content);
+
+  wrap.appendChild(avatar);
+  wrap.appendChild(bubble);
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+  return bubble;
+}
+
+function formatAiText(text) {
+  return text
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/`(.*?)`/g, '<code>$1</code>')
+    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+    .replace(/^- (.*$)/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/gs, m => '<ul>' + m + '</ul>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>')
+    .replace(/^(?!<[hou])(.+)/gm, (m) => m.startsWith('<') ? m : m)
+    .replace(/^(.+)$/gm, m => (m.startsWith('<') || !m.trim()) ? m : '<p>' + m + '</p>')
+    .replace(/<p><\/p>/g, '');
+}
+
+function showThinking() {
+  const msgs = document.getElementById('ai-messages');
+  const wrap = document.createElement('div');
+  wrap.className = 'ai-msg ai'; wrap.id = 'ai-thinking-wrap';
+  const avatar = document.createElement('div');
+  avatar.className = 'ai-msg-avatar'; avatar.textContent = '🤖';
+  const bubble = document.createElement('div');
+  bubble.className = 'ai-msg-bubble';
+  bubble.innerHTML = '<div class="ai-thinking"><div class="ai-thinking-dot"></div><div class="ai-thinking-dot"></div><div class="ai-thinking-dot"></div></div>';
+  wrap.appendChild(avatar); wrap.appendChild(bubble);
+  msgs.appendChild(wrap); msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeThinking() {
+  const el = document.getElementById('ai-thinking-wrap');
+  if (el) el.remove();
+}
+
+async function sendAiMessage() {
+  if (aiTyping) return;
+  const input = document.getElementById('ai-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = ''; autoResize(input);
+  document.getElementById('ai-send-btn').disabled = true;
+  aiTyping = true;
+
+  addAiMessage('user', text);
+  aiHistory.push({ role: 'user', content: text });
+
+  showThinking();
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: buildSystemPrompt(),
+        messages: aiHistory
+      })
+    });
+
+    removeThinking();
+
+    if (!res.ok) { throw new Error('API error ' + res.status); }
+    const data = await res.json();
+    const reply = data.content?.find(b => b.type === 'text')?.text || 'Sorry, I had trouble responding. Please try again.';
+
+    addAiMessage('ai', reply);
+    aiHistory.push({ role: 'assistant', content: reply });
+
+    // Keep history manageable (last 20 messages)
+    if (aiHistory.length > 20) aiHistory = aiHistory.slice(aiHistory.length - 20);
+
+  } catch (e) {
+    removeThinking();
+    addAiMessage('ai', '⚠️ Could not connect to Claude. Make sure you\'re signed in and try again.');
+    console.error('AI error:', e);
+  }
+
+  aiTyping = false;
+  document.getElementById('ai-send-btn').disabled = false;
+  document.getElementById('ai-input').focus();
+}
+
+function clearAiChat() {
+  aiHistory = [];
+  const msgs = document.getElementById('ai-messages');
+  msgs.innerHTML = `<div class="ai-welcome" id="ai-welcome">
+    <div class="ai-welcome-icon">🤖</div>
+    <h3>Your study assistant</h3>
+    <p>I know your current progress, notes, and tasks. Ask me anything — study tips, progress analysis, concept explanations, or a quick quiz.</p>
+  </div>`;
+}
+
+// Update AI context panel whenever progress/notes/tasks change
+const origOnCheck = window.onCheck;
+window.onCheck = function(save=true) { origOnCheck(save); updateAiContext(); };
+
+// Hook into note/task renders to keep context fresh
+const origRenderNotes = window.renderNotes || function(){};
+const origRenderTasks = window.renderTasks || function(){};
+
+// Patch updateDashStats to also refresh AI context
+const origUpdateDash = window.updateDashStats || function(){};
+window.updateDashStats = function() { origUpdateDash(); updateAiContext(); };
 
 // Close on overlay click
 document.getElementById('editor-overlay').addEventListener('click',function(e){if(e.target===this)closeNoteEditor();});
