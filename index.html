@@ -1134,27 +1134,47 @@ function openInClaude() {
   const q = document.getElementById('ai-input').value.trim();
   if (!q) { document.getElementById('ai-input').focus(); return; }
   const fullPrompt = buildFullPrompt(q);
-  // Copy to clipboard then open claude.ai
-  navigator.clipboard.writeText(fullPrompt).then(() => {
-    showCopiedNotice();
-  }).catch(() => {
-    // Fallback: select text in preview box
-    showCopiedNotice(false);
-  });
-  // Open claude.ai in new tab
+
+  // Reliable copy: create hidden textarea, select, execCommand
+  let copied = false;
+  try {
+    const ta = document.createElement('textarea');
+    ta.value = fullPrompt;
+    ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    copied = document.execCommand('copy');
+    document.body.removeChild(ta);
+  } catch(e) {}
+
+  // Also try modern clipboard API as bonus
+  if (!copied && navigator.clipboard) {
+    navigator.clipboard.writeText(fullPrompt).catch(()=>{});
+  }
+
+  showCopiedNotice(fullPrompt, copied);
   window.open('https://claude.ai/new', '_blank');
 }
 
-function showCopiedNotice(copied=true) {
+function showCopiedNotice(fullPrompt, copied=true) {
   const msgs = document.getElementById('ai-messages');
   const old = document.getElementById('ai-copied-notice');
   if (old) old.remove();
   const el = document.createElement('div');
   el.id = 'ai-copied-notice';
-  el.style.cssText = 'background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:flex-start;gap:12px';
-  el.innerHTML = copied
-    ? `<div style="font-size:20px;flex-shrink:0">✅</div><div><div style="font-size:13px;font-weight:600;color:var(--teal);margin-bottom:4px">Prompt copied to clipboard!</div><div style="font-size:13px;color:var(--text2);line-height:1.5">Claude.ai just opened in a new tab. <strong style="color:var(--text)">Paste (⌘V)</strong> in the chat box and press Enter. Your full workspace context is included.</div></div>`
-    : `<div style="font-size:20px;flex-shrink:0">🚀</div><div><div style="font-size:13px;font-weight:600;color:var(--accent);margin-bottom:4px">Claude.ai opened in a new tab!</div><div style="font-size:13px;color:var(--text2);line-height:1.5">Copy the prompt from the preview below and paste it into Claude.ai. Your full context is included.</div></div>`;
+  el.style.cssText = 'background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;display:flex;flex-direction:column;gap:12px';
+
+  const status = copied
+    ? `<div style="display:flex;align-items:center;gap:10px"><div style="font-size:20px">✅</div><div><div style="font-size:13px;font-weight:600;color:var(--teal);margin-bottom:2px">Copied! Claude.ai opened in a new tab.</div><div style="font-size:13px;color:var(--text2)">Just <strong style="color:var(--text)">paste (⌘V or Ctrl+V)</strong> in the Claude chat box and press Enter.</div></div></div>`
+    : `<div style="display:flex;align-items:center;gap:10px"><div style="font-size:20px">🚀</div><div><div style="font-size:13px;font-weight:600;color:var(--accent);margin-bottom:2px">Claude.ai opened — copy the prompt below</div><div style="font-size:13px;color:var(--text2)">Auto-copy didn't work. Select all text below → copy → paste in Claude.</div></div></div>`;
+
+  el.innerHTML = status + `
+    <div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:6px;font-weight:600">Full prompt (with your context)</div>
+      <textarea id="ai-full-prompt-box" readonly style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;font-size:11px;color:var(--text2);font-family:var(--mono);line-height:1.5;resize:none;height:120px;outline:none" onclick="this.select()">${esc(fullPrompt)}</textarea>
+      <button onclick="document.getElementById('ai-full-prompt-box').select();document.execCommand('copy');this.textContent='Copied ✓';this.style.background='var(--teal)'" style="margin-top:8px;background:var(--bg4);border:1px solid var(--border);color:var(--text2);padding:6px 14px;border-radius:var(--radius-sm);font-size:12px;cursor:pointer;font-family:var(--font);transition:all .2s">Copy prompt</button>
+    </div>`;
   msgs.appendChild(el);
   msgs.scrollTop = msgs.scrollHeight;
 }
