@@ -20,7 +20,6 @@
   --sidebar-w:260px;
   --transition:all .25s cubic-bezier(.4,0,.2,1);
 }
-/* Light theme */
 html.light{
   --bg:#f5f4f0;--bg2:#ffffff;--bg3:#eeeee9;--bg4:#ddddd6;
   --text:#1a1a1a;--text2:#555550;--text3:#8a8a82;
@@ -29,13 +28,20 @@ html.light{
 }
 html{scroll-behavior:smooth}
 body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
-
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--text3)}
 
-/* SIDEBAR */
+/* SYNC STATUS */
+.sync-indicator{position:fixed;top:12px;right:16px;z-index:999;display:flex;align-items:center;gap:6px;font-size:11px;font-family:var(--mono);color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:5px 10px;border-radius:20px;transition:all .3s;opacity:0;pointer-events:none}
+.sync-indicator.show{opacity:1}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--text3);flex-shrink:0;transition:background .3s}
+.sync-indicator.saving .sync-dot{background:var(--amber);animation:pulse .8s infinite}
+.sync-indicator.saved .sync-dot{background:var(--teal)}
+.sync-indicator.error .sync-dot{background:var(--red)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
 .sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:transform .3s cubic-bezier(.4,0,.2,1)}
 .sidebar-header{padding:28px 24px 20px;border-bottom:1px solid var(--border)}
 .logo{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;letter-spacing:-.02em}
@@ -54,7 +60,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:
 .sidebar-footer{padding:16px 12px;border-top:1px solid var(--border)}
 .sidebar-footer .nav-item{color:var(--text3)}
 
-/* MAIN */
 .main{margin-left:var(--sidebar-w);min-height:100vh;position:relative}
 .topbar{position:sticky;top:0;z-index:50;background:rgba(10,10,12,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 36px;height:60px;display:flex;align-items:center;justify-content:space-between;transition:background .3s}
 html.light .topbar{background:rgba(245,244,240,.85)}
@@ -69,13 +74,10 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--teal));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#0a0a0c;cursor:pointer}
 
 .content{padding:36px;max-width:1100px}
-
-/* PAGES */
 .page{display:none;animation:fadeIn .35s ease}
 .page.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* DASHBOARD */
 .page-title{font-family:var(--serif);font-size:32px;font-weight:400;margin-bottom:6px;letter-spacing:-.02em}
 .page-subtitle{color:var(--text2);font-size:14px;margin-bottom:32px}
 
@@ -93,7 +95,6 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .section-action{font-size:13px;color:var(--accent);cursor:pointer;transition:var(--transition)}
 .section-action:hover{color:var(--accent2)}
 
-/* COURSE CARDS */
 .courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:36px}
 .course-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:var(--transition);cursor:pointer}
 .course-card:hover{border-color:var(--border2);transform:translateY(-3px)}
@@ -106,7 +107,6 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .progress-fill{height:100%;border-radius:2px;transition:width .6s cubic-bezier(.4,0,.2,1)}
 .course-meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:12px;color:var(--text3)}
 
-/* NOTES */
 .notes-list{display:flex;flex-direction:column;gap:10px}
 .note-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 22px;display:flex;align-items:center;gap:16px;transition:var(--transition);cursor:pointer}
 .note-item:hover{border-color:var(--border2);background:var(--bg3)}
@@ -116,7 +116,6 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .note-content p{font-size:12px;color:var(--text3)}
 .note-date{font-size:11px;color:var(--text3);font-family:var(--mono);white-space:nowrap}
 
-/* TIMELINE */
 .timeline-hero{margin-bottom:32px}
 .timeline-hero h2{font-family:var(--serif);font-size:26px;font-weight:400;margin-bottom:4px}
 .timeline-hero p{color:var(--text2);font-size:14px}
@@ -130,14 +129,12 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .tl-legend span{display:flex;align-items:center;gap:6px}
 .tl-legend .dot{width:8px;height:8px;border-radius:2px}
 
-/* Overall progress bar for course 1 */
 .course-progress-wrap{margin-bottom:28px}
 .course-progress-label{display:flex;justify-content:space-between;font-size:13px;color:var(--text2);margin-bottom:6px}
 .course-progress-label span:last-child{color:var(--accent);font-weight:600;font-family:var(--mono)}
 .course-progress-track{height:8px;background:var(--bg4);border-radius:4px;overflow:hidden}
 .course-progress-fill{height:100%;border-radius:4px;background:var(--accent);transition:width .5s cubic-bezier(.4,0,.2,1);width:0%}
 
-/* MODULE CARDS */
 .module-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;transition:var(--transition)}
 .module-card:hover{border-color:var(--border2)}
 .module-head{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none}
@@ -159,7 +156,6 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .module-chevron{transition:transform .3s;color:var(--text3)}
 .module-card.open .module-chevron{transform:rotate(180deg)}
 
-/* Checklist items inside modules */
 .checklist{margin-top:12px}
 .checklist-section{margin-bottom:16px}
 .checklist-section-title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:8px;font-weight:600;display:flex;align-items:center;gap:8px}
@@ -184,7 +180,6 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .topic-list{display:flex;flex-wrap:wrap;gap:6px}
 .topic-tag{font-size:11px;background:var(--bg4);color:var(--text2);padding:4px 10px;border-radius:20px}
 
-/* TASKS */
 .tasks-board{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .task-col h3{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .task-col h3 .cnt{background:var(--bg4);font-size:11px;padding:2px 8px;border-radius:10px;font-weight:500}
@@ -195,7 +190,6 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .task-item p{font-size:12px;color:var(--text3)}
 .task-item .task-footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:11px;color:var(--text3)}
 
-/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;animation:fadeIn .2s ease}
 .modal-overlay.show{display:flex}
 .modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);width:90%;max-width:480px;padding:28px;animation:slideUp .3s cubic-bezier(.4,0,.2,1)}
@@ -213,7 +207,6 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}
 .btn-ghost:hover{background:var(--bg3)}
 
-/* SETTINGS */
 .settings-saved{display:none;background:var(--accent-dim);color:var(--accent);border:1px solid rgba(200,255,0,.2);padding:12px 18px;border-radius:var(--radius-sm);font-size:13px;margin-top:16px;font-weight:500;align-items:center;gap:8px}
 .settings-saved.show{display:flex}
 
@@ -244,6 +237,12 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 </style>
 </head>
 <body>
+
+<!-- SYNC INDICATOR -->
+<div class="sync-indicator" id="sync-indicator">
+  <div class="sync-dot"></div>
+  <span id="sync-text">Saving...</span>
+</div>
 
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
@@ -312,7 +311,7 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 
   <div class="content">
 
-    <!-- ===== DASHBOARD ===== -->
+    <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <h1 class="page-title anim-item" id="greeting">Good evening</h1>
       <p class="page-subtitle anim-item">Here's your workspace overview — stay sharp.</p>
@@ -327,7 +326,7 @@ html.light .topbar{background:rgba(245,244,240,.85)}
         <div class="course-card anim-item" onclick="showPage('timeline')">
           <div class="banner" style="background:linear-gradient(90deg,var(--accent),var(--teal))"></div>
           <div class="body">
-            <div class="tag" style="color:var(--accent)">Course 1 — Not started</div>
+            <div class="tag" style="color:var(--accent)">Course 1 — Active</div>
             <h3>Foundations: Data, Data, Everywhere</h3>
             <p>Key concepts, analytical thinking, tools overview</p>
             <div class="progress-bar"><div class="progress-fill" id="dash-c1-bar" style="width:0%;background:var(--accent)"></div></div>
@@ -356,54 +355,49 @@ html.light .topbar{background:rgba(245,244,240,.85)}
         </div>
       </div>
       <div class="section-header anim-item"><div class="section-title">Recent notes</div><div class="section-action" onclick="showPage('notes')">View all →</div></div>
-      <div class="notes-list" id="dash-notes-list">
+      <div class="notes-list">
         <div class="note-item anim-item" onclick="showPage('notes')"><div class="note-dot" style="background:var(--accent)"></div><div class="note-content"><h4>Data lifecycle vs Analysis process</h4><p>Key differences and when each applies</p></div><div class="note-date">Today</div></div>
         <div class="note-item anim-item" onclick="showPage('notes')"><div class="note-dot" style="background:var(--purple)"></div><div class="note-content"><h4>SQL quick reference</h4><p>SELECT, FROM, WHERE, ORDER BY basics</p></div><div class="note-date">Yesterday</div></div>
       </div>
     </div>
 
-    <!-- ===== COURSES ===== -->
+    <!-- COURSES -->
     <div class="page" id="page-courses">
       <h1 class="page-title anim-item">Courses</h1>
       <p class="page-subtitle anim-item">Google Data Analytics Professional Certificate — 9 courses, 152 hours total</p>
       <div class="courses-grid" id="courses-list"></div>
     </div>
 
-    <!-- ===== TIMELINE ===== -->
+    <!-- TIMELINE -->
     <div class="page" id="page-timeline">
       <div class="timeline-hero anim-item">
         <h2>Course 1 — Foundations: Data, Data, Everywhere</h2>
-        <p>Track your progress manually — check off items as you complete them</p>
+        <p>Track your progress — synced across all your devices in real time</p>
       </div>
-
       <div class="course-progress-wrap anim-item">
         <div class="course-progress-label"><span>Overall course progress</span><span id="overall-pct">0%</span></div>
         <div class="course-progress-track"><div class="course-progress-fill" id="overall-bar"></div></div>
       </div>
-
       <div class="tl-stats anim-item">
         <div class="tl-stat"><div class="num">~13</div><div class="lbl">Hours</div></div>
         <div class="tl-stat"><div class="num">4</div><div class="lbl">Modules</div></div>
         <div class="tl-stat"><div class="num" id="completed-count">0</div><div class="lbl">Completed</div></div>
         <div class="tl-stat"><div class="num" id="remaining-count">62</div><div class="lbl">Remaining</div></div>
       </div>
-
       <div class="tl-legend anim-item">
         <span><span class="dot" style="background:var(--purple)"></span>Videos</span>
         <span><span class="dot" style="background:var(--teal)"></span>Readings</span>
         <span><span class="dot" style="background:var(--amber)"></span>Assignments</span>
         <span><span class="dot" style="background:var(--text3)"></span>Plugins</span>
       </div>
-
       <div id="modules-container"></div>
-
       <div style="margin-top:20px;background:var(--bg3);border-radius:var(--radius);padding:20px;font-size:13px;color:var(--text2);line-height:1.7" class="anim-item">
         <strong style="color:var(--text);font-weight:600">Full certificate context</strong><br>
         Course 1 is 13h of 152h total (9 courses). At 2h/day the full certificate takes ~11 weeks. At Coursera's suggested 10h/week, ~6 months.
       </div>
     </div>
 
-    <!-- ===== TASKS ===== -->
+    <!-- TASKS -->
     <div class="page" id="page-work">
       <h1 class="page-title anim-item">Tasks</h1>
       <p class="page-subtitle anim-item">Kanban board — organize your work</p>
@@ -425,7 +419,7 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       </div>
     </div>
 
-    <!-- ===== NOTES ===== -->
+    <!-- NOTES -->
     <div class="page" id="page-notes">
       <h1 class="page-title anim-item">Notes</h1>
       <p class="page-subtitle anim-item">Important notes, organized by topic</p>
@@ -437,25 +431,15 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       </div>
     </div>
 
-    <!-- ===== SETTINGS ===== -->
+    <!-- SETTINGS -->
     <div class="page" id="page-settings">
       <h1 class="page-title anim-item">Settings</h1>
       <p class="page-subtitle anim-item">Customize your workspace — changes apply instantly</p>
       <div style="max-width:520px">
-        <div class="form-group anim-item">
-          <label>Display name</label>
-          <input type="text" id="set-name" value="" placeholder="Your Name"/>
-        </div>
-        <div class="form-group anim-item">
-          <label>Theme</label>
-          <select id="set-theme"><option value="dark">Dark</option><option value="light">Light</option></select>
-        </div>
-        <div class="form-group anim-item">
-          <label>Study pace (hours/day)</label>
-          <input type="number" id="set-pace" value="2" min="1" max="12"/>
-        </div>
-        <div class="form-group anim-item">
-          <label>Time zone</label>
+        <div class="form-group anim-item"><label>Display name</label><input type="text" id="set-name" value="" placeholder="Your Name"/></div>
+        <div class="form-group anim-item"><label>Theme</label><select id="set-theme"><option value="dark">Dark</option><option value="light">Light</option></select></div>
+        <div class="form-group anim-item"><label>Study pace (hours/day)</label><input type="number" id="set-pace" value="2" min="1" max="12"/></div>
+        <div class="form-group anim-item"><label>Time zone</label>
           <select id="set-tz">
             <option value="AST">AST — Arabia Standard Time (UTC+3)</option>
             <option value="EST">EST — Eastern (UTC-5)</option>
@@ -466,8 +450,7 @@ html.light .topbar{background:rgba(245,244,240,.85)}
             <option value="IST">IST — India (UTC+5:30)</option>
           </select>
         </div>
-        <div class="form-group anim-item">
-          <label>Accent color</label>
+        <div class="form-group anim-item"><label>Accent color</label>
           <select id="set-color">
             <option value="#c8ff00">Lime (Default)</option>
             <option value="#4d9fff">Blue</option>
@@ -503,12 +486,82 @@ html.light .topbar{background:rgba(245,244,240,.85)}
   </div>
 </div>
 
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCv7KJ9uzUr7qTRbAKQagkIWSYjJxvr6OA",
+  authDomain: "note-called-gorge.firebaseapp.com",
+  projectId: "note-called-gorge",
+  storageBucket: "note-called-gorge.firebasestorage.app",
+  messagingSenderId: "171384757901",
+  appId: "1:171384757901:web:842b85b5e8c7281655ccc4",
+  measurementId: "G-H5G3ZLRRK2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const DOC_ID = 'workspace-progress';
+
+// Sync indicator
+function showSync(state, text) {
+  const el = document.getElementById('sync-indicator');
+  const txt = document.getElementById('sync-text');
+  el.className = 'sync-indicator show ' + state;
+  txt.textContent = text;
+  if (state === 'saved') {
+    setTimeout(() => el.classList.remove('show'), 2000);
+  }
+}
+
+// Save to Firestore
+let saveTimer = null;
+window.saveToFirestore = function(checks) {
+  showSync('saving', 'Saving...');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async () => {
+    try {
+      await setDoc(doc(db, 'progress', DOC_ID), { checks, updatedAt: Date.now() });
+      showSync('saved', 'Saved ✓');
+      // Also save locally as backup
+      try { localStorage.setItem('ws-checks', JSON.stringify(checks)); } catch(e){}
+    } catch(err) {
+      showSync('error', 'Sync error');
+      console.error(err);
+    }
+  }, 600);
+};
+
+// Real-time listener — updates all devices instantly
+let isFirstLoad = true;
+onSnapshot(doc(db, 'progress', DOC_ID), (snap) => {
+  if (snap.exists()) {
+    const data = snap.data();
+    if (data.checks) {
+      applyChecks(data.checks);
+      if (!isFirstLoad) showSync('saved', 'Synced ✓');
+    }
+  }
+  isFirstLoad = false;
+});
+
+function applyChecks(saved) {
+  const all = document.querySelectorAll('#modules-container input[type=checkbox]');
+  if (!all.length) { setTimeout(() => applyChecks(saved), 150); return; }
+  all.forEach((cb, i) => { cb.checked = !!saved[i]; });
+  window.onCheck(false); // update UI without re-saving
+}
+
+window._firestoreReady = true;
+</script>
+
 <script>
 // ============ MODULE DATA ============
 const moduleData = [
   {
     num: 1, title: 'Intro to data analytics & analytical thinking', hours: '~4h', days: 'Days 1–2',
-    barWidth: '31%', barGrad: 'linear-gradient(90deg,var(--purple) 40%,var(--teal) 40% 86%,var(--amber) 86%)',
     topics: ['Data ecosystems','Analytical thinking','Five whys','Data-driven decisions','Root cause analysis'],
     sections: [
       { type:'Videos', tag:'vid', color:'var(--purple)', icon:'M5 3l14 9-14 9V3z', items: [
@@ -555,7 +608,6 @@ const moduleData = [
   },
   {
     num: 2, title: 'The wonderful world of data', hours: '~3h', days: 'Days 3–4',
-    barWidth: '23%', barGrad: 'linear-gradient(90deg,var(--purple) 17%,var(--teal) 17% 34%,var(--amber) 34% 94%,var(--text3) 94%)',
     topics: ['Data life cycle','Analysis phases','Analyst tools','Spreadsheets vs SQL'],
     sections: [
       { type:'Videos', tag:'vid', color:'var(--purple)', icon:'M5 3l14 9-14 9V3z', items: [
@@ -586,7 +638,6 @@ const moduleData = [
   },
   {
     num: 3, title: 'Set up your data analytics toolbox', hours: '~3h', days: 'Days 4–5',
-    barWidth: '23%', barGrad: 'linear-gradient(90deg,var(--purple) 13%,var(--teal) 13% 32%,var(--amber) 32%)',
     topics: ['Google Sheets','SQL basics','Data visualization','Tableau intro'],
     sections: [
       { type:'Videos', tag:'vid', color:'var(--purple)', icon:'M5 3l14 9-14 9V3z', items: [
@@ -615,7 +666,6 @@ const moduleData = [
   },
   {
     num: 4, title: 'Become a fair & impactful data professional', hours: '~3h', days: 'Days 6–7',
-    barWidth: '23%', barGrad: 'linear-gradient(90deg,var(--purple) 21%,var(--teal) 21% 44%,var(--amber) 44% 94%,var(--text3) 94%)',
     topics: ['Data ethics','Fairness','Analyst roles','Industry applications','Job search prep'],
     sections: [
       { type:'Videos', tag:'vid', color:'var(--purple)', icon:'M5 3l14 9-14 9V3z', items: [
@@ -653,14 +703,12 @@ const moduleData = [
   },
 ];
 
-// ============ TOTAL ITEMS ============
 let totalItems = 0;
 moduleData.forEach(m => m.sections.forEach(s => totalItems += s.items.length));
 
-// ============ BUILD MODULES ============
+// Build modules
 const container = document.getElementById('modules-container');
 let globalIdx = 0;
-
 moduleData.forEach(m => {
   let sectionsHtml = '';
   m.sections.forEach(sec => {
@@ -669,7 +717,7 @@ moduleData.forEach(m => {
     sec.items.forEach(item => {
       const id = 'chk-' + globalIdx;
       itemsHtml += `<label class="check-item" id="item-${globalIdx}" for="${id}">
-        <input type="checkbox" id="${id}" data-idx="${globalIdx}" onchange="onCheck()">
+        <input type="checkbox" id="${id}" data-idx="${globalIdx}" onchange="onCheck(true)">
         <span class="cat-tag ${sec.tag}">${tagLabel}</span>
         <span class="check-text">${item.t}</span>
         <span class="duration">${item.d}</span>
@@ -680,12 +728,9 @@ moduleData.forEach(m => {
       <div class="checklist-section-title">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${sec.color}" stroke-width="2"><path d="${sec.icon}"/></svg>
         ${sec.type} (${sec.items.length})
-      </div>
-      ${itemsHtml}
-    </div>`;
+      </div>${itemsHtml}</div>`;
   });
 
-  // Compute category counts for this module
   const catCounts = {};
   m.sections.forEach(s => { catCounts[s.tag] = s.items.length; });
 
@@ -723,23 +768,23 @@ moduleData.forEach(m => {
   </div>`;
 });
 
-// ============ PROGRESS TRACKING ============
-function onCheck() {
+// onCheck: pass true to save, false to just update UI
+window.onCheck = function(shouldSave = true) {
   const all = document.querySelectorAll('#modules-container input[type=checkbox]');
   let checked = 0;
+  const state = [];
   all.forEach(cb => {
     const lbl = cb.closest('.check-item');
     if (cb.checked) { lbl.classList.add('done'); checked++; }
     else { lbl.classList.remove('done'); }
+    state.push(cb.checked);
   });
-  const pct = Math.round((checked / totalItems) * 100);
 
+  const pct = Math.round((checked / totalItems) * 100);
   document.getElementById('overall-pct').textContent = pct + '%';
   document.getElementById('overall-bar').style.width = pct + '%';
   document.getElementById('completed-count').textContent = checked;
   document.getElementById('remaining-count').textContent = totalItems - checked;
-
-  // Dashboard updates
   document.getElementById('dash-progress').textContent = pct + '%';
   document.getElementById('dash-c1-bar').style.width = pct + '%';
   document.getElementById('dash-c1-pct').textContent = pct + '%';
@@ -748,7 +793,7 @@ function onCheck() {
   else if (pct === 100) { sub.textContent = 'Completed!'; sub.className = 'change up'; }
   else { sub.textContent = 'In progress'; sub.className = 'change up'; }
 
-  // Per-module progress bars — segmented by category
+  // Per-module bars
   let idx = 0;
   moduleData.forEach(m => {
     let mTotal = 0, mChecked = 0;
@@ -761,8 +806,6 @@ function onCheck() {
       });
       catStats[s.tag] = { total: s.items.length, checked: sChecked };
     });
-
-    // Update full module progress bar
     const mPct = mTotal > 0 ? Math.round((mChecked / mTotal) * 100) : 0;
     const fullBar = document.getElementById('mfull-' + m.num);
     const fullPct = document.getElementById('mfull-pct-' + m.num);
@@ -771,21 +814,16 @@ function onCheck() {
       fullPct.textContent = mPct + '%';
       fullPct.style.color = mPct === 100 ? 'var(--accent)' : mPct > 0 ? 'var(--text2)' : 'var(--text3)';
     }
-
-    // Update segmented bars: each segment width = (checked in cat / total items in module) * 100
     ['vid','read','assign','plug'].forEach(tag => {
       const bar = document.getElementById('mbar-' + m.num + '-' + tag);
       const lbl = document.getElementById('mpct-' + m.num + '-' + tag);
-      if (bar && catStats[tag]) {
-        const segW = mTotal > 0 ? (catStats[tag].checked / mTotal) * 100 : 0;
-        bar.style.width = segW + '%';
-      }
-      if (lbl && catStats[tag]) {
-        const catPct = catStats[tag].total > 0 ? Math.round((catStats[tag].checked / catStats[tag].total) * 100) : 0;
-        lbl.textContent = catPct + '%';
-        lbl.style.color = catPct === 100 ? 'var(--accent)' : 'var(--text2)';
-      }
       const cnt = document.getElementById('mcnt-' + m.num + '-' + tag);
+      if (bar && catStats[tag]) bar.style.width = mTotal > 0 ? (catStats[tag].checked / mTotal) * 100 + '%' : '0%';
+      if (lbl && catStats[tag]) {
+        const cp = catStats[tag].total > 0 ? Math.round((catStats[tag].checked / catStats[tag].total) * 100) : 0;
+        lbl.textContent = cp + '%';
+        lbl.style.color = cp === 100 ? 'var(--accent)' : 'var(--text2)';
+      }
       if (cnt && catStats[tag]) {
         cnt.textContent = catStats[tag].checked + '/' + catStats[tag].total;
         cnt.style.color = catStats[tag].checked === catStats[tag].total && catStats[tag].total > 0 ? 'var(--accent)' : 'var(--text2)';
@@ -793,53 +831,29 @@ function onCheck() {
     });
   });
 
-  // Save state
-  const state = [];
-  all.forEach(cb => state.push(cb.checked));
-  try { localStorage.setItem('ws-checks', JSON.stringify(state)); } catch(e){}
-}
+  // Save to Firestore (only when user actually checks something)
+  if (shouldSave && window.saveToFirestore) {
+    window.saveToFirestore(state);
+  }
+};
 
-// Load saved checks
-function loadChecks() {
-  try {
-    const saved = JSON.parse(localStorage.getItem('ws-checks'));
-    if (saved) {
-      const all = document.querySelectorAll('#modules-container input[type=checkbox]');
-      all.forEach((cb, i) => { if (saved[i]) cb.checked = true; });
-      onCheck();
-    }
-  } catch(e){}
-}
-
-// ============ SETTINGS ============
+// Settings
 function loadSettings() {
   try {
     const s = JSON.parse(localStorage.getItem('ws-settings'));
     if (!s) return;
-    if (s.name) {
-      document.getElementById('set-name').value = s.name;
-      document.getElementById('avatar-el').textContent = s.name.charAt(0).toUpperCase();
-      document.getElementById('logo-letter').textContent = s.name.charAt(0).toUpperCase();
-    }
-    if (s.theme) {
-      document.getElementById('set-theme').value = s.theme;
-      document.documentElement.classList.toggle('light', s.theme === 'light');
-    }
+    if (s.name) { document.getElementById('set-name').value = s.name; document.getElementById('avatar-el').textContent = s.name.charAt(0).toUpperCase(); document.getElementById('logo-letter').textContent = s.name.charAt(0).toUpperCase(); }
+    if (s.theme) { document.getElementById('set-theme').value = s.theme; document.documentElement.classList.toggle('light', s.theme === 'light'); }
     if (s.pace) document.getElementById('set-pace').value = s.pace;
     if (s.tz) document.getElementById('set-tz').value = s.tz;
-    if (s.color) {
-      document.getElementById('set-color').value = s.color;
-      applyAccentColor(s.color);
-    }
+    if (s.color) { document.getElementById('set-color').value = s.color; applyAccentColor(s.color); }
   } catch(e){}
 }
 
 function applyAccentColor(hex) {
   document.documentElement.style.setProperty('--accent', hex);
-  // Compute a darker variant
   const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
-  const dr = Math.round(r*.8), dg = Math.round(g*.8), db = Math.round(b*.8);
-  document.documentElement.style.setProperty('--accent2', `rgb(${dr},${dg},${db})`);
+  document.documentElement.style.setProperty('--accent2', `rgb(${Math.round(r*.8)},${Math.round(g*.8)},${Math.round(b*.8)})`);
   document.documentElement.style.setProperty('--accent-dim', hex + '14');
 }
 
@@ -849,25 +863,10 @@ function saveSettings() {
   const pace = document.getElementById('set-pace').value;
   const tz = document.getElementById('set-tz').value;
   const color = document.getElementById('set-color').value;
-
-  // Apply theme
   document.documentElement.classList.toggle('light', theme === 'light');
-
-  // Apply name
-  if (name) {
-    document.getElementById('avatar-el').textContent = name.charAt(0).toUpperCase();
-    document.getElementById('logo-letter').textContent = name.charAt(0).toUpperCase();
-  }
-
-  // Apply accent color
+  if (name) { document.getElementById('avatar-el').textContent = name.charAt(0).toUpperCase(); document.getElementById('logo-letter').textContent = name.charAt(0).toUpperCase(); }
   applyAccentColor(color);
-
-  // Save
-  try {
-    localStorage.setItem('ws-settings', JSON.stringify({name, theme, pace, tz, color}));
-  } catch(e){}
-
-  // Toast
+  try { localStorage.setItem('ws-settings', JSON.stringify({name, theme, pace, tz, color})); } catch(e){}
   const toast = document.getElementById('save-toast');
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2500);
@@ -892,23 +891,23 @@ function resetSettings() {
   setTimeout(() => { toast.classList.remove('show'); toast.textContent = 'Settings saved successfully'; }, 2500);
 }
 
-// ============ NAVIGATION ============
+// Navigation
 const pages = {dashboard:'Dashboard',courses:'Courses',timeline:'Course 1 Timeline',work:'Tasks',notes:'Notes',settings:'Settings'};
-function showPage(id){
+function showPage(id) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   document.querySelectorAll('.sidebar-nav .nav-item, .sidebar-footer .nav-item').forEach(n=>n.classList.remove('active'));
-  const navItems=document.querySelectorAll('.sidebar-nav .nav-item, .sidebar-footer .nav-item');
-  const map={dashboard:0,courses:1,timeline:2,work:3,notes:4,settings:5};
-  if(map[id]!==undefined)navItems[map[id]].classList.add('active');
-  document.getElementById('breadcrumb').innerHTML='Home / <span>'+(pages[id]||id)+'</span>';
+  const navItems = document.querySelectorAll('.sidebar-nav .nav-item, .sidebar-footer .nav-item');
+  const map = {dashboard:0,courses:1,timeline:2,work:3,notes:4,settings:5};
+  if (map[id] !== undefined) navItems[map[id]].classList.add('active');
+  document.getElementById('breadcrumb').innerHTML = 'Home / <span>'+(pages[id]||id)+'</span>';
   document.getElementById('sidebar').classList.remove('open');
   document.querySelectorAll('#page-'+id+' .anim-item').forEach(el=>{el.style.animation='none';el.offsetHeight;el.style.animation='';});
 }
 
-// ============ COURSES LIST ============
+// Courses list
 const coursesData=[
-  {n:1,t:'Foundations: Data, Data, Everywhere',h:13,c1:'var(--accent)',c2:'var(--teal)',s:'Not started'},
+  {n:1,t:'Foundations: Data, Data, Everywhere',h:13,c1:'var(--accent)',c2:'var(--teal)',s:'Active'},
   {n:2,t:'Ask Questions to Make Data-Driven Decisions',h:15,c1:'var(--blue)',c2:'var(--purple)',s:'Locked'},
   {n:3,t:'Prepare Data for Exploration',h:19,c1:'var(--amber)',c2:'var(--red)',s:'Locked'},
   {n:4,t:'Process Data from Dirty to Clean',h:16,c1:'var(--teal)',c2:'var(--blue)',s:'Locked'},
@@ -918,9 +917,9 @@ const coursesData=[
   {n:8,t:'Google Data Analytics Capstone',h:11,c1:'var(--accent)',c2:'var(--purple)',s:'Locked'},
   {n:9,t:'Accelerate Your Job Search with AI',h:6,c1:'var(--amber)',c2:'var(--teal)',s:'Locked'},
 ];
-const cl=document.getElementById('courses-list');
-coursesData.forEach((c,i)=>{
-  cl.innerHTML+=`<div class="course-card anim-item" style="animation-delay:${i*.06}s" ${c.n===1?'onclick="showPage(\'timeline\')"':''}>
+const cl = document.getElementById('courses-list');
+coursesData.forEach((c,i) => {
+  cl.innerHTML += `<div class="course-card anim-item" style="animation-delay:${i*.06}s" ${c.n===1?'onclick="showPage(\'timeline\')"':''}>
     <div class="banner" style="background:linear-gradient(90deg,${c.c1},${c.c2})"></div>
     <div class="body">
       <div class="tag" style="color:${c.c1}">Course ${c.n} — ${c.s}</div>
@@ -931,49 +930,44 @@ coursesData.forEach((c,i)=>{
   </div>`;
 });
 
-// ============ MODAL ============
+// Modal
 function openModal(){document.getElementById('modal').classList.add('show')}
 function closeModal(){document.getElementById('modal').classList.remove('show')}
 document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal()});
 
-function addItem(){
-  const type=document.getElementById('add-type').value;
-  const title=document.getElementById('add-title').value;
-  if(!title)return;
-  const colors=['var(--accent)','var(--purple)','var(--teal)','var(--amber)','var(--blue)'];
-  const color=colors[Math.floor(Math.random()*colors.length)];
-  if(type==='Note'){
-    const list=document.getElementById('notes-list-main');
-    const item=document.createElement('div');
-    item.className='note-item';
-    item.innerHTML=`<div class="note-dot" style="background:${color}"></div><div class="note-content"><h4>${title}</h4><p>${document.getElementById('add-details').value||'No details'}</p></div><div class="note-date">Just now</div>`;
+function addItem() {
+  const type = document.getElementById('add-type').value;
+  const title = document.getElementById('add-title').value;
+  if (!title) return;
+  const colors = ['var(--accent)','var(--purple)','var(--teal)','var(--amber)','var(--blue)'];
+  const color = colors[Math.floor(Math.random()*colors.length)];
+  if (type === 'Note') {
+    const list = document.getElementById('notes-list-main');
+    const item = document.createElement('div');
+    item.className = 'note-item';
+    item.innerHTML = `<div class="note-dot" style="background:${color}"></div><div class="note-content"><h4>${title}</h4><p>${document.getElementById('add-details').value||'No details'}</p></div><div class="note-date">Just now</div>`;
     list.prepend(item);
-    const badge=document.getElementById('notes-badge');
-    badge.textContent=parseInt(badge.textContent)+1;
-    document.getElementById('dash-notes').textContent=badge.textContent;
+    const badge = document.getElementById('notes-badge');
+    badge.textContent = parseInt(badge.textContent)+1;
+    document.getElementById('dash-notes').textContent = badge.textContent;
   } else {
-    const col=document.querySelector('.task-col');
-    const cnt=col.querySelector('.cnt');
-    cnt.textContent=parseInt(cnt.textContent)+1;
-    const item=document.createElement('div');
-    item.className='task-item';
-    item.innerHTML=`<h4><span class="task-priority" style="background:var(--amber)"></span>${title}</h4><p>${document.getElementById('add-details').value||'No details'}</p><div class="task-footer"><span>Just added</span><span style="color:var(--amber)">New</span></div>`;
+    const col = document.querySelector('.task-col');
+    col.querySelector('.cnt').textContent = parseInt(col.querySelector('.cnt').textContent)+1;
+    const item = document.createElement('div');
+    item.className = 'task-item';
+    item.innerHTML = `<h4><span class="task-priority" style="background:var(--amber)"></span>${title}</h4><p>${document.getElementById('add-details').value||'No details'}</p><div class="task-footer"><span>Just added</span><span style="color:var(--amber)">New</span></div>`;
     col.appendChild(item);
-    document.getElementById('task-badge').textContent=parseInt(document.getElementById('task-badge').textContent)+1;
+    document.getElementById('task-badge').textContent = parseInt(document.getElementById('task-badge').textContent)+1;
   }
-  document.getElementById('add-title').value='';
-  document.getElementById('add-details').value='';
+  document.getElementById('add-title').value = '';
+  document.getElementById('add-details').value = '';
   closeModal();
 }
 
-// ============ INIT ============
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
-
-const h=new Date().getHours();
-document.getElementById('greeting').textContent=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
-
+document.addEventListener('keydown', function(e){if(e.key==='Escape')closeModal()});
+const h = new Date().getHours();
+document.getElementById('greeting').textContent = h<12?'Good morning':h<18?'Good afternoon':'Good evening';
 loadSettings();
-setTimeout(loadChecks, 100);
 </script>
 </body>
 </html>
