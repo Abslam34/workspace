@@ -466,19 +466,29 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       <div class="page-header anim-item">
         <div>
           <h1 class="page-title" style="margin-bottom:4px">AI Assistant</h1>
-          <p class="page-subtitle" style="margin-bottom:0">Powered by Claude · Knows your progress, notes &amp; tasks</p>
+          <p class="page-subtitle" style="margin-bottom:0">Powered by Claude · Free · Uses your claude.ai subscription</p>
         </div>
-        <button class="btn btn-ghost" onclick="clearAiChat()" style="font-size:12px">Clear chat</button>
       </div>
+
+      <!-- HOW IT WORKS BANNER -->
+      <div class="anim-item" style="background:var(--accent-dim);border:1px solid rgba(200,255,0,.2);border-radius:var(--radius);padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:14px">
+        <div style="font-size:24px;flex-shrink:0">⚡</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--accent);margin-bottom:2px">How it works</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.5">Pick a question or type your own → click <strong style="color:var(--text)">Open in Claude</strong> → your full workspace context is pre-filled → Claude answers instantly. Free, no API key needed.</div>
+        </div>
+      </div>
+
       <div class="ai-layout anim-item">
         <!-- LEFT: context + quick prompts -->
         <div class="ai-sidebar">
           <div class="ai-context-card">
-            <h4>Your context</h4>
+            <h4>Live context</h4>
             <div class="ai-context-item"><span>Course 1</span><span class="ai-context-val" id="ai-ctx-pct">0%</span></div>
             <div class="ai-context-item"><span>Completed</span><span class="ai-context-val" id="ai-ctx-done">0/62</span></div>
             <div class="ai-context-item"><span>Open tasks</span><span class="ai-context-val" id="ai-ctx-tasks">0</span></div>
             <div class="ai-context-item"><span>Notes</span><span class="ai-context-val" id="ai-ctx-notes">0</span></div>
+            <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text3);line-height:1.5">This context is injected into every prompt automatically</div>
           </div>
           <div class="ai-prompts">
             <h4>Quick prompts</h4>
@@ -491,21 +501,31 @@ html.light .topbar{background:rgba(245,244,240,.85)}
             <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">Tips to stay consistent with studying</button>
             <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">Explain the data life cycle simply</button>
             <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">What is SQL and why does it matter?</button>
+            <button class="ai-prompt-chip" onclick="aiQuickPrompt(this)">How long until I finish the certificate?</button>
           </div>
         </div>
-        <!-- RIGHT: chat -->
+
+        <!-- RIGHT: prompt builder -->
         <div class="ai-chat">
           <div class="ai-messages" id="ai-messages">
             <div class="ai-welcome" id="ai-welcome">
               <div class="ai-welcome-icon">🤖</div>
               <h3>Your study assistant</h3>
-              <p>I know your current progress, notes, and tasks. Ask me anything — study tips, progress analysis, concept explanations, or a quick quiz.</p>
+              <p>Pick a question from the left or type your own below. Click <strong>Open in Claude</strong> and your full workspace context — progress, tasks, notes — will be pre-filled for Claude to answer.</p>
             </div>
           </div>
+
+          <!-- PROMPT PREVIEW -->
+          <div id="ai-preview-wrap" style="display:none;padding:16px;border-top:1px solid var(--border)">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:8px;font-weight:600">Preview — what Claude will see</div>
+            <div id="ai-preview-box" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;font-size:12px;color:var(--text2);line-height:1.6;max-height:180px;overflow-y:auto;font-family:var(--mono);white-space:pre-wrap;word-break:break-word"></div>
+          </div>
+
           <div class="ai-input-row">
-            <textarea class="ai-input" id="ai-input" placeholder="Ask anything about your studies..." rows="1" onkeydown="aiKeyDown(event)" oninput="autoResize(this)"></textarea>
-            <button class="ai-send-btn" id="ai-send-btn" onclick="sendAiMessage()" title="Send">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <textarea class="ai-input" id="ai-input" placeholder="Type your question or pick one from the left..." rows="1" oninput="autoResize(this);onAiInputChange()" onkeydown="aiKeyDown(event)"></textarea>
+            <button class="ai-send-btn" id="ai-send-btn" onclick="openInClaude()" title="Open in Claude" style="width:auto;padding:0 16px;border-radius:var(--radius-sm);gap:8px;font-size:13px;font-weight:600;display:flex;align-items:center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Open in Claude
             </button>
           </div>
         </div>
@@ -1022,82 +1042,125 @@ function fabClick(){if(window.currentPage==='notes')openNoteEditor();else openTa
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fmtDate(ts){if(!ts)return'';const d=new Date(ts),now=new Date(),diff=now-d;if(diff<86400000)return'Today';if(diff<172800000)return'Yesterday';return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
 
-// ============ AI ASSISTANT ============
-let aiHistory = [];
-let aiTyping = false;
-
-function buildSystemPrompt() {
-  // Gather live context
+// ============ AI ASSISTANT (Free — Claude.ai bridge) ============
+function buildContextBlock() {
   const all = document.querySelectorAll('#modules-container input[type=checkbox]');
   let checked = 0;
   const completedItems = [], remainingItems = [];
-  all.forEach((cb, i) => { if (cb.checked) { checked++; completedItems.push(cb.closest('.check-item')?.querySelector('.check-text')?.textContent?.trim()); } else { remainingItems.push(cb.closest('.check-item')?.querySelector('.check-text')?.textContent?.trim()); } });
-  const pct = Math.round((checked / totalItems) * 100);
-  const openTasks = window._tasks.filter(t => t.status !== 'done');
-  const doneTasks = window._tasks.filter(t => t.status === 'done');
-  const notesTitles = window._notes.map(n => n.title).join(', ') || 'None';
+  all.forEach(cb => {
+    const label = cb.closest('.check-item')?.querySelector('.check-text')?.textContent?.trim();
+    if (cb.checked) { checked++; if(label) completedItems.push(label); }
+    else { if(label) remainingItems.push(label); }
+  });
+  const pct = totalItems > 0 ? Math.round((checked / totalItems) * 100) : 0;
+  const openTasks = (window._tasks||[]).filter(t => t.status !== 'done');
+  const doneTasks = (window._tasks||[]).filter(t => t.status === 'done');
+  const notesTitles = (window._notes||[]).map(n => n.title).join(', ') || 'None';
 
-  return `You are a personal study assistant embedded inside the user's learning workspace. You are helpful, encouraging, concise, and smart.
+  return `== MY WORKSPACE CONTEXT ==
+Course: Google Data Analytics Professional Certificate (9 courses, 152h total)
+Active: Course 1 — "Foundations: Data, Data, Everywhere" (13h, ${totalItems} items)
+Progress: ${pct}% complete (${checked}/${totalItems} items done)
 
-== USER'S CURRENT PROGRESS ==
-Course: Google Data Analytics Professional Certificate (9 courses, 152 hours total)
-Currently active: Course 1 — "Foundations: Data, Data, Everywhere" (13 hours, 62 items)
-Course 1 progress: ${pct}% (${checked} of ${totalItems} items completed)
+Completed items (${completedItems.length}): ${completedItems.slice(0,15).join('; ')||'None yet'}${completedItems.length>15?` ...+${completedItems.length-15} more`:''}
 
-Completed items (${completedItems.filter(Boolean).length}): ${completedItems.filter(Boolean).slice(0, 20).join('; ') || 'None yet'}${completedItems.length > 20 ? ` ...and ${completedItems.length - 20} more` : ''}
+Up next: ${remainingItems.slice(0,8).join('; ')||'All done!'}
 
-Remaining items (next up): ${remainingItems.filter(Boolean).slice(0, 10).join('; ') || 'All done!'}
-
-== TASKS ==
-Open tasks (${openTasks.length}): ${openTasks.map(t => `"${t.title}" [${t.priority} priority${t.due ? ', due: ' + t.due : ''}]`).join('; ') || 'None'}
+Open tasks (${openTasks.length}): ${openTasks.map(t=>`"${t.title}" [${t.priority}${t.due?', due '+t.due:''}]`).join('; ')||'None'}
 Completed tasks: ${doneTasks.length}
 
-== NOTES ==
-Total notes: ${window._notes.length}
-Note titles: ${notesTitles}
+Notes (${(window._notes||[]).length}): ${notesTitles}
 
-== COURSE OVERVIEW (for context) ==
-Course 2: Ask Questions to Make Data-Driven Decisions (15h)
-Course 3: Prepare Data for Exploration (19h)
-Course 4: Process Data from Dirty to Clean (16h)
-Course 5: Analyze Data to Answer Questions (26h)
-Course 6: Share Data Through the Art of Visualization (19h)
-Course 7: Introduction to Data Analysis Using Python (27h)
-Course 8: Google Data Analytics Capstone (11h)
-Course 9: Accelerate Your Job Search with AI (6h)
+Certificate overview: C2 Ask Questions (15h) · C3 Prepare Data (19h) · C4 Process Data (16h) · C5 Analyze (26h) · C6 Visualize (19h) · C7 Python (27h) · C8 Capstone (11h) · C9 Job Search AI (6h)
+== END CONTEXT ==`;
+}
 
-== INSTRUCTIONS ==
-- Answer in a warm, clear, structured way. Use bullet points and bold for key terms.
-- When asked about progress, use the exact numbers above.
-- When giving study tips, be specific to their current position in the course.
-- Keep responses concise — under 300 words unless asked to elaborate.
-- If asked to quiz the user, ask one question at a time and wait for their answer.
-- You can reference their notes and tasks naturally in your responses.`;
+function buildFullPrompt(question) {
+  return buildContextBlock() + '\n\nMy question: ' + question + '\n\nPlease answer based on my context above. Be specific, encouraging, and concise.';
 }
 
 function updateAiContext() {
   const all = document.querySelectorAll('#modules-container input[type=checkbox]');
   let checked = 0; all.forEach(cb => { if (cb.checked) checked++; });
   const pct = totalItems > 0 ? Math.round((checked / totalItems) * 100) : 0;
-  const ctxPct = document.getElementById('ai-ctx-pct');
-  const ctxDone = document.getElementById('ai-ctx-done');
-  const ctxTasks = document.getElementById('ai-ctx-tasks');
-  const ctxNotes = document.getElementById('ai-ctx-notes');
-  if (ctxPct) ctxPct.textContent = pct + '%';
-  if (ctxDone) ctxDone.textContent = checked + '/' + totalItems;
-  if (ctxTasks) ctxTasks.textContent = (window._tasks || []).filter(t => t.status !== 'done').length;
-  if (ctxNotes) ctxNotes.textContent = (window._notes || []).length;
+  const el = (id, val) => { const e = document.getElementById(id); if(e) e.textContent = val; };
+  el('ai-ctx-pct', pct + '%');
+  el('ai-ctx-done', checked + '/' + totalItems);
+  el('ai-ctx-tasks', (window._tasks||[]).filter(t => t.status !== 'done').length);
+  el('ai-ctx-notes', (window._notes||[]).length);
+}
+
+function onAiInputChange() {
+  const q = document.getElementById('ai-input').value.trim();
+  const wrap = document.getElementById('ai-preview-wrap');
+  const box = document.getElementById('ai-preview-box');
+  if (!q) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  box.textContent = buildFullPrompt(q);
 }
 
 function aiQuickPrompt(btn) {
   const input = document.getElementById('ai-input');
   input.value = btn.textContent.trim();
   autoResize(input);
-  sendAiMessage();
+  onAiInputChange();
+  // Show the question in the chat area
+  showQuestionPreview(btn.textContent.trim());
+}
+
+function showQuestionPreview(q) {
+  const welcome = document.getElementById('ai-welcome');
+  if (welcome) welcome.remove();
+  const msgs = document.getElementById('ai-messages');
+  // Remove old preview
+  const old = document.getElementById('ai-q-preview');
+  if (old) old.remove();
+  const wrap = document.createElement('div');
+  wrap.id = 'ai-q-preview';
+  wrap.style.cssText = 'background:var(--accent-dim);border:1px solid rgba(200,255,0,.15);border-radius:var(--radius);padding:20px 24px;display:flex;flex-direction:column;gap:12px';
+  wrap.innerHTML = `
+    <div style="font-size:13px;font-weight:600;color:var(--accent)">Your question</div>
+    <div style="font-size:15px;color:var(--text);line-height:1.5">"${esc(q)}"</div>
+    <div style="font-size:13px;color:var(--text2)">✓ Your full context (progress, tasks, notes) will be included automatically.<br>Click <strong style="color:var(--text)">Open in Claude</strong> below to get your answer.</div>
+    <button onclick="openInClaude()" style="align-self:flex-start;background:var(--accent);color:#0a0a0c;border:none;padding:10px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:var(--font)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Open in Claude →
+    </button>`;
+  msgs.appendChild(wrap);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function openInClaude() {
+  const q = document.getElementById('ai-input').value.trim();
+  if (!q) { document.getElementById('ai-input').focus(); return; }
+  const fullPrompt = buildFullPrompt(q);
+  // Copy to clipboard then open claude.ai
+  navigator.clipboard.writeText(fullPrompt).then(() => {
+    showCopiedNotice();
+  }).catch(() => {
+    // Fallback: select text in preview box
+    showCopiedNotice(false);
+  });
+  // Open claude.ai in new tab
+  window.open('https://claude.ai/new', '_blank');
+}
+
+function showCopiedNotice(copied=true) {
+  const msgs = document.getElementById('ai-messages');
+  const old = document.getElementById('ai-copied-notice');
+  if (old) old.remove();
+  const el = document.createElement('div');
+  el.id = 'ai-copied-notice';
+  el.style.cssText = 'background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;display:flex;align-items:flex-start;gap:12px';
+  el.innerHTML = copied
+    ? `<div style="font-size:20px;flex-shrink:0">✅</div><div><div style="font-size:13px;font-weight:600;color:var(--teal);margin-bottom:4px">Prompt copied to clipboard!</div><div style="font-size:13px;color:var(--text2);line-height:1.5">Claude.ai just opened in a new tab. <strong style="color:var(--text)">Paste (⌘V)</strong> in the chat box and press Enter. Your full workspace context is included.</div></div>`
+    : `<div style="font-size:20px;flex-shrink:0">🚀</div><div><div style="font-size:13px;font-weight:600;color:var(--accent);margin-bottom:4px">Claude.ai opened in a new tab!</div><div style="font-size:13px;color:var(--text2);line-height:1.5">Copy the prompt from the preview below and paste it into Claude.ai. Your full context is included.</div></div>`;
+  msgs.appendChild(el);
+  msgs.scrollTop = msgs.scrollHeight;
 }
 
 function aiKeyDown(e) {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendAiMessage(); }
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); openInClaude(); }
 }
 
 function autoResize(ta) {
@@ -1105,131 +1168,10 @@ function autoResize(ta) {
   ta.style.height = Math.min(ta.scrollHeight, 120) + 'px';
 }
 
-function addAiMessage(role, content) {
-  const welcome = document.getElementById('ai-welcome');
-  if (welcome) welcome.remove();
-
-  const msgs = document.getElementById('ai-messages');
-  const wrap = document.createElement('div');
-  wrap.className = 'ai-msg ' + role;
-
-  const avatar = document.createElement('div');
-  avatar.className = 'ai-msg-avatar';
-  avatar.textContent = role === 'ai' ? '🤖' : '👤';
-
-  const bubble = document.createElement('div');
-  bubble.className = 'ai-msg-bubble';
-  bubble.innerHTML = formatAiText(content);
-
-  wrap.appendChild(avatar);
-  wrap.appendChild(bubble);
-  msgs.appendChild(wrap);
-  msgs.scrollTop = msgs.scrollHeight;
-  return bubble;
-}
-
-function formatAiText(text) {
-  return text
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/`(.*?)`/g, '<code>$1</code>')
-    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-    .replace(/^- (.*$)/gm, '<li>$1</li>')
-    .replace(/(<li>.*<\/li>)/gs, m => '<ul>' + m + '</ul>')
-    .replace(/\n\n/g, '</p><p>')
-    .replace(/\n/g, '<br>')
-    .replace(/^(?!<[hou])(.+)/gm, (m) => m.startsWith('<') ? m : m)
-    .replace(/^(.+)$/gm, m => (m.startsWith('<') || !m.trim()) ? m : '<p>' + m + '</p>')
-    .replace(/<p><\/p>/g, '');
-}
-
-function showThinking() {
-  const msgs = document.getElementById('ai-messages');
-  const wrap = document.createElement('div');
-  wrap.className = 'ai-msg ai'; wrap.id = 'ai-thinking-wrap';
-  const avatar = document.createElement('div');
-  avatar.className = 'ai-msg-avatar'; avatar.textContent = '🤖';
-  const bubble = document.createElement('div');
-  bubble.className = 'ai-msg-bubble';
-  bubble.innerHTML = '<div class="ai-thinking"><div class="ai-thinking-dot"></div><div class="ai-thinking-dot"></div><div class="ai-thinking-dot"></div></div>';
-  wrap.appendChild(avatar); wrap.appendChild(bubble);
-  msgs.appendChild(wrap); msgs.scrollTop = msgs.scrollHeight;
-}
-
-function removeThinking() {
-  const el = document.getElementById('ai-thinking-wrap');
-  if (el) el.remove();
-}
-
-async function sendAiMessage() {
-  if (aiTyping) return;
-  const input = document.getElementById('ai-input');
-  const text = input.value.trim();
-  if (!text) return;
-
-  input.value = ''; autoResize(input);
-  document.getElementById('ai-send-btn').disabled = true;
-  aiTyping = true;
-
-  addAiMessage('user', text);
-  aiHistory.push({ role: 'user', content: text });
-
-  showThinking();
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: buildSystemPrompt(),
-        messages: aiHistory
-      })
-    });
-
-    removeThinking();
-
-    if (!res.ok) { throw new Error('API error ' + res.status); }
-    const data = await res.json();
-    const reply = data.content?.find(b => b.type === 'text')?.text || 'Sorry, I had trouble responding. Please try again.';
-
-    addAiMessage('ai', reply);
-    aiHistory.push({ role: 'assistant', content: reply });
-
-    // Keep history manageable (last 20 messages)
-    if (aiHistory.length > 20) aiHistory = aiHistory.slice(aiHistory.length - 20);
-
-  } catch (e) {
-    removeThinking();
-    addAiMessage('ai', '⚠️ Could not connect to Claude. Make sure you\'re signed in and try again.');
-    console.error('AI error:', e);
-  }
-
-  aiTyping = false;
-  document.getElementById('ai-send-btn').disabled = false;
-  document.getElementById('ai-input').focus();
-}
-
-function clearAiChat() {
-  aiHistory = [];
-  const msgs = document.getElementById('ai-messages');
-  msgs.innerHTML = `<div class="ai-welcome" id="ai-welcome">
-    <div class="ai-welcome-icon">🤖</div>
-    <h3>Your study assistant</h3>
-    <p>I know your current progress, notes, and tasks. Ask me anything — study tips, progress analysis, concept explanations, or a quick quiz.</p>
-  </div>`;
-}
-
 // Update AI context panel whenever progress/notes/tasks change
 const origOnCheck = window.onCheck;
 window.onCheck = function(save=true) { origOnCheck(save); updateAiContext(); };
 
-// Hook into note/task renders to keep context fresh
-const origRenderNotes = window.renderNotes || function(){};
-const origRenderTasks = window.renderTasks || function(){};
-
-// Patch updateDashStats to also refresh AI context
 const origUpdateDash = window.updateDashStats || function(){};
 window.updateDashStats = function() { origUpdateDash(); updateAiContext(); };
 
