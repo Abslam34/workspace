@@ -334,6 +334,116 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .anim-item{opacity:0;transform:translateY(12px);animation:fadeIn .4s ease forwards}
 .anim-item:nth-child(1){animation-delay:.05s}.anim-item:nth-child(2){animation-delay:.1s}.anim-item:nth-child(3){animation-delay:.15s}.anim-item:nth-child(4){animation-delay:.2s}.anim-item:nth-child(5){animation-delay:.25s}.anim-item:nth-child(6){animation-delay:.3s}.anim-item:nth-child(7){animation-delay:.35s}.anim-item:nth-child(8){animation-delay:.4s}
 
+/* SEARCH OVERLAY */
+.search-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(12px);z-index:500;display:none;align-items:flex-start;justify-content:center;padding-top:80px}
+.search-overlay.show{display:flex}
+.search-modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-lg);width:90%;max-width:600px;overflow:hidden;animation:slideUp .2s cubic-bezier(.4,0,.2,1)}
+.search-input-wrap{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border)}
+.search-input-wrap svg{flex-shrink:0;color:var(--text3)}
+.search-input-main{flex:1;background:none;border:none;outline:none;font-size:16px;color:var(--text);font-family:var(--font)}
+.search-input-main::placeholder{color:var(--text3)}
+.search-results{max-height:400px;overflow-y:auto}
+.search-section-label{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);padding:10px 20px 4px;font-weight:600}
+.search-result-item{display:flex;align-items:center;gap:12px;padding:10px 20px;cursor:pointer;transition:background .15s}
+.search-result-item:hover,.search-result-item.sel{background:var(--bg3)}
+.search-result-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.search-result-body{flex:1;min-width:0}
+.search-result-title{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-result-sub{font-size:11px;color:var(--text3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-result-tag{font-size:10px;background:var(--bg4);color:var(--text3);padding:2px 7px;border-radius:8px;flex-shrink:0}
+.search-empty{text-align:center;padding:32px;color:var(--text3);font-size:13px}
+.search-footer{padding:8px 20px;border-top:1px solid var(--border);display:flex;gap:16px;font-size:11px;color:var(--text3)}
+.search-footer span{display:flex;align-items:center;gap:4px}
+
+/* MARKDOWN notes */
+.md-render h1{font-size:14px;font-weight:700;margin:2px 0;color:var(--text)}
+.md-render h2{font-size:13px;font-weight:600;margin:2px 0;color:var(--text)}
+.md-render strong{font-weight:600;color:var(--text)}
+.md-render em{font-style:italic}
+.md-render code{background:var(--bg4);padding:1px 5px;border-radius:4px;font-family:var(--mono);font-size:11px;color:var(--teal)}
+.md-render ul{padding-left:14px;margin:2px 0}
+.md-render li{margin-bottom:1px}
+.md-render blockquote{border-left:2px solid var(--accent);padding-left:8px;color:var(--text3);font-style:italic;margin:2px 0}
+
+/* OVERDUE tasks */
+.task-due.overdue{color:var(--red)!important;font-weight:600}
+.task-due.due-today{color:var(--amber)!important;font-weight:600}
+.task-card.overdue-card{border-left:3px solid var(--red)}
+.task-card.today-card{border-left:3px solid var(--amber)}
+
+/* ONBOARDING */
+.onboarding-banner{background:linear-gradient(135deg,var(--accent-dim),rgba(77,159,255,.05));border:1px solid rgba(200,255,0,.15);border-radius:var(--radius);padding:18px 20px;margin-bottom:24px;position:relative}
+.ob-head{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.ob-icon{font-size:28px;flex-shrink:0}
+.ob-title{font-size:14px;font-weight:600;color:var(--text)}
+.ob-sub{font-size:12px;color:var(--text2);margin-top:2px}
+.ob-steps{display:flex;gap:8px;flex-wrap:wrap}
+.ob-step{font-size:11px;background:var(--bg3);border:1px solid var(--border);padding:5px 12px;border-radius:20px;color:var(--text2);cursor:pointer;transition:var(--transition);display:flex;align-items:center;gap:5px}
+.ob-step:hover{border-color:var(--accent);color:var(--accent)}
+.ob-step.done{background:var(--accent-dim);border-color:rgba(200,255,0,.3);color:var(--accent)}
+.ob-dismiss{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:0;line-height:1}
+.ob-dismiss:hover{color:var(--text)}
+
+/* CERT overall bar */
+.cert-bar-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px}
+.cert-bar-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:8px}
+.cert-bar-label strong{color:var(--accent);font-family:var(--mono)}
+.cert-segs{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--bg4);gap:1px}
+.cert-seg{height:100%;border-radius:2px;transition:width .6s cubic-bezier(.4,0,.2,1);min-width:0}
+
+/* EDIT COURSE inline */
+.cc-edit-form{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px;margin-top:6px;display:flex;flex-direction:column;gap:6px}
+.cc-edit-form input,.cc-edit-form select{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:6px 10px;color:var(--text);font-size:12px;font-family:var(--font);outline:none}
+.cc-edit-form input:focus,.cc-edit-form select:focus{border-color:var(--accent)}
+.cc-edit-row{display:flex;gap:6px}
+.cc-edit-row input,.cc-edit-row select{flex:1}
+
+/* EXPORT */
+.export-modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);width:90%;max-width:560px;padding:28px;animation:slideUp .3s cubic-bezier(.4,0,.2,1);max-height:90vh;overflow-y:auto}
+.export-modal h2{font-size:17px;font-weight:600;margin-bottom:4px}
+.export-modal p{font-size:13px;color:var(--text2);margin-bottom:20px}
+.export-preview{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;font-size:12px;font-family:var(--mono);line-height:1.7;color:var(--text2);max-height:260px;overflow-y:auto;white-space:pre-wrap;word-break:break-word;margin-bottom:16px}
+.export-btns{display:flex;gap:10px;flex-wrap:wrap}
+
+/* NOTE PREVIEW */
+.editor-view-toggle{display:flex;gap:4px}
+.view-toggle-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text3);padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:var(--font);transition:var(--transition)}
+.view-toggle-btn.active{background:var(--accent-dim);border-color:rgba(200,255,0,.3);color:var(--accent)}
+.editor-preview-pane{padding:14px;font-size:14px;line-height:1.7;color:var(--text);min-height:200px;overflow-y:auto;display:none;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg3)}
+.editor-preview-pane.show{display:block}
+.editor-textarea.hidden{display:none}
+
+/* TASK SORT */
+.task-sort-row{display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.sort-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text3);padding:3px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:var(--font);transition:var(--transition)}
+.sort-btn.active{background:var(--accent-dim);border-color:rgba(200,255,0,.3);color:var(--accent)}
+
+/* CERT TRACKER PAGE */
+.cert-tracker-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
+.cert-course-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:18px;transition:var(--transition)}
+.cert-course-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.cert-course-card .ctc-tag{font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:6px}
+.cert-course-card .ctc-title{font-size:13px;font-weight:600;margin-bottom:10px;line-height:1.4}
+.cert-course-card .ctc-bar{height:5px;background:var(--bg4);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.cert-course-card .ctc-fill{height:100%;border-radius:3px;transition:width .5s}
+.cert-course-card .ctc-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--text3)}
+.cert-course-card .ctc-est{font-size:11px;color:var(--text3);margin-top:4px}
+.cert-summary{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.cert-sum-stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;flex:1;min-width:120px;text-align:center}
+.cert-sum-stat .val{font-size:22px;font-weight:700;color:var(--accent);font-family:var(--mono)}
+.cert-sum-stat .lbl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+@media(max-width:768px){.cert-tracker-grid{grid-template-columns:1fr}}
+
+/* TAG FILTER */
+.tag-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.tag-filter-chip{font-size:11px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:4px 10px;border-radius:20px;cursor:pointer;transition:var(--transition)}
+.tag-filter-chip:hover,.tag-filter-chip.active{background:var(--accent-dim);border-color:rgba(200,255,0,.3);color:var(--accent)}
+
+/* POMODORO SOUND */
+.pomo-sound-row{display:flex;align-items:center;justify-content:space-between;margin-top:10px;font-size:11px;color:var(--text3)}
+.pomo-sound-toggle{display:flex;align-items:center;gap:5px;cursor:pointer}
+.pomo-sound-toggle input{accent-color:var(--accent);cursor:pointer}
+
 /* POMODORO */
 .pomo-widget{position:fixed;bottom:92px;right:28px;z-index:200;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 22px;width:220px;box-shadow:0 8px 32px rgba(0,0,0,.4);display:none;animation:slideUp .3s cubic-bezier(.4,0,.2,1)}
 .pomo-widget.show{display:block}
@@ -457,6 +567,9 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       <div class="nav-item" onclick="showPage('timeline2')">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Course 2 Timeline
       </div>
+      <div class="nav-item" onclick="showPage('certtracker')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Certificate Tracker
+      </div>
     </div>
     <div class="nav-section">
       <div class="nav-label">Productivity</div>
@@ -489,7 +602,7 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       <div class="breadcrumb" id="breadcrumb">Home / <span>Dashboard</span></div>
     </div>
     <div class="topbar-right">
-      <div class="search-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Search...</span><kbd>/</kbd></div>
+      <div class="search-box" onclick="openSearch()" style="cursor:pointer"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Search...</span><kbd>/</kbd></div>
       <div class="avatar" id="avatar-el">G</div>
     </div>
   </div>
@@ -501,6 +614,33 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       <h1 class="page-title anim-item" id="greeting">Good evening</h1>
       <p class="page-subtitle anim-item" id="dash-subtitle">Here's your workspace overview.</p>
 
+      <!-- ONBOARDING (hidden after dismiss) -->
+      <div class="onboarding-banner anim-item" id="onboarding-banner" style="display:none">
+        <div class="ob-head">
+          <div class="ob-icon">🎯</div>
+          <div><div class="ob-title">Getting started with Command Center</div><div class="ob-sub">Complete these steps to set up your workspace</div></div>
+        </div>
+        <div class="ob-steps">
+          <div class="ob-step" id="obs-timeline" onclick="showPage('timeline');dismissOb()">📋 Open Course 1 timeline</div>
+          <div class="ob-step" id="obs-task" onclick="openTaskModal();dismissOb()">✅ Add your first task</div>
+          <div class="ob-step" id="obs-note" onclick="openNoteEditor();dismissOb()">📝 Write a note</div>
+          <div class="ob-step" id="obs-pomo" onclick="togglePomo();dismissOb()">⏱ Try the Pomodoro timer</div>
+          <div class="ob-step" id="obs-settings" onclick="showPage('settings');dismissOb()">⚙️ Set your study pace</div>
+        </div>
+        <button class="ob-dismiss" onclick="dismissOb(true)" title="Dismiss">×</button>
+      </div>
+
+      <!-- CERTIFICATE OVERALL PROGRESS -->
+      <div class="cert-bar-wrap anim-item" id="cert-bar-wrap">
+        <div class="cert-bar-label"><span>Certificate overall progress</span><strong id="cert-overall-pct">0%</strong></div>
+        <div class="cert-segs" id="cert-segs"></div>
+        <div style="display:flex;gap:16px;margin-top:8px;font-size:11px;color:var(--text3);flex-wrap:wrap">
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--accent);margin-right:4px"></span>C1</span>
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--blue);margin-right:4px"></span>C2</span>
+          <span style="color:var(--text3)">9 courses · 152h total</span>
+        </div>
+      </div>
+
       <!-- STAT CARDS -->
       <div class="stats-grid">
         <div class="stat-card anim-item" style="cursor:pointer" onclick="showPage('timeline')">
@@ -508,10 +648,10 @@ html.light .topbar{background:rgba(245,244,240,.85)}
           <div class="value" style="color:var(--accent)" id="dash-progress">0%</div>
           <div class="change" id="dash-progress-sub">Not started</div>
         </div>
-        <div class="stat-card anim-item">
-          <div class="label">Est. finish date</div>
-          <div class="value" style="font-size:18px;padding-top:4px" id="dash-finish">—</div>
-          <div class="change up" id="dash-finish-sub">at current pace</div>
+        <div class="stat-card anim-item" style="cursor:pointer" onclick="showPage('timeline2')">
+          <div class="label">Course 2 progress</div>
+          <div class="value" style="color:var(--blue)" id="dash-progress2">0%</div>
+          <div class="change" id="dash-progress2-sub">Not started</div>
         </div>
         <div class="stat-card anim-item" style="cursor:pointer" onclick="showPage('tasks')">
           <div class="label">Open tasks</div>
@@ -530,7 +670,7 @@ html.light .topbar{background:rgba(245,244,240,.85)}
         <!-- Progress ring -->
         <div class="chart-card">
           <div class="chart-card-header">
-            <div><div class="chart-card-title">Course 1 overview</div><div class="chart-card-sub">Foundations: Data, Data, Everywhere</div></div>
+            <div><div class="chart-card-title">Combined progress</div><div class="chart-card-sub" id="dash-ring-sub">C1 + C2 · Est. finish <span id="dash-finish">—</span></div></div>
           </div>
           <div class="progress-ring-wrap">
             <svg width="110" height="110" viewBox="0 0 110 110">
@@ -542,8 +682,8 @@ html.light .topbar{background:rgba(245,244,240,.85)}
               <text x="55" y="65" text-anchor="middle" font-size="9" fill="var(--text3)" font-family="DM Sans,sans-serif">complete</text>
             </svg>
             <div class="progress-ring-info">
-              <div class="progress-ring-stat"><div class="prs-val" id="dash-ring-done">0/62</div><div class="prs-lbl">items done</div></div>
-              <div class="progress-ring-stat"><div class="prs-val" id="dash-ring-remain">62</div><div class="prs-lbl">remaining</div></div>
+              <div class="progress-ring-stat"><div class="prs-val" id="dash-ring-done">0/62</div><div class="prs-lbl">C1 done</div></div>
+              <div class="progress-ring-stat"><div class="prs-val" id="dash-ring-done2">0/0</div><div class="prs-lbl">C2 done</div></div>
               <div class="pace-row">
                 <span id="dash-pace-label">2h/day</span>
                 <div class="pace-bar-track"><div class="pace-bar-fill" id="dash-pace-bar" style="width:0%"></div></div>
@@ -556,7 +696,7 @@ html.light .topbar{background:rgba(245,244,240,.85)}
         <!-- Module breakdown bar chart -->
         <div class="chart-card">
           <div class="chart-card-header">
-            <div><div class="chart-card-title">Module progress</div><div class="chart-card-sub">Course 1 — 4 modules</div></div>
+            <div><div class="chart-card-title">Module progress</div><div class="chart-card-sub">C1 modules (M1–M4) + C2 modules (M5–M8)</div></div>
           </div>
           <svg class="bar-chart" height="120" id="module-bar-chart" viewBox="0 0 260 120" preserveAspectRatio="xMidYMid meet"></svg>
         </div>
@@ -658,6 +798,13 @@ html.light .topbar{background:rgba(245,244,240,.85)}
         <div><h1 class="page-title" style="margin-bottom:4px">Tasks</h1><p class="page-subtitle" style="margin-bottom:0">Drag cards between columns · Click to edit</p></div>
         <button class="btn btn-primary" onclick="openTaskModal()">+ Add task</button>
       </div>
+      <div class="task-sort-row anim-item">
+        <span style="font-size:11px;color:var(--text3)">Sort by:</span>
+        <button class="sort-btn active" id="sort-btn-default" onclick="setTaskSort('default')">Default</button>
+        <button class="sort-btn" id="sort-btn-priority" onclick="setTaskSort('priority')">Priority</button>
+        <button class="sort-btn" id="sort-btn-due" onclick="setTaskSort('due')">Due date</button>
+        <button class="sort-btn" id="sort-btn-alpha" onclick="setTaskSort('alpha')">A–Z</button>
+      </div>
       <div class="kanban-board anim-item">
         <div class="kanban-col" id="col-todo" ondragover="event.preventDefault();this.classList.add('drag-over')" ondrop="dropTask(event,'todo')" ondragleave="this.classList.remove('drag-over')">
           <div class="kanban-col-header"><div class="kanban-col-title"><span style="color:var(--amber)">●</span>To do<span class="kanban-cnt" id="cnt-todo">0</span></div><button class="kanban-add-btn" onclick="openTaskModal('todo')">+</button></div>
@@ -678,10 +825,22 @@ html.light .topbar{background:rgba(245,244,240,.85)}
     <div class="page" id="page-notes">
       <div class="page-header anim-item">
         <div><h1 class="page-title" style="margin-bottom:4px">Notes</h1><p class="page-subtitle" style="margin-bottom:0">Click any note to edit · Auto-saved to cloud</p></div>
-        <button class="btn btn-primary" onclick="openNoteEditor()">+ New note</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-ghost" onclick="openExportModal()">↓ Export</button>
+          <button class="btn btn-primary" onclick="openNoteEditor()">+ New note</button>
+        </div>
       </div>
       <div class="notes-search-bar anim-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="notes-search-input" placeholder="Search notes..." oninput="filterNotes()"/></div>
+      <div class="tag-filter-row anim-item" id="tag-filter-row"></div>
       <div class="notes-grid anim-item" id="notes-grid"></div>
+    </div>
+
+    <!-- CERTIFICATE TRACKER -->
+    <div class="page" id="page-certtracker">
+      <h1 class="page-title anim-item">Certificate Tracker</h1>
+      <p class="page-subtitle anim-item">Google Data Analytics Professional Certificate — full completion projection</p>
+      <div class="cert-summary anim-item" id="cert-summary-stats"></div>
+      <div class="cert-tracker-grid anim-item" id="cert-tracker-grid"></div>
     </div>
 
     <!-- AI ASSISTANT -->
@@ -781,13 +940,17 @@ html.light .topbar{background:rgba(245,244,240,.85)}
   <div class="editor-modal">
     <div class="editor-header">
       <input type="text" class="editor-title-input" id="editor-title" placeholder="Note title..."/>
-      <button class="close-btn" onclick="closeNoteEditor()">×</button>
+      <div class="editor-view-toggle">
+        <button class="view-toggle-btn active" id="vt-edit" onclick="setEditorView('edit')">Edit</button>
+        <button class="view-toggle-btn" id="vt-preview" onclick="setEditorView('preview')">Preview</button>
+      </div>
+      <button class="close-btn" onclick="closeNoteEditor()" style="margin-left:6px">×</button>
     </div>
     <div class="editor-meta">
       <div class="color-picker" id="color-picker"></div>
       <input type="text" class="tag-input" id="editor-tag" placeholder="Tag (optional)"/>
     </div>
-    <div class="editor-toolbar">
+    <div class="editor-toolbar" id="editor-toolbar">
       <button onclick="insertMd('**','**')"><b>B</b></button>
       <button onclick="insertMd('*','*')"><i>I</i></button>
       <button onclick="insertMd('# ','')">H1</button>
@@ -798,6 +961,7 @@ html.light .topbar{background:rgba(245,244,240,.85)}
     </div>
     <div class="editor-body">
       <textarea class="editor-textarea" id="editor-body" placeholder="Write your note... (supports markdown)"></textarea>
+      <div class="editor-preview-pane" id="editor-preview-pane"></div>
     </div>
     <div class="editor-footer">
       <button class="btn btn-danger" id="editor-delete-btn" style="display:none" onclick="deleteCurrentNote()">Delete</button>
@@ -824,6 +988,21 @@ html.light .topbar{background:rgba(245,244,240,.85)}
   </div>
 </div>
 
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="search-overlay" onclick="if(event.target===this)closeSearch()">
+  <div class="search-modal">
+    <div class="search-input-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="search-input-main" id="search-input" placeholder="Search notes, tasks, timeline items..." oninput="runSearch()" onkeydown="searchKeyNav(event)" autocomplete="off"/>
+      <span class="search-kbd">Esc</span>
+    </div>
+    <div class="search-results" id="search-results"><div class="search-empty">Start typing to search across your workspace</div></div>
+    <div class="search-footer">
+      <span>↑↓ navigate</span><span>↵ open</span><span>Esc close</span>
+    </div>
+  </div>
+</div>
+
 <!-- POMODORO WIDGET -->
 <button class="pomo-fab" id="pomo-fab" onclick="togglePomo()" title="Pomodoro timer">⏱</button>
 <div class="pomo-widget" id="pomo-widget">
@@ -835,6 +1014,23 @@ html.light .topbar{background:rgba(245,244,240,.85)}
     <button class="pomo-btn pomo-btn-reset" onclick="pomoReset()">Reset</button>
   </div>
   <div class="pomo-sessions" id="pomo-sessions">Sessions today: 0</div>
+  <div class="pomo-sound-row">
+    <label class="pomo-sound-toggle"><input type="checkbox" id="pomo-sound-cb" checked> 🔔 Sound on finish</label>
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div class="overlay" id="export-overlay">
+  <div class="export-modal">
+    <h2>Export progress</h2>
+    <p>A summary of your workspace — copy it or download as a text file.</p>
+    <div class="export-preview" id="export-preview-text"></div>
+    <div class="export-btns">
+      <button class="btn btn-primary" onclick="copyExport()">Copy to clipboard</button>
+      <button class="btn btn-ghost" onclick="downloadExport()">Download .txt</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('export-overlay').classList.remove('show')">Close</button>
+    </div>
+  </div>
 </div>
 
 <!-- ADD COURSE MODAL -->
@@ -898,7 +1094,7 @@ window.saveProgress2 = function(checks) {
   }, 600);
 };
 
-// Notes
+// Notes + Settings
 window.FB = {
   addNote: async (d) => addDoc(collection(db,'notes'), d),
   updateNote: async (id,d) => { await updateDoc(doc(db,'notes',id),d); syncStatus('saved','Saved ✓'); },
@@ -906,6 +1102,8 @@ window.FB = {
   addTask: async (d) => addDoc(collection(db,'tasks'), d),
   updateTask: async (id,d) => { await updateDoc(doc(db,'tasks',id),d); syncStatus('saved','Saved ✓'); },
   deleteTask: async (id) => deleteDoc(doc(db,'tasks',id)),
+  saveSettings: async (s) => { try{await setDoc(doc(db,'user','settings'),{data:s,t:Date.now()});}catch(e){} },
+  saveStreak: async (history) => { try{await setDoc(doc(db,'streak','history'),{data:history,t:Date.now()});}catch(e){} },
 };
 
 onAuthStateChanged(auth, user => {
@@ -929,6 +1127,34 @@ onAuthStateChanged(auth, user => {
     // Course 2 progress
     onSnapshot(doc(db,'progress','course2'), snap => {
       if (snap.exists() && snap.data().checks) applyChecks2(snap.data().checks);
+    });
+    // Settings sync from Firestore (remote wins on first load, local wins after that)
+    let firstSettings = true;
+    onSnapshot(doc(db,'user','settings'), snap => {
+      if (firstSettings && snap.exists() && snap.data().data) {
+        const remote = snap.data().data;
+        // Only apply if local is missing or older
+        const localRaw = localStorage.getItem('ws-settings');
+        const localTs = localRaw ? (JSON.parse(localRaw).__t||0) : 0;
+        if (snap.data().t > localTs) {
+          try { localStorage.setItem('ws-settings', JSON.stringify({...remote, __t: snap.data().t})); } catch(e) {}
+          if(typeof loadSettings==='function') loadSettings();
+        }
+      }
+      firstSettings = false;
+    });
+    // Streak history
+    onSnapshot(doc(db,'streak','history'), snap => {
+      if (snap.exists() && snap.data().data) {
+        let remote = snap.data().data;
+        let local = {};
+        try { local = JSON.parse(localStorage.getItem('ws-progress-history')||'{}'); } catch(e) {}
+        const merged = Object.assign({}, remote, local);
+        window._streakHistory = merged;
+        try { localStorage.setItem('ws-progress-history', JSON.stringify(merged)); } catch(e) {}
+      } else {
+        try { window._streakHistory = JSON.parse(localStorage.getItem('ws-progress-history')||'{}'); } catch(e) { window._streakHistory = {}; }
+      }
     });
   } else {
     document.getElementById('login-screen').classList.remove('hidden');
@@ -984,6 +1210,23 @@ let editingNoteId = null, editingTaskId = null, dragId = null;
 const NOTE_COLORS = ['#c8ff00','#4d9fff','#00d4aa','#a07cff','#ffb020','#ff4d4f'];
 let noteColor = NOTE_COLORS[0];
 
+// Markdown renderer (lightweight)
+function renderMd(text) {
+  if(!text) return '';
+  let h = esc(text)
+    .replace(/^### (.+)$/gm,'<h3>$1</h3>')
+    .replace(/^## (.+)$/gm,'<h2>$1</h2>')
+    .replace(/^# (.+)$/gm,'<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/`(.+?)`/g,'<code>$1</code>')
+    .replace(/^&gt; (.+)$/gm,'<blockquote>$1</blockquote>')
+    .replace(/^- (.+)$/gm,'<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/s,'<ul>$1</ul>')
+    .replace(/\n/g,'<br>');
+  return '<div class="md-render">'+h+'</div>';
+}
+
 // ============ NOTES ============
 function renderNotes(q='') {
   const grid = document.getElementById('notes-grid');
@@ -1005,7 +1248,7 @@ function makeNoteCard(n) {
         <button class="icon-btn del" title="Delete" onclick="event.stopPropagation();deleteNote('${n.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></button>
       </div>
     </div>
-    <div class="note-card-body">${esc(n.body||'')}</div>
+    <div class="note-card-body">${renderMd(n.body||'')}</div>
     <div class="note-card-footer">
       <div style="display:flex;align-items:center;gap:8px">
         <div class="note-color-dot" style="background:${n.color||'var(--accent)'}"></div>
@@ -1092,9 +1335,24 @@ function renderTasks() {
 
 function makeTaskCard(t) {
   const card=document.createElement('div');
-  card.className='task-card'+(t.status==='done'?' done':'');
+  // Detect overdue/today
+  let dueClass='', cardClass='task-card'+(t.status==='done'?' done':'');
+  if(t.due && t.status!=='done') {
+    const dueStr=t.due.toLowerCase();
+    const today=new Date(); today.setHours(0,0,0,0);
+    let dueDate=null;
+    if(dueStr==='today') dueDate=new Date(today);
+    else if(dueStr==='tomorrow'){dueDate=new Date(today);dueDate.setDate(dueDate.getDate()+1);}
+    else{const p=new Date(t.due);if(!isNaN(p)){dueDate=p;dueDate.setHours(0,0,0,0);}}
+    if(dueDate){
+      if(dueDate<today){dueClass=' overdue';cardClass+=' overdue-card';}
+      else if(dueDate.getTime()===today.getTime()){dueClass=' due-today';cardClass+=' today-card';}
+    }
+  }
+  card.className=cardClass;
   card.draggable=true;
   card.dataset.id=t.id;
+  const dueLabel=t.due?(dueClass===' overdue'?'⚠ '+t.due:(dueClass===' due-today'?'📅 Today':t.due)):'';
   card.innerHTML=`
     <div class="task-card-top">
       <div class="task-card-title${t.status==='done'?' striked':''}">${esc(t.title||'')}</div>
@@ -1106,7 +1364,7 @@ function makeTaskCard(t) {
     ${t.desc?`<div class="task-card-desc">${esc(t.desc)}</div>`:''}
     <div class="task-card-footer">
       <span class="priority-badge priority-${t.priority||'medium'}">${t.priority||'medium'}</span>
-      ${t.due?`<span class="task-due">${esc(t.due)}</span>`:''}
+      ${t.due?`<span class="task-due${dueClass}">${esc(dueLabel)}</span>`:''}
     </div>`;
   card.addEventListener('dragstart',e=>{dragId=t.id;card.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
   card.addEventListener('dragend',()=>{card.classList.remove('dragging');dragId=null;});
@@ -1158,12 +1416,15 @@ window.dropTask = async function(e, status) {
 // ============ DASHBOARD ============
 // ============ ANALYTICS DASHBOARD ============
 function updateDashStats() {
+  // Onboarding
+  checkOnboarding();
+
   // Basic counts
   const openTasks = (window._tasks||[]).filter(t=>t.status!=='done');
   document.getElementById('dash-notes-count').textContent = (window._notes||[]).length;
   document.getElementById('dash-tasks-count').textContent = openTasks.length;
 
-  // Progress
+  // C1 Progress
   const all = document.querySelectorAll('#modules-container input[type=checkbox]');
   let checked = 0; all.forEach(cb=>{if(cb.checked)checked++;});
   const pct = totalItems>0 ? Math.round((checked/totalItems)*100) : 0;
@@ -1171,36 +1432,41 @@ function updateDashStats() {
   const sub = document.getElementById('dash-progress-sub');
   if(sub){if(pct===0){sub.textContent='Not started';sub.className='change';}else if(pct===100){sub.textContent='Completed! 🎉';sub.className='change up';}else{sub.textContent='In progress';sub.className='change up';}}
 
-  // Update legacy IDs used by onCheck
-  const cb1=document.getElementById('dash-c1-bar'); if(cb1)cb1.style.width=pct+'%';
-  const cp1=document.getElementById('dash-c1-pct'); if(cp1)cp1.textContent=pct+'%';
+  // C2 Progress
+  const all2 = document.querySelectorAll('#modules-container2 input[type=checkbox]');
+  let checked2=0; all2.forEach(cb=>{if(cb.checked)checked2++;});
+  const tot2 = all2.length || (typeof totalItems2!=='undefined'?totalItems2:0);
+  const pct2 = tot2>0?Math.round((checked2/tot2)*100):0;
+  const d2el = document.getElementById('dash-progress2');
+  const sub2 = document.getElementById('dash-progress2-sub');
+  if(d2el) d2el.textContent=pct2+'%';
+  if(sub2){if(pct2===0){sub2.textContent='Not started';sub2.className='change';}else if(pct2===100){sub2.textContent='Completed! 🎉';sub2.className='change up';}else{sub2.textContent='In progress';sub2.className='change up';}}
 
-  // Progress ring
+  // Combined ring (C1 only drives the ring, combined shown in stats)
   const ring=document.getElementById('dash-ring');
   const circumference=289;
   if(ring) ring.style.strokeDashoffset=circumference-(circumference*(pct/100));
   const rp=document.getElementById('dash-ring-pct'); if(rp)rp.textContent=pct+'%';
   const rd=document.getElementById('dash-ring-done'); if(rd)rd.textContent=checked+'/'+totalItems;
-  const rr=document.getElementById('dash-ring-remain'); if(rr)rr.textContent=(totalItems-checked);
+  const rd2=document.getElementById('dash-ring-done2'); if(rd2)rd2.textContent=checked2+'/'+(tot2||'—');
 
-  // Estimated finish
+  // Certificate overall progress bar
+  renderCertBar(pct, pct2);
+
+  // Estimated finish (C1)
   const settings=JSON.parse(localStorage.getItem('ws-settings')||'{}');
-  const pace=parseFloat(settings.pace)||2; // hours/day
-  const hoursPerItem=13/totalItems; // ~0.21h per item
+  const pace=parseFloat(settings.pace)||2;
+  const hoursPerItem=13/totalItems;
   const remaining=totalItems-checked;
-  const daysLeft=remaining>0 ? Math.ceil((remaining*hoursPerItem)/pace) : 0;
+  const daysLeft=remaining>0?Math.ceil((remaining*hoursPerItem)/pace):0;
   const finishDate=new Date(); finishDate.setDate(finishDate.getDate()+daysLeft);
   const finishEl=document.getElementById('dash-finish');
   if(finishEl) finishEl.textContent=remaining===0?'Done! 🎉':finishDate.toLocaleDateString('en-US',{month:'short',day:'numeric'});
-  const finishSub=document.getElementById('dash-finish-sub');
-  if(finishSub) finishSub.textContent=remaining===0?'Course 1 complete':daysLeft+' days at '+pace+'h/day';
-
-  // Pace bar (progress toward today's goal)
   const paceLabel=document.getElementById('dash-pace-label'); if(paceLabel)paceLabel.textContent=pace+'h/day';
-  const paceDays=document.getElementById('dash-pace-days'); if(paceDays)paceDays.textContent=daysLeft>0?daysLeft+' days left':'Done!';
+  const paceDays=document.getElementById('dash-pace-days'); if(paceDays)paceDays.textContent=daysLeft>0?daysLeft+' days (C1)':'C1 Done!';
   const paceBar=document.getElementById('dash-pace-bar'); if(paceBar)paceBar.style.width=pct+'%';
 
-  // Module bar chart
+  // Module bar chart (C1 + C2)
   renderModuleBarChart();
 
   // Category breakdown
@@ -1222,44 +1488,61 @@ function updateDashStats() {
   updateAiContext();
 }
 
+function renderCertBar(pct1, pct2) {
+  const segs = document.getElementById('cert-segs');
+  const pctEl = document.getElementById('cert-overall-pct');
+  if(!segs) return;
+  // 9 courses: C1=13h, C2=15h, rest=124h total 152h
+  const totalH=152, c1h=13, c2h=15;
+  const w1=(c1h/totalH*100).toFixed(1), w2=(c2h/totalH*100).toFixed(1), wRest=(100-parseFloat(w1)-parseFloat(w2)).toFixed(1);
+  const contrib1=pct1/100*(c1h/totalH*100), contrib2=pct2/100*(c2h/totalH*100);
+  const overall=Math.round((contrib1+contrib2));
+  if(pctEl) pctEl.textContent=overall+'% of C1+C2';
+  segs.innerHTML=`
+    <div class="cert-seg" style="width:${w1}%;background:linear-gradient(90deg,var(--accent),var(--teal));opacity:${0.3+pct1/100*0.7}" title="C1: ${pct1}%"></div>
+    <div class="cert-seg" style="width:${w2}%;background:linear-gradient(90deg,var(--blue),var(--purple));opacity:${0.3+pct2/100*0.7}" title="C2: ${pct2}%"></div>
+    <div class="cert-seg" style="width:${wRest}%;background:var(--bg3)" title="C3–C9: Locked"></div>`;
+}
+
 function renderModuleBarChart() {
   const svg = document.getElementById('module-bar-chart');
   if (!svg) return;
-  const all = document.querySelectorAll('#modules-container input[type=checkbox]');
-  const W=260, H=120, padL=28, padB=24, padT=10, barW=32, gap=18;
-  const moduleItems=[32,16,10,4]; // items per module (vid+read+assign+plug counts)
-  // Recalculate from actual checkboxes
-  const modulePcts=[];
+  const all1 = document.querySelectorAll('#modules-container input[type=checkbox]');
+  const all2 = document.querySelectorAll('#modules-container2 input[type=checkbox]');
+  const W=260, H=120, padL=24, padB=22, padT=10, gap=4;
+  const allModules = [];
   let idx=0;
-  moduleData.forEach(m=>{
+  moduleData.forEach((m,mi)=>{
     let mT=0,mC=0;
-    m.sections.forEach(s=>s.items.forEach(()=>{if(all[idx]&&all[idx].checked)mC++;mT++;idx++;}));
-    modulePcts.push(mT>0?Math.round((mC/mT)*100):0);
+    m.sections.forEach(s=>s.items.forEach(()=>{if(all1[idx]&&all1[idx].checked)mC++;mT++;idx++;}));
+    allModules.push({pct:mT>0?Math.round((mC/mT)*100):0,label:'C1M'+(mi+1),color:['var(--accent)','var(--teal)','var(--blue)','var(--purple)'][mi]});
   });
+  if(typeof moduleData2!=='undefined'){
+    let idx2=0;
+    moduleData2.forEach((m,mi)=>{
+      let mT=0,mC=0;
+      m.sections.forEach(s=>s.items.forEach(()=>{if(all2[idx2]&&all2[idx2].checked)mC++;mT++;idx2++;}));
+      allModules.push({pct:mT>0?Math.round((mC/mT)*100):0,label:'C2M'+(mi+1),color:['var(--blue)','var(--purple)','var(--teal)','var(--accent)'][mi],c2:true});
+    });
+  }
+  const n=allModules.length;
+  const barW=Math.floor((W-padL-gap*(n-1)-4)/n);
   const chartH=H-padB-padT;
-  const totalW=(barW+gap)*modulePcts.length-gap;
-  const startX=(W-totalW)/2;
-  const labels=['M1','M2','M3','M4'];
-  const colors=['var(--accent)','var(--teal)','var(--blue)','var(--purple)'];
   let html='';
-  // Grid lines
-  [0,25,50,75,100].forEach(v=>{
+  [0,50,100].forEach(v=>{
     const y=padT+chartH-(chartH*v/100);
-    html+=`<line x1="${padL}" y1="${y}" x2="${W-4}" y2="${y}" stroke="var(--border)" stroke-width="0.5"/>`;
-    html+=`<text x="${padL-4}" y="${y+3}" text-anchor="end" class="bar-label">${v}%</text>`;
+    html+=`<line x1="${padL}" y1="${y}" x2="${W-2}" y2="${y}" stroke="var(--border)" stroke-width="0.5"/>`;
+    html+=`<text x="${padL-3}" y="${y+3}" text-anchor="end" class="bar-label">${v}%</text>`;
   });
-  modulePcts.forEach((pct,i)=>{
-    const x=startX+i*(barW+gap);
-    const barH=Math.max(2,chartH*pct/100);
+  allModules.forEach((m,i)=>{
+    const x=padL+i*(barW+gap);
+    const barH=Math.max(2,chartH*m.pct/100);
     const y=padT+chartH-barH;
-    html+=`<rect x="${x}" y="${padT+chartH}" width="${barW}" height="0" rx="4" fill="${colors[i]}" opacity="0.85" class="bar-fill" id="mbar-dash-${i}"/>`;
-    html+=`<text x="${x+barW/2}" y="${H-6}" text-anchor="middle" class="bar-label">${labels[i]}</text>`;
-    html+=`<text x="${x+barW/2}" y="${y-4}" text-anchor="middle" class="bar-val">${pct>0?pct+'%':''}</text>`;
-    // Animate
-    setTimeout(()=>{
-      const bar=document.getElementById('mbar-dash-'+i);
-      if(bar){bar.setAttribute('y',y);bar.setAttribute('height',barH);}
-    },100+i*80);
+    const op=m.c2?0.7:1;
+    html+=`<rect x="${x}" y="${padT+chartH}" width="${barW}" height="0" rx="3" fill="${m.color}" opacity="${op}" class="bar-fill" id="mbar-dash-${i}"/>`;
+    html+=`<text x="${x+barW/2}" y="${H-4}" text-anchor="middle" class="bar-label" style="font-size:8px">${m.label}</text>`;
+    if(m.pct>0) html+=`<text x="${x+barW/2}" y="${Math.max(y-2,padT+8)}" text-anchor="middle" class="bar-val" style="font-size:8px">${m.pct}%</text>`;
+    setTimeout(()=>{const bar=document.getElementById('mbar-dash-'+i);if(bar){bar.setAttribute('y',y);bar.setAttribute('height',barH);}},80+i*50);
   });
   svg.innerHTML=html;
 }
@@ -1453,18 +1736,19 @@ window.onCheck = function(save=true) {
 };
 
 // Navigation
-const pageNames={dashboard:'Dashboard',courses:'Courses',timeline:'Course 1 Timeline',timeline2:'Course 2 Timeline',tasks:'Tasks',notes:'Notes',ai:'AI Assistant',settings:'Settings'};
+const pageNames={dashboard:'Dashboard',courses:'Courses',timeline:'Course 1 Timeline',timeline2:'Course 2 Timeline',certtracker:'Certificate Tracker',tasks:'Tasks',notes:'Notes',ai:'AI Assistant',settings:'Settings'};
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
+  const pg=document.getElementById('page-'+id); if(pg) pg.classList.add('active');
   document.querySelectorAll('.sidebar-nav .nav-item,.sidebar-footer .nav-item').forEach(n=>n.classList.remove('active'));
   const ni=document.querySelectorAll('.sidebar-nav .nav-item,.sidebar-footer .nav-item');
-  const map={dashboard:0,courses:1,timeline:2,timeline2:3,tasks:4,notes:5,ai:6,settings:7};
+  const map={dashboard:0,courses:1,timeline:2,timeline2:3,certtracker:4,tasks:5,notes:6,ai:7,settings:8};
   if(map[id]!==undefined)ni[map[id]].classList.add('active');
   document.getElementById('breadcrumb').innerHTML='Home / <span>'+(pageNames[id]||id)+'</span>';
   document.getElementById('sidebar').classList.remove('open');
   window.currentPage=id;
   document.querySelectorAll('#page-'+id+' .anim-item').forEach(el=>{el.style.animation='none';el.offsetHeight;el.style.animation='';});
+  if(id==='certtracker') renderCertTracker();
 }
 
 // Courses
@@ -1524,8 +1808,52 @@ function renderCustomCoursesList(){
   const el=document.getElementById('custom-courses-list');
   const arr=getCustomCourses();
   if(!arr.length){el.innerHTML='<div style="font-size:13px;color:var(--text3);text-align:center;padding:8px">No custom courses yet</div>';return;}
-  el.innerHTML=arr.map((c,i)=>`<div class="custom-course-item"><span class="cc-num">#${i+1}</span><span class="cc-title">${esc(c.title)}</span><span style="font-size:11px;color:var(--text3);margin-right:4px">${c.hours}h</span><button class="cc-del" onclick="deleteCustomCourse(${i})" title="Remove">×</button></div>`).join('');
+  el.innerHTML=arr.map((c,i)=>`
+    <div class="custom-course-item" id="cc-item-${i}">
+      <span class="cat-dot" style="width:10px;height:10px;border-radius:50%;background:${c.color||'var(--accent)'};flex-shrink:0;margin-right:2px"></span>
+      <span class="cc-title">${esc(c.title)}</span>
+      <span style="font-size:11px;color:var(--text3);margin-right:4px">${c.hours||0}h</span>
+      <button class="icon-btn" style="width:22px;height:22px" title="Edit" onclick="editCustomCourse(${i})"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+      <button class="cc-del icon-btn del" style="width:22px;height:22px" title="Delete" onclick="deleteCustomCourse(${i})">×</button>
+    </div>
+    <div id="cc-edit-${i}" style="display:none" class="cc-edit-form">
+      <input type="text" id="cc-edit-title-${i}" value="${esc(c.title)}" placeholder="Course title"/>
+      <div class="cc-edit-row">
+        <input type="number" id="cc-edit-hours-${i}" value="${c.hours||0}" placeholder="Hours" min="1"/>
+        <select id="cc-edit-color-${i}">
+          <option value="var(--accent)"${c.color==='var(--accent)'?' selected':''}>Lime</option>
+          <option value="var(--blue)"${c.color==='var(--blue)'?' selected':''}>Blue</option>
+          <option value="var(--teal)"${c.color==='var(--teal)'?' selected':''}>Teal</option>
+          <option value="var(--purple)"${c.color==='var(--purple)'?' selected':''}>Purple</option>
+          <option value="var(--amber)"${c.color==='var(--amber)'?' selected':''}>Amber</option>
+          <option value="var(--red)"${c.color==='var(--red)'?' selected':''}>Red</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-primary" style="padding:5px 12px;font-size:12px" onclick="saveEditCourse(${i})">Save</button>
+        <button class="btn btn-ghost" style="padding:5px 12px;font-size:12px" onclick="cancelEditCourse(${i})">Cancel</button>
+      </div>
+    </div>`).join('');
 }
+window.editCustomCourse=function(i){
+  document.getElementById('cc-edit-'+i).style.display='flex';
+  document.getElementById('cc-item-'+i).style.opacity='0.5';
+};
+window.cancelEditCourse=function(i){
+  document.getElementById('cc-edit-'+i).style.display='none';
+  document.getElementById('cc-item-'+i).style.opacity='1';
+};
+window.saveEditCourse=function(i){
+  const title=document.getElementById('cc-edit-title-'+i).value.trim();
+  if(!title) return;
+  const hours=parseInt(document.getElementById('cc-edit-hours-'+i).value)||0;
+  const color=document.getElementById('cc-edit-color-'+i).value;
+  const arr=getCustomCourses();
+  arr[i]={title,hours,color};
+  saveCustomCourses(arr);
+  renderCourseCards();
+  renderCustomCoursesList();
+};
 window.addCustomCourse=function(){
   const title=document.getElementById('cc-title-input').value.trim();
   const hours=parseInt(document.getElementById('cc-hours-input').value)||0;
@@ -1678,7 +2006,9 @@ function saveSettings(){
   document.documentElement.classList.toggle('light',th==='light');
   if(n){document.getElementById('avatar-el').textContent=n.charAt(0).toUpperCase();document.getElementById('logo-letter').textContent=n.charAt(0).toUpperCase();}
   applyColor(c);
-  try{localStorage.setItem('ws-settings',JSON.stringify({name:n,theme:th,pace:p,tz,color:c}));}catch(e){}
+  const s={name:n,theme:th,pace:p,tz,color:c,__t:Date.now()};
+  try{localStorage.setItem('ws-settings',JSON.stringify(s));}catch(e){}
+  if(window.FB&&window.FB.saveSettings) window.FB.saveSettings(s);
   const t=document.getElementById('save-toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
 }
 function resetSettings(){
@@ -1708,25 +2038,42 @@ function buildContextBlock() {
     else { if(label) remainingItems.push(label); }
   });
   const pct = totalItems > 0 ? Math.round((checked / totalItems) * 100) : 0;
+
+  // C2
+  const all2 = document.querySelectorAll('#modules-container2 input[type=checkbox]');
+  let checked2=0; const completedItems2=[], remainingItems2=[];
+  all2.forEach(cb=>{
+    const label=cb.closest('.check-item')?.querySelector('.check-text')?.textContent?.trim();
+    if(cb.checked){checked2++;if(label)completedItems2.push(label);}
+    else{if(label)remainingItems2.push(label);}
+  });
+  const tot2=all2.length||(typeof totalItems2!=='undefined'?totalItems2:0);
+  const pct2=tot2>0?Math.round((checked2/tot2)*100):0;
+
   const openTasks = (window._tasks||[]).filter(t => t.status !== 'done');
   const doneTasks = (window._tasks||[]).filter(t => t.status === 'done');
   const notesTitles = (window._notes||[]).map(n => n.title).join(', ') || 'None';
+  const settings=JSON.parse(localStorage.getItem('ws-settings')||'{}');
 
   return `== MY WORKSPACE CONTEXT ==
 Course: Google Data Analytics Professional Certificate (9 courses, 152h total)
-Active: Course 1 — "Foundations: Data, Data, Everywhere" (13h, ${totalItems} items)
-Progress: ${pct}% complete (${checked}/${totalItems} items done)
+Pace: ${settings.pace||2}h/day · Name: ${settings.name||'Student'}
 
-Completed items (${completedItems.length}): ${completedItems.slice(0,15).join('; ')||'None yet'}${completedItems.length>15?` ...+${completedItems.length-15} more`:''}
+COURSE 1 — Foundations: Data, Data, Everywhere (13h, ${totalItems} items)
+Progress: ${pct}% (${checked}/${totalItems} done)
+Completed: ${completedItems.slice(0,12).join('; ')||'None yet'}${completedItems.length>12?` +${completedItems.length-12} more`:''}
+Up next: ${remainingItems.slice(0,6).join('; ')||'All done!'}
 
-Up next: ${remainingItems.slice(0,8).join('; ')||'All done!'}
+COURSE 2 — Ask Questions to Make Data-Driven Decisions (15h, ${tot2} items)
+Progress: ${pct2}% (${checked2}/${tot2} done)
+Completed: ${completedItems2.slice(0,8).join('; ')||'None yet'}${completedItems2.length>8?` +${completedItems2.length-8} more`:''}
+Up next: ${remainingItems2.slice(0,4).join('; ')||'All done!'}
 
 Open tasks (${openTasks.length}): ${openTasks.map(t=>`"${t.title}" [${t.priority}${t.due?', due '+t.due:''}]`).join('; ')||'None'}
 Completed tasks: ${doneTasks.length}
-
 Notes (${(window._notes||[]).length}): ${notesTitles}
 
-Certificate overview: C2 Ask Questions (15h) · C3 Prepare Data (19h) · C4 Process Data (16h) · C5 Analyze (26h) · C6 Visualize (19h) · C7 Python (27h) · C8 Capstone (11h) · C9 Job Search AI (6h)
+Certificate: C3 Prepare Data (19h) · C4 Process (16h) · C5 Analyze (26h) · C6 Visualize (19h) · C7 Python (27h) · C8 Capstone (11h) · C9 Job Search AI (6h)
 == END CONTEXT ==`;
 }
 
@@ -1853,11 +2200,437 @@ window.updateDashStats = function() { origUpdateDash(); updateAiContext(); };
 // Close on overlay click
 document.getElementById('editor-overlay').addEventListener('click',function(e){if(e.target===this)closeNoteEditor();});
 document.getElementById('task-overlay').addEventListener('click',function(e){if(e.target===this)closeTaskModal();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeNoteEditor();closeTaskModal();}});
+
+// ============ GLOBAL SEARCH ============
+let searchSelIdx=-1, searchItems=[];
+window.openSearch=function(){
+  document.getElementById('search-overlay').classList.add('show');
+  setTimeout(()=>{const i=document.getElementById('search-input');i.value='';i.focus();runSearch();},50);
+};
+window.closeSearch=function(){
+  document.getElementById('search-overlay').classList.remove('show');
+  searchSelIdx=-1;
+};
+window.runSearch=function(){
+  const q=document.getElementById('search-input').value.trim().toLowerCase();
+  const el=document.getElementById('search-results');
+  searchItems=[];
+  if(!q){el.innerHTML='<div class="search-empty">Start typing to search across your workspace</div>';return;}
+  let html='';
+  // Notes
+  const notes=(window._notes||[]).filter(n=>(n.title+n.body+n.tag).toLowerCase().includes(q));
+  if(notes.length){
+    html+=`<div class="search-section-label">Notes</div>`;
+    notes.slice(0,5).forEach(n=>{
+      const idx=searchItems.length;
+      searchItems.push({type:'note',id:n.id});
+      html+=`<div class="search-result-item" id="sr-${idx}" onclick="searchGo(${idx})">
+        <div class="search-result-icon" style="background:${n.color||'var(--accent)'}22"><span style="color:${n.color||'var(--accent)'}">📝</span></div>
+        <div class="search-result-body"><div class="search-result-title">${esc(n.title||'Untitled')}</div><div class="search-result-sub">${esc((n.body||'').slice(0,60))}</div></div>
+        <span class="search-result-tag">${n.tag?esc(n.tag):'note'}</span>
+      </div>`;
+    });
+  }
+  // Tasks
+  const tasks=(window._tasks||[]).filter(t=>(t.title+t.desc).toLowerCase().includes(q));
+  if(tasks.length){
+    html+=`<div class="search-section-label">Tasks</div>`;
+    tasks.slice(0,5).forEach(t=>{
+      const idx=searchItems.length;
+      searchItems.push({type:'task',id:t.id});
+      html+=`<div class="search-result-item" id="sr-${idx}" onclick="searchGo(${idx})">
+        <div class="search-result-icon" style="background:var(--amber)22"><span>✅</span></div>
+        <div class="search-result-body"><div class="search-result-title">${esc(t.title)}</div><div class="search-result-sub">${t.status} · ${t.priority||'medium'} priority${t.due?' · '+t.due:''}</div></div>
+        <span class="search-result-tag">${esc(t.status)}</span>
+      </div>`;
+    });
+  }
+  // Timeline C1
+  const c1items=[];
+  document.querySelectorAll('#modules-container .check-item').forEach(el=>{
+    const txt=el.querySelector('.check-text')?.textContent||'';
+    if(txt.toLowerCase().includes(q)) c1items.push({text:txt,done:el.classList.contains('done')});
+  });
+  // Timeline C2
+  const c2items=[];
+  document.querySelectorAll('#modules-container2 .check-item').forEach(el=>{
+    const txt=el.querySelector('.check-text')?.textContent||'';
+    if(txt.toLowerCase().includes(q)) c2items.push({text:txt,done:el.classList.contains('done')});
+  });
+  if(c1items.length||c2items.length){
+    html+=`<div class="search-section-label">Timeline items</div>`;
+    [...c1items.slice(0,3).map(x=>({...x,course:'C1'})),...c2items.slice(0,3).map(x=>({...x,course:'C2'}))].forEach(item=>{
+      const idx=searchItems.length;
+      searchItems.push({type:'timeline',course:item.course});
+      html+=`<div class="search-result-item" id="sr-${idx}" onclick="searchGo(${idx})">
+        <div class="search-result-icon" style="background:var(--purple)22"><span>📋</span></div>
+        <div class="search-result-body"><div class="search-result-title">${esc(item.text)}</div><div class="search-result-sub">${item.course} · ${item.done?'✓ Done':'Pending'}</div></div>
+        <span class="search-result-tag">${item.course}</span>
+      </div>`;
+    });
+  }
+  if(!searchItems.length) html='<div class="search-empty">No results for "'+esc(q)+'"</div>';
+  el.innerHTML=html;
+  searchSelIdx=-1;
+};
+window.searchGo=function(idx){
+  const item=searchItems[idx];
+  if(!item) return;
+  closeSearch();
+  if(item.type==='note'){showPage('notes');setTimeout(()=>openNoteEditor(item.id),200);}
+  else if(item.type==='task'){showPage('tasks');}
+  else if(item.type==='timeline'){showPage(item.course==='C2'?'timeline2':'timeline');}
+};
+window.searchKeyNav=function(e){
+  const items=document.querySelectorAll('.search-result-item');
+  if(e.key==='ArrowDown'){e.preventDefault();searchSelIdx=Math.min(searchSelIdx+1,items.length-1);}
+  else if(e.key==='ArrowUp'){e.preventDefault();searchSelIdx=Math.max(searchSelIdx-1,0);}
+  else if(e.key==='Enter'){e.preventDefault();if(searchSelIdx>=0)searchGo(searchSelIdx);return;}
+  else if(e.key==='Escape'){closeSearch();return;}
+  items.forEach((el,i)=>el.classList.toggle('sel',i===searchSelIdx));
+  if(searchSelIdx>=0&&items[searchSelIdx])items[searchSelIdx].scrollIntoView({block:'nearest'});
+};
+
+// ============ ONBOARDING ============
+function checkOnboarding(){
+  try{
+    const dismissed=localStorage.getItem('ws-ob-dismissed');
+    if(dismissed) return;
+    const banner=document.getElementById('onboarding-banner');
+    if(banner) banner.style.display='block';
+    // Mark steps as done
+    const hasTask=(window._tasks||[]).length>0;
+    const hasNote=(window._notes||[]).length>0;
+    const hasProgress=document.querySelectorAll('#modules-container input[type=checkbox]:checked').length>0;
+    const s=id=>document.getElementById(id);
+    if(hasProgress&&s('obs-timeline'))s('obs-timeline').classList.add('done');
+    if(hasTask&&s('obs-task'))s('obs-task').classList.add('done');
+    if(hasNote&&s('obs-note'))s('obs-note').classList.add('done');
+    const allDone=hasProgress&&hasTask&&hasNote;
+    if(allDone) window.dismissOb(true);
+  }catch(e){}
+}
+window.dismissOb=function(permanent=false){
+  const banner=document.getElementById('onboarding-banner');
+  if(banner) banner.style.display='none';
+  if(permanent) try{localStorage.setItem('ws-ob-dismissed','1');}catch(e){}
+};
+
+// ============ NOTE EDITOR PREVIEW TOGGLE ============
+window.setEditorView = function(mode) {
+  const ta = document.getElementById('editor-body');
+  const preview = document.getElementById('editor-preview-pane');
+  const toolbar = document.getElementById('editor-toolbar');
+  document.getElementById('vt-edit').classList.toggle('active', mode==='edit');
+  document.getElementById('vt-preview').classList.toggle('active', mode==='preview');
+  if(mode==='preview'){
+    preview.innerHTML = renderMd(ta.value);
+    preview.classList.add('show');
+    ta.classList.add('hidden');
+    toolbar.style.opacity='0.4';toolbar.style.pointerEvents='none';
+  } else {
+    preview.classList.remove('show');
+    ta.classList.remove('hidden');
+    toolbar.style.opacity='';toolbar.style.pointerEvents='';
+    ta.focus();
+  }
+};
+
+// ============ TAG FILTER ============
+let activeTag = null;
+function renderTagFilter() {
+  const row = document.getElementById('tag-filter-row');
+  if(!row) return;
+  const tags = [...new Set((window._notes||[]).map(n=>n.tag).filter(Boolean))];
+  if(!tags.length){row.innerHTML='';return;}
+  row.innerHTML = '<span style="font-size:11px;color:var(--text3)">Filter:</span>'
+    + '<div class="tag-filter-chip'+(activeTag===null?' active':'')+ '" onclick="setTagFilter(null)">All</div>'
+    + tags.map(t=>`<div class="tag-filter-chip${activeTag===t?' active':''}" onclick="setTagFilter('${esc(t)}')">${esc(t)}</div>`).join('');
+}
+window.setTagFilter = function(tag) {
+  activeTag = tag;
+  renderTagFilter();
+  filterNotes();
+};
+
+// Patch filterNotes to respect tag filter
+const _origFilterNotes = window.filterNotes || function(){};
+window.filterNotes = function() {
+  const q = (document.getElementById('notes-search-input')?.value||'').toLowerCase();
+  const grid = document.getElementById('notes-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  let list = window._notes || [];
+  if(q) list = list.filter(n=>(n.title+n.body+n.tag).toLowerCase().includes(q));
+  if(activeTag) list = list.filter(n=>n.tag===activeTag);
+  if(!list.length){grid.innerHTML='<div class="notes-empty">No notes found</div>';return;}
+  list.forEach(n=>grid.appendChild(makeNoteCard(n)));
+};
+
+// Patch renderNotes to also update tag filter
+const _origRenderNotes = renderNotes;
+function renderNotes(q='') {
+  const grid = document.getElementById('notes-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  let list = q ? window._notes.filter(n=>(n.title+n.body+n.tag).toLowerCase().includes(q.toLowerCase())) : window._notes;
+  if(activeTag) list = list.filter(n=>n.tag===activeTag);
+  if(!list.length){grid.innerHTML='<div class="notes-empty">No notes yet — click "+ New note" to start</div>';return;}
+  list.forEach(n=>grid.appendChild(makeNoteCard(n)));
+  const badge=document.getElementById('notes-badge');if(badge)badge.textContent=window._notes.length;
+  renderTagFilter();
+}
+
+// ============ TASK SORT ============
+let taskSort = 'default';
+window.setTaskSort = function(s) {
+  taskSort = s;
+  ['default','priority','due','alpha'].forEach(k=>{
+    const b=document.getElementById('sort-btn-'+k);
+    if(b) b.classList.toggle('active', k===s);
+  });
+  renderTasks();
+};
+
+// Patch renderTasks for sort
+const _origRenderTasks = renderTasks;
+function renderTasks() {
+  ['todo','inprogress','done'].forEach(status => {
+    const cont=document.getElementById('tasks-'+status), emp=document.getElementById('empty-'+status);
+    if(!cont) return;
+    cont.innerHTML='';
+    let list=window._tasks.filter(t=>t.status===status);
+    // Sort
+    const priOrder={high:0,medium:1,low:2};
+    if(taskSort==='priority') list=[...list].sort((a,b)=>(priOrder[a.priority||'medium']||1)-(priOrder[b.priority||'medium']||1));
+    else if(taskSort==='alpha') list=[...list].sort((a,b)=>a.title.localeCompare(b.title));
+    else if(taskSort==='due') list=[...list].sort((a,b)=>{
+      if(!a.due&&!b.due) return 0; if(!a.due) return 1; if(!b.due) return -1;
+      return new Date(a.due)-new Date(b.due)||0;
+    });
+    document.getElementById('cnt-'+status).textContent=list.length;
+    if(emp) emp.style.display=list.length?'none':'block';
+    list.forEach(t=>{const c=makeTaskCard(t);cont.appendChild(c);});
+  });
+  const open=window._tasks.filter(t=>t.status!=='done').length;
+  const badge=document.getElementById('task-badge');if(badge)badge.textContent=open;
+}
+
+// ============ CERTIFICATE TRACKER ============
+const CERT_COURSES = [
+  {n:1,title:'Foundations: Data, Data, Everywhere',h:13,color:'var(--accent)',hasTimeline:true,page:'timeline'},
+  {n:2,title:'Ask Questions to Make Data-Driven Decisions',h:15,color:'var(--blue)',hasTimeline:true,page:'timeline2'},
+  {n:3,title:'Prepare Data for Exploration',h:19,color:'var(--amber)'},
+  {n:4,title:'Process Data from Dirty to Clean',h:16,color:'var(--teal)'},
+  {n:5,title:'Analyze Data to Answer Questions',h:26,color:'var(--purple)'},
+  {n:6,title:'Share Data Through the Art of Visualization',h:19,color:'var(--red)'},
+  {n:7,title:'Introduction to Data Analysis Using Python',h:27,color:'var(--blue)'},
+  {n:8,title:'Google Data Analytics Capstone',h:11,color:'var(--accent)'},
+  {n:9,title:'Accelerate Your Job Search with AI',h:6,color:'var(--amber)'},
+];
+
+function renderCertTracker() {
+  const grid = document.getElementById('cert-tracker-grid');
+  const summary = document.getElementById('cert-summary-stats');
+  if(!grid) return;
+
+  const settings = JSON.parse(localStorage.getItem('ws-settings')||'{}');
+  const pace = parseFloat(settings.pace)||2;
+
+  const all1 = document.querySelectorAll('#modules-container input[type=checkbox]');
+  let ch1=0; all1.forEach(cb=>{if(cb.checked)ch1++;});
+  const pct1 = totalItems>0?Math.round((ch1/totalItems)*100):0;
+
+  const all2 = document.querySelectorAll('#modules-container2 input[type=checkbox]');
+  let ch2=0,tot2=all2.length; all2.forEach(cb=>{if(cb.checked)ch2++;});
+  const pct2 = tot2>0?Math.round((ch2/tot2)*100):0;
+
+  const totalH = CERT_COURSES.reduce((s,c)=>s+c.h,0); // 152
+  let totalDone = 0;
+  CERT_COURSES.forEach(c=>{
+    if(c.n===1) totalDone += (ch1/totalItems)*c.h;
+    else if(c.n===2) totalDone += tot2>0?(ch2/tot2)*c.h:0;
+  });
+  const overallPct = Math.round((totalDone/totalH)*100);
+  const hoursLeft = totalH - totalDone;
+  const daysLeft = hoursLeft>0 ? Math.ceil(hoursLeft/pace) : 0;
+  const finishDate = new Date(); finishDate.setDate(finishDate.getDate()+daysLeft);
+
+  if(summary) summary.innerHTML = `
+    <div class="cert-sum-stat"><div class="val">${overallPct}%</div><div class="lbl">Overall</div></div>
+    <div class="cert-sum-stat"><div class="val">${Math.round(totalDone)}h</div><div class="lbl">Hours done</div></div>
+    <div class="cert-sum-stat"><div class="val">${Math.round(hoursLeft)}h</div><div class="lbl">Remaining</div></div>
+    <div class="cert-sum-stat"><div class="val">${daysLeft>0?finishDate.toLocaleDateString('en-US',{month:'short',day:'numeric'}):'🎉'}</div><div class="lbl">Est. finish at ${pace}h/day</div></div>`;
+
+  grid.innerHTML = CERT_COURSES.map(c=>{
+    const pct = c.n===1?pct1:c.n===2?pct2:0;
+    const status = pct===100?'Complete ✓':c.n<=2?'Active':'Locked';
+    const estH = c.h*(1-pct/100);
+    const estD = estH>0?Math.ceil(estH/pace):0;
+    const clickAttr = c.page ? `onclick="showPage('${c.page}')" style="cursor:pointer"` : '';
+    return `<div class="cert-course-card" ${clickAttr}>
+      <div class="ctc-tag" style="color:${c.color}">Course ${c.n} · ${status}</div>
+      <div class="ctc-title">${c.title}</div>
+      <div class="ctc-bar"><div class="ctc-fill" style="width:${pct}%;background:${c.color}"></div></div>
+      <div class="ctc-meta"><span>${c.h}h total</span><span style="color:${c.color};font-family:var(--mono)">${pct}%</span></div>
+      <div class="ctc-est">${pct===100?'✅ Complete':(c.n<=2?`~${estD} days left at ${pace}h/day`:'—')}</div>
+    </div>`;
+  }).join('');
+}
+
+// ============ EXPORT ============
+window.openExportModal = function() {
+  const text = buildExportText();
+  document.getElementById('export-preview-text').textContent = text;
+  document.getElementById('export-overlay').classList.add('show');
+};
+function buildExportText() {
+  const now = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const settings = JSON.parse(localStorage.getItem('ws-settings')||'{}');
+
+  const all1 = document.querySelectorAll('#modules-container input[type=checkbox]');
+  let ch1=0; const done1=[]; all1.forEach(cb=>{if(cb.checked){ch1++;const l=cb.closest('.check-item')?.querySelector('.check-text')?.textContent?.trim();if(l)done1.push(l);}});
+  const pct1 = totalItems>0?Math.round((ch1/totalItems)*100):0;
+
+  const all2 = document.querySelectorAll('#modules-container2 input[type=checkbox]');
+  let ch2=0,tot2=all2.length; const done2=[]; all2.forEach(cb=>{if(cb.checked){ch2++;const l=cb.closest('.check-item')?.querySelector('.check-text')?.textContent?.trim();if(l)done2.push(l);}});
+  const pct2 = tot2>0?Math.round((ch2/tot2)*100):0;
+
+  const openTasks=(window._tasks||[]).filter(t=>t.status!=='done');
+  const doneTasks=(window._tasks||[]).filter(t=>t.status==='done');
+  const notes=(window._notes||[]);
+
+  return `COMMAND CENTER — PROGRESS REPORT
+Generated: ${now}
+Student: ${settings.name||'—'} · Pace: ${settings.pace||2}h/day
+
+════════════════════════════════
+CERTIFICATE PROGRESS
+Google Data Analytics Professional Certificate
+9 courses · 152 hours total
+════════════════════════════════
+
+Course 1: Foundations: Data, Data, Everywhere
+  Progress: ${pct1}% (${ch1}/${totalItems} items)
+${done1.length?'  Completed:\n'+done1.map(i=>'    ✓ '+i).join('\n'):'  Not started'}
+
+Course 2: Ask Questions to Make Data-Driven Decisions
+  Progress: ${pct2}% (${ch2}/${tot2} items)
+${done2.length?'  Completed:\n'+done2.map(i=>'    ✓ '+i).join('\n'):'  Not started'}
+
+════════════════════════════════
+TASKS
+════════════════════════════════
+
+Open (${openTasks.length}):
+${openTasks.map(t=>`  • ${t.title} [${t.priority}${t.due?', due '+t.due:''}]`).join('\n')||'  None'}
+
+Done (${doneTasks.length}):
+${doneTasks.slice(0,10).map(t=>`  ✓ ${t.title}`).join('\n')||'  None'}
+
+════════════════════════════════
+NOTES (${notes.length})
+════════════════════════════════
+${notes.map(n=>`• ${n.title||'Untitled'}${n.tag?' ['+n.tag+']':''}`).join('\n')||'None'}
+`;
+}
+window.copyExport = function() {
+  const text = document.getElementById('export-preview-text').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.querySelector('.export-btns .btn-primary');
+    if(btn){const orig=btn.textContent;btn.textContent='Copied ✓';btn.style.background='var(--teal)';setTimeout(()=>{btn.textContent=orig;btn.style.background='';},2000);}
+  }).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;top:-9999px';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+  });
+};
+window.downloadExport = function() {
+  const text = buildExportText();
+  const blob = new Blob([text],{type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'workspace-progress-'+new Date().toISOString().slice(0,10)+'.txt';
+  a.click();
+};
+document.getElementById('export-overlay').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+
+// ============ POMODORO SOUND ============
+function pomoPlaySound() {
+  const cb = document.getElementById('pomo-sound-cb');
+  if(!cb||!cb.checked) return;
+  try {
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const notes = [523, 659, 784]; // C E G
+    notes.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type='sine'; osc.frequency.value=freq;
+      gain.gain.setValueAtTime(0,ctx.currentTime+i*0.18);
+      gain.gain.linearRampToValueAtTime(0.3,ctx.currentTime+i*0.18+0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.18+0.5);
+      osc.start(ctx.currentTime+i*0.18);
+      osc.stop(ctx.currentTime+i*0.18+0.5);
+    });
+  } catch(e) {}
+}
+
+// Wire sound into pomodoro session end — patch pomoBtnClick
+const _origPomoBtnClick = window.pomoBtnClick;
+window.pomoBtnClick = function() {
+  if(pomoRunning){clearInterval(pomoInterval);pomoInterval=null;pomoRunning=false;}
+  else {
+    pomoRunning=true;
+    pomoInterval=setInterval(()=>{
+      pomoSecondsLeft--;
+      if(pomoSecondsLeft<=0){
+        clearInterval(pomoInterval);pomoInterval=null;pomoRunning=false;
+        if(pomoPhase==='focus'){pomoSessions++;pomoPhase=pomoSessions%4===0?'longBreak':'shortBreak';}
+        else{pomoPhase='focus';}
+        pomoSecondsLeft=POMO_TIMES[pomoPhase];
+        pomoPlaySound();
+        try{new Notification('⏱ Pomodoro',{body:pomoPhase==='focus'?'Break over — back to work! 💪':'Time for a break! ☕'});}catch(e){}
+        document.getElementById('pomo-widget').classList.add('show');
+        document.getElementById('pomo-fab').classList.add('active');
+      }
+      pomoRender();
+    },1000);
+  }
+  pomoRender();
+};
+
+// ============ KEYBOARD SHORTCUTS ============
+document.addEventListener('keydown',e=>{
+  // Escape — close overlays
+  if(e.key==='Escape'){
+    closeNoteEditor();closeTaskModal();closeSearch();
+    document.getElementById('pomo-widget').classList.remove('show');
+    document.getElementById('pomo-fab').classList.remove('active');
+    return;
+  }
+  // Ignore shortcuts when typing
+  const tag=document.activeElement.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT') return;
+  if(e.metaKey||e.ctrlKey||e.altKey) return;
+  switch(e.key){
+    case '/': e.preventDefault(); openSearch(); break;
+    case 'n': case 'N': openNoteEditor(); break;
+    case 't': case 'T': openTaskModal(); break;
+    case 'p': case 'P': togglePomo(); break;
+    case '1': showPage('dashboard'); break;
+    case '2': showPage('courses'); break;
+    case '3': showPage('timeline'); break;
+    case '4': showPage('timeline2'); break;
+    case '5': showPage('certtracker'); break;
+    case '6': showPage('tasks'); break;
+    case '7': showPage('notes'); break;
+    case '8': showPage('ai'); break;
+  }
+});
 
 const h=new Date().getHours();
 document.getElementById('greeting').textContent=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
 loadSettings();
+checkOnboarding();
 </script>
 </body>
 </html>
