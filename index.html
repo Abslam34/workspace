@@ -388,7 +388,7 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .cert-bar-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px}
 .cert-bar-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:8px}
 .cert-bar-label strong{color:var(--accent);font-family:var(--mono)}
-.cert-segs{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--bg4);gap:1px}
+.cert-segs{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--bg4);gap:2px;align-items:stretch}
 .cert-seg{height:100%;border-radius:2px;transition:width .6s cubic-bezier(.4,0,.2,1);min-width:0}
 
 /* EDIT COURSE inline */
@@ -1492,16 +1492,23 @@ function renderCertBar(pct1, pct2) {
   const segs = document.getElementById('cert-segs');
   const pctEl = document.getElementById('cert-overall-pct');
   if(!segs) return;
-  // 9 courses: C1=13h, C2=15h, rest=124h total 152h
-  const totalH=152, c1h=13, c2h=15;
-  const w1=(c1h/totalH*100).toFixed(1), w2=(c2h/totalH*100).toFixed(1), wRest=(100-parseFloat(w1)-parseFloat(w2)).toFixed(1);
-  const contrib1=pct1/100*(c1h/totalH*100), contrib2=pct2/100*(c2h/totalH*100);
-  const overall=Math.round((contrib1+contrib2));
-  if(pctEl) pctEl.textContent=overall+'% of C1+C2';
+  const totalH=152, c1h=13, c2h=15, restH=totalH-c1h-c2h;
+  const w1=(c1h/totalH*100).toFixed(2);
+  const w2=(c2h/totalH*100).toFixed(2);
+  const wRest=(restH/totalH*100).toFixed(2);
+  // How much of the cert is done (hours completed / total hours)
+  const hoursDone = (pct1/100)*c1h + (pct2/100)*c2h;
+  const overallPct = Math.round((hoursDone/totalH)*100);
+  if(pctEl) pctEl.textContent = overallPct+'% of certificate';
+  // Each segment: filled portion = pct of that course × segment width
   segs.innerHTML=`
-    <div class="cert-seg" style="width:${w1}%;background:linear-gradient(90deg,var(--accent),var(--teal));opacity:${0.3+pct1/100*0.7}" title="C1: ${pct1}%"></div>
-    <div class="cert-seg" style="width:${w2}%;background:linear-gradient(90deg,var(--blue),var(--purple));opacity:${0.3+pct2/100*0.7}" title="C2: ${pct2}%"></div>
-    <div class="cert-seg" style="width:${wRest}%;background:var(--bg3)" title="C3–C9: Locked"></div>`;
+    <div style="width:${w1}%;position:relative;background:var(--bg4);border-radius:3px;overflow:hidden;height:100%">
+      <div style="position:absolute;left:0;top:0;height:100%;width:${pct1}%;background:linear-gradient(90deg,var(--accent),var(--teal));border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)" title="C1: ${pct1}%"></div>
+    </div>
+    <div style="width:${w2}%;position:relative;background:var(--bg4);border-radius:3px;overflow:hidden;height:100%">
+      <div style="position:absolute;left:0;top:0;height:100%;width:${pct2}%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)" title="C2: ${pct2}%"></div>
+    </div>
+    <div style="width:${wRest}%;background:var(--bg4);border-radius:3px;height:100%" title="C3–C9: Locked"></div>`;
 }
 
 function renderModuleBarChart() {
