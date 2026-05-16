@@ -334,7 +334,74 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .anim-item{opacity:0;transform:translateY(12px);animation:fadeIn .4s ease forwards}
 .anim-item:nth-child(1){animation-delay:.05s}.anim-item:nth-child(2){animation-delay:.1s}.anim-item:nth-child(3){animation-delay:.15s}.anim-item:nth-child(4){animation-delay:.2s}.anim-item:nth-child(5){animation-delay:.25s}.anim-item:nth-child(6){animation-delay:.3s}.anim-item:nth-child(7){animation-delay:.35s}.anim-item:nth-child(8){animation-delay:.4s}
 
-@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.menu-btn{display:block}.kanban-board{grid-template-columns:1fr}.search-box{display:none}.content{padding:20px}.notes-grid{grid-template-columns:1fr}}
+/* POMODORO */
+.pomo-widget{position:fixed;bottom:92px;right:28px;z-index:200;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 22px;width:220px;box-shadow:0 8px 32px rgba(0,0,0,.4);display:none;animation:slideUp .3s cubic-bezier(.4,0,.2,1)}
+.pomo-widget.show{display:block}
+.pomo-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.pomo-title{font-size:13px;font-weight:600}
+.pomo-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;line-height:1;padding:0}
+.pomo-ring{display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.pomo-time{font-size:32px;font-weight:700;font-family:var(--mono);color:var(--accent);letter-spacing:-.02em;text-align:center}
+.pomo-phase{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;text-align:center;margin-bottom:12px}
+.pomo-btns{display:flex;gap:8px}
+.pomo-btn{flex:1;padding:8px;border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer;border:none;font-family:var(--font);transition:var(--transition)}
+.pomo-btn-start{background:var(--accent);color:#0a0a0c}.pomo-btn-start:hover{background:var(--accent2)}
+.pomo-btn-reset{background:var(--bg4);color:var(--text2)}.pomo-btn-reset:hover{background:var(--border2)}
+.pomo-sessions{font-size:11px;color:var(--text3);text-align:center;margin-top:10px}
+.pomo-fab{position:fixed;bottom:28px;right:90px;width:52px;height:52px;background:var(--bg2);border:1px solid var(--border);color:var(--text2);border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.3);transition:var(--transition);z-index:150}
+.pomo-fab:hover{background:var(--bg3);color:var(--accent);border-color:var(--accent)}
+.pomo-fab.active{background:var(--accent);color:#0a0a0c;border-color:var(--accent)}
+
+/* COURSE MODAL (add course) */
+.course-modal{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);width:90%;max-width:500px;padding:28px;animation:slideUp .3s cubic-bezier(.4,0,.2,1);max-height:90vh;overflow-y:auto}
+.course-modal h2{font-size:17px;font-weight:600;margin-bottom:6px}
+.course-modal p{font-size:13px;color:var(--text2);margin-bottom:20px}
+.custom-courses-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;max-height:200px;overflow-y:auto}
+.custom-course-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px}
+.custom-course-item .cc-num{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:700;min-width:24px}
+.custom-course-item .cc-title{flex:1;color:var(--text)}
+.custom-course-item .cc-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:0 4px;border-radius:4px;transition:var(--transition)}
+.custom-course-item .cc-del:hover{color:var(--red);background:rgba(255,77,79,.1)}
+
+/* MOBILE */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);width:80vw;max-width:280px}
+  .sidebar.open{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.5)}
+  .main{margin-left:0}
+  .menu-btn{display:block}
+  .kanban-board{grid-template-columns:1fr;gap:12px}
+  .kanban-col{min-height:120px}
+  .search-box{display:none}
+  .content{padding:16px}
+  .page-title{font-size:24px}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .stat-card{padding:14px 16px}
+  .stat-card .value{font-size:22px}
+  .analytics-grid,.analytics-grid.three{grid-template-columns:1fr}
+  .chart-card{padding:16px}
+  .notes-grid{grid-template-columns:1fr}
+  .courses-grid{grid-template-columns:1fr}
+  .tl-stats{grid-template-columns:repeat(2,1fr)}
+  .ai-layout{flex-direction:column;height:auto}
+  .ai-sidebar{width:100%}
+  .ai-prompts{max-height:200px}
+  .ai-chat{min-height:400px}
+  .module-cat-stats{gap:8px}
+  .module-cat-stat{font-size:10px}
+  .page-header{flex-direction:column;gap:8px}
+  .page-header .btn{align-self:flex-start}
+  .pomo-widget{bottom:auto;top:70px;right:12px;width:200px}
+  .pomo-fab{bottom:92px;right:12px}
+  .fab{bottom:28px;right:12px}
+  .topbar{padding:0 16px}
+  .editor-modal{max-height:95vh;border-radius:var(--radius)}
+  .task-modal{padding:20px}
+  .progress-ring-wrap{flex-direction:column;align-items:flex-start;gap:12px}
+}
+@media(max-width:400px){
+  .stats-grid{grid-template-columns:1fr}
+  .tl-stats{grid-template-columns:repeat(2,1fr)}
+}
 </style>
 </head>
 <body>
@@ -386,6 +453,9 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       </div>
       <div class="nav-item" onclick="showPage('timeline')">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Course 1 Timeline
+      </div>
+      <div class="nav-item" onclick="showPage('timeline2')">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Course 2 Timeline
       </div>
     </div>
     <div class="nav-section">
@@ -547,8 +617,10 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 
     <!-- COURSES -->
     <div class="page" id="page-courses">
-      <h1 class="page-title anim-item">Courses</h1>
-      <p class="page-subtitle anim-item">Google Data Analytics Professional Certificate — 9 courses, 152 hours total</p>
+      <div class="page-header anim-item">
+        <div><h1 class="page-title" style="margin-bottom:4px">Courses</h1><p class="page-subtitle" style="margin-bottom:0">Google Data Analytics Certificate — 9 courses, 152h total</p></div>
+        <button class="btn btn-primary" onclick="openCourseModal()">+ Add course</button>
+      </div>
       <div class="courses-grid" id="courses-list"></div>
     </div>
 
@@ -564,6 +636,20 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       </div>
       <div class="tl-legend anim-item"><span><span class="dot" style="background:var(--purple)"></span>Videos</span><span><span class="dot" style="background:var(--teal)"></span>Readings</span><span><span class="dot" style="background:var(--amber)"></span>Assignments</span><span><span class="dot" style="background:var(--text3)"></span>Plugins</span></div>
       <div id="modules-container"></div>
+    </div>
+
+    <!-- COURSE 2 TIMELINE -->
+    <div class="page" id="page-timeline2">
+      <div class="timeline-hero anim-item"><h2>Course 2 — Ask Questions to Make Data-Driven Decisions</h2><p>Track your progress — synced across all devices in real time</p></div>
+      <div class="course-progress-wrap anim-item"><div class="course-progress-label"><span>Overall course progress</span><span id="overall-pct2">0%</span></div><div class="course-progress-track"><div class="course-progress-fill" id="overall-bar2"></div></div></div>
+      <div class="tl-stats anim-item">
+        <div class="tl-stat"><div class="num">~15</div><div class="lbl">Hours</div></div>
+        <div class="tl-stat"><div class="num">4</div><div class="lbl">Modules</div></div>
+        <div class="tl-stat"><div class="num" id="completed-count2">0</div><div class="lbl">Completed</div></div>
+        <div class="tl-stat"><div class="num" id="remaining-count2">0</div><div class="lbl">Remaining</div></div>
+      </div>
+      <div class="tl-legend anim-item"><span><span class="dot" style="background:var(--purple)"></span>Videos</span><span><span class="dot" style="background:var(--teal)"></span>Readings</span><span><span class="dot" style="background:var(--amber)"></span>Assignments</span><span><span class="dot" style="background:var(--text3)"></span>Plugins</span></div>
+      <div id="modules-container2"></div>
     </div>
 
     <!-- TASKS -->
@@ -738,6 +824,37 @@ html.light .topbar{background:rgba(245,244,240,.85)}
   </div>
 </div>
 
+<!-- POMODORO WIDGET -->
+<button class="pomo-fab" id="pomo-fab" onclick="togglePomo()" title="Pomodoro timer">⏱</button>
+<div class="pomo-widget" id="pomo-widget">
+  <div class="pomo-header"><span class="pomo-title">Pomodoro Timer</span><button class="pomo-close" onclick="togglePomo()">×</button></div>
+  <div class="pomo-time" id="pomo-time">25:00</div>
+  <div class="pomo-phase" id="pomo-phase">Focus session</div>
+  <div class="pomo-btns">
+    <button class="pomo-btn pomo-btn-start" id="pomo-start-btn" onclick="pomoBtnClick()">Start</button>
+    <button class="pomo-btn pomo-btn-reset" onclick="pomoReset()">Reset</button>
+  </div>
+  <div class="pomo-sessions" id="pomo-sessions">Sessions today: 0</div>
+</div>
+
+<!-- ADD COURSE MODAL -->
+<div class="overlay" id="course-modal-overlay">
+  <div class="course-modal">
+    <h2>Add a custom course</h2>
+    <p>Add any course or learning resource to track alongside your certificate</p>
+    <div id="custom-courses-list" class="custom-courses-list"></div>
+    <div class="form-group"><label>Course title</label><input type="text" id="cc-title-input" placeholder="e.g. SQL for Data Science — Coursera"/></div>
+    <div style="display:flex;gap:10px">
+      <div class="form-group" style="flex:1"><label>Hours</label><input type="number" id="cc-hours-input" placeholder="20" min="1"/></div>
+      <div class="form-group" style="flex:1"><label>Color</label><select id="cc-color-input"><option value="var(--accent)">Lime</option><option value="var(--blue)">Blue</option><option value="var(--teal)">Teal</option><option value="var(--purple)">Purple</option><option value="var(--amber)">Amber</option><option value="var(--red)">Red</option></select></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeCourseModal()">Done</button>
+      <button class="btn btn-primary" onclick="addCustomCourse()">Add course</button>
+    </div>
+  </div>
+</div>
+
 <!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
@@ -762,8 +879,8 @@ function syncStatus(state, text) {
   if (state === 'saved') setTimeout(() => el.classList.remove('show'), 2000);
 }
 
-// Progress
-let saveTimer;
+// Progress C1 + C2
+let saveTimer, saveTimer2;
 window.saveProgress = function(checks) {
   syncStatus('saving','Saving...');
   clearTimeout(saveTimer);
@@ -772,8 +889,16 @@ window.saveProgress = function(checks) {
     catch(e) { syncStatus('error','Error'); }
   }, 600);
 };
+window.saveProgress2 = function(checks) {
+  syncStatus('saving','Saving...');
+  clearTimeout(saveTimer2);
+  saveTimer2 = setTimeout(async () => {
+    try { await setDoc(doc(db,'progress','course2'),{checks,t:Date.now()}); syncStatus('saved','Saved ✓'); try{localStorage.setItem('ws-checks2',JSON.stringify(checks));}catch(e){} }
+    catch(e) { syncStatus('error','Error'); }
+  }, 600);
+};
 
-// Notes / Tasks / Streak
+// Notes
 window.FB = {
   addNote: async (d) => addDoc(collection(db,'notes'), d),
   updateNote: async (id,d) => { await updateDoc(doc(db,'notes',id),d); syncStatus('saved','Saved ✓'); },
@@ -781,9 +906,6 @@ window.FB = {
   addTask: async (d) => addDoc(collection(db,'tasks'), d),
   updateTask: async (id,d) => { await updateDoc(doc(db,'tasks',id),d); syncStatus('saved','Saved ✓'); },
   deleteTask: async (id) => deleteDoc(doc(db,'tasks',id)),
-  saveStreak: async (history) => {
-    try { await setDoc(doc(db,'streak','history'), {data:history, t:Date.now()}); } catch(e) {}
-  },
 };
 
 onAuthStateChanged(auth, user => {
@@ -793,26 +915,8 @@ onAuthStateChanged(auth, user => {
     // Listeners
     let firstProgress = true;
     onSnapshot(doc(db,'progress','main'), snap => {
-      if (snap.exists() && snap.data().checks) {
-        applyChecks(snap.data().checks);
-        if(!firstProgress) syncStatus('saved','Synced ✓');
-      }
+      if (snap.exists() && snap.data().checks) { applyChecks(snap.data().checks); if(!firstProgress)syncStatus('saved','Synced ✓'); }
       firstProgress = false;
-    });
-    // Streak history from Firestore — merge with localStorage for offline resilience
-    onSnapshot(doc(db,'streak','history'), snap => {
-      if (snap.exists() && snap.data().data) {
-        let remote = snap.data().data;
-        // Merge with any local-only days (in case offline edits happened)
-        let local = {};
-        try { local = JSON.parse(localStorage.getItem('ws-progress-history')||'{}'); } catch(e) {}
-        const merged = Object.assign({}, remote, local);
-        window._streakHistory = merged;
-        try { localStorage.setItem('ws-progress-history', JSON.stringify(merged)); } catch(e) {}
-      } else {
-        // No Firestore streak yet — seed from localStorage
-        try { window._streakHistory = JSON.parse(localStorage.getItem('ws-progress-history')||'{}'); } catch(e) { window._streakHistory = {}; }
-      }
     });
     onSnapshot(query(collection(db,'notes'),orderBy('createdAt','desc')), snap => {
       window._notes = snap.docs.map(d => ({id:d.id,...d.data()}));
@@ -821,6 +925,10 @@ onAuthStateChanged(auth, user => {
     onSnapshot(query(collection(db,'tasks'),orderBy('createdAt','asc')), snap => {
       window._tasks = snap.docs.map(d => ({id:d.id,...d.data()}));
       renderTasks(); updateDashStats();
+    });
+    // Course 2 progress
+    onSnapshot(doc(db,'progress','course2'), snap => {
+      if (snap.exists() && snap.data().checks) applyChecks2(snap.data().checks);
     });
   } else {
     document.getElementById('login-screen').classList.remove('hidden');
@@ -832,8 +940,13 @@ function applyChecks(saved) {
   if (!all.length) { setTimeout(() => applyChecks(saved), 200); return; }
   all.forEach((cb,i) => cb.checked = !!saved[i]);
   window.onCheck(false);
-  // Ensure dashboard analytics refresh after Firestore load
   if (typeof updateDashStats === 'function') updateDashStats();
+}
+function applyChecks2(saved) {
+  const all = document.querySelectorAll('#modules-container2 input[type=checkbox]');
+  if (!all.length) { setTimeout(() => applyChecks2(saved), 200); return; }
+  all.forEach((cb,i) => cb.checked = !!saved[i]);
+  if (typeof window.onCheck2 === 'function') window.onCheck2(false);
 }
 
 window.doLogin = async function() {
@@ -1107,9 +1220,6 @@ function updateDashStats() {
 
   // Update AI context
   updateAiContext();
-
-  // Sync Course 1 card on Courses page
-  if(typeof window.updateCourseCards === 'function') window.updateCourseCards();
 }
 
 function renderModuleBarChart() {
@@ -1198,28 +1308,20 @@ function renderMilestones(pct, checked) {
 
 function renderStreak() {
   const el=document.getElementById('streak-grid'); if(!el) return;
-  // Use Firestore-synced history (falls back to localStorage if not loaded yet)
-  let history = window._streakHistory || {};
-  if (!Object.keys(history).length) {
-    try { history = JSON.parse(localStorage.getItem('ws-progress-history')||'{}'); } catch(e) {}
-  }
+  // Load progress history from localStorage
+  let history={};
+  try{history=JSON.parse(localStorage.getItem('ws-progress-history')||'{}');}catch(e){}
   // Mark today if there's any progress
   const all=document.querySelectorAll('#modules-container input[type=checkbox]');
   let checked=0; all.forEach(cb=>{if(cb.checked)checked++;});
   const today=new Date().toISOString().slice(0,10);
-  if(checked>0 && !history[today]) {
-    history[today]=checked;
-    window._streakHistory = history;
-    try { localStorage.setItem('ws-progress-history',JSON.stringify(history)); } catch(e) {}
-    // Persist to Firestore (debounced via FB)
-    if(window.FB && window.FB.saveStreak) window.FB.saveStreak(history);
-  } else if(checked>0) {
-    history[today]=checked;
-    window._streakHistory = history;
-  }
+  if(checked>0) history[today]=checked;
+  try{localStorage.setItem('ws-progress-history',JSON.stringify(history));}catch(e){}
 
   // Render 70 days (10 weeks)
   const days=70;
+  let html='';
+  let streak=0; let countingStreak=true;
   const cells=[];
   for(let i=days-1;i>=0;i--){
     const d=new Date(); d.setDate(d.getDate()-i);
@@ -1229,7 +1331,6 @@ function renderStreak() {
     cells.push({key,active,isToday});
   }
   // Calculate current streak (from today backwards)
-  let streak=0;
   for(let i=cells.length-1;i>=0;i--){
     if(cells[i].active){streak++;}
     else if(i<cells.length-1){break;}
@@ -1348,17 +1449,17 @@ window.onCheck = function(save=true) {
     });
   });
   if(save&&window.saveProgress) window.saveProgress(state);
-  if(typeof window.updateCourseCards === 'function') window.updateCourseCards();
+  if(typeof window.updateCourseCards==='function') window.updateCourseCards();
 };
 
 // Navigation
-const pageNames={dashboard:'Dashboard',courses:'Courses',timeline:'Course 1 Timeline',tasks:'Tasks',notes:'Notes',ai:'AI Assistant',settings:'Settings'};
+const pageNames={dashboard:'Dashboard',courses:'Courses',timeline:'Course 1 Timeline',timeline2:'Course 2 Timeline',tasks:'Tasks',notes:'Notes',ai:'AI Assistant',settings:'Settings'};
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   document.querySelectorAll('.sidebar-nav .nav-item,.sidebar-footer .nav-item').forEach(n=>n.classList.remove('active'));
   const ni=document.querySelectorAll('.sidebar-nav .nav-item,.sidebar-footer .nav-item');
-  const map={dashboard:0,courses:1,timeline:2,tasks:3,notes:4,ai:5,settings:6};
+  const map={dashboard:0,courses:1,timeline:2,timeline2:3,tasks:4,notes:5,ai:6,settings:7};
   if(map[id]!==undefined)ni[map[id]].classList.add('active');
   document.getElementById('breadcrumb').innerHTML='Home / <span>'+(pageNames[id]||id)+'</span>';
   document.getElementById('sidebar').classList.remove('open');
@@ -1367,33 +1468,194 @@ function showPage(id){
 }
 
 // Courses
-const cData=[{n:1,t:'Foundations: Data, Data, Everywhere',h:13,c1:'var(--accent)',c2:'var(--teal)',s:'Active'},{n:2,t:'Ask Questions to Make Data-Driven Decisions',h:15,c1:'var(--blue)',c2:'var(--purple)',s:'Locked'},{n:3,t:'Prepare Data for Exploration',h:19,c1:'var(--amber)',c2:'var(--red)',s:'Locked'},{n:4,t:'Process Data from Dirty to Clean',h:16,c1:'var(--teal)',c2:'var(--blue)',s:'Locked'},{n:5,t:'Analyze Data to Answer Questions',h:26,c1:'var(--purple)',c2:'var(--accent)',s:'Locked'},{n:6,t:'Share Data Through the Art of Visualization',h:19,c1:'var(--red)',c2:'var(--amber)',s:'Locked'},{n:7,t:'Introduction to Data Analysis Using Python',h:27,c1:'var(--blue)',c2:'var(--teal)',s:'Locked'},{n:8,t:'Google Data Analytics Capstone',h:11,c1:'var(--accent)',c2:'var(--purple)',s:'Locked'},{n:9,t:'Accelerate Your Job Search with AI',h:6,c1:'var(--amber)',c2:'var(--teal)',s:'Locked'}];
+const cData=[{n:1,t:'Foundations: Data, Data, Everywhere',h:13,c1:'var(--accent)',c2t:'var(--teal)',s:'Active',page:'timeline'},{n:2,t:'Ask Questions to Make Data-Driven Decisions',h:15,c1:'var(--blue)',c2t:'var(--purple)',s:'Active',page:'timeline2'},{n:3,t:'Prepare Data for Exploration',h:19,c1:'var(--amber)',c2t:'var(--red)',s:'Locked',page:null},{n:4,t:'Process Data from Dirty to Clean',h:16,c1:'var(--teal)',c2t:'var(--blue)',s:'Locked',page:null},{n:5,t:'Analyze Data to Answer Questions',h:26,c1:'var(--purple)',c2t:'var(--accent)',s:'Locked',page:null},{n:6,t:'Share Data Through the Art of Visualization',h:19,c1:'var(--red)',c2t:'var(--amber)',s:'Locked',page:null},{n:7,t:'Introduction to Data Analysis Using Python',h:27,c1:'var(--blue)',c2t:'var(--teal)',s:'Locked',page:null},{n:8,t:'Google Data Analytics Capstone',h:11,c1:'var(--accent)',c2t:'var(--purple)',s:'Locked',page:null},{n:9,t:'Accelerate Your Job Search with AI',h:6,c1:'var(--amber)',c2t:'var(--teal)',s:'Locked',page:null}];
 const cl=document.getElementById('courses-list');
-cData.forEach((c,i)=>{
-  const card = document.createElement('div');
-  card.className = 'course-card anim-item';
-  card.style.animationDelay = i*.06+'s';
-  if(c.n===1) { card.id='course-card-1'; card.onclick=()=>showPage('timeline'); }
-  card.innerHTML=`<div class="banner" style="background:linear-gradient(90deg,${c.c1},${c.c2})"></div><div class="body"><div class="tag" style="color:${c.c1}">Course ${c.n} — ${c.s}</div><h3>${c.t}</h3><div class="progress-bar"><div class="progress-fill" id="course-fill-${c.n}" style="width:0%;background:${c.c1}"></div></div><div class="course-meta"><span>${c.h} hours</span><span id="course-pct-${c.n}">0%</span></div></div>`;
-  cl.appendChild(card);
-});
 
-// Called by updateDashStats to keep Course 1 card in sync
-window.updateCourseCards = function() {
-  const all = document.querySelectorAll('#modules-container input[type=checkbox]');
-  let checked = 0; all.forEach(cb=>{if(cb.checked)checked++;});
-  const pct = totalItems>0 ? Math.round((checked/totalItems)*100) : 0;
-  const fill = document.getElementById('course-fill-1');
-  const pctEl = document.getElementById('course-pct-1');
-  if(fill) fill.style.width = pct+'%';
-  if(pctEl) pctEl.textContent = pct+'%';
-  // Update status tag if complete
-  const card = document.getElementById('course-card-1');
-  if(card) {
-    const tag = card.querySelector('.tag');
-    if(tag) tag.textContent = 'Course 1 — '+(pct===100?'Complete ✓':'Active');
-  }
+function getCustomCourses(){try{return JSON.parse(localStorage.getItem('ws-custom-courses')||'[]');}catch(e){return[];}}
+function saveCustomCourses(arr){try{localStorage.setItem('ws-custom-courses',JSON.stringify(arr));}catch(e){}}
+
+function renderCourseCards(){
+  cl.innerHTML='';
+  cData.forEach((c,i)=>{
+    const card=document.createElement('div');
+    card.className='course-card anim-item';
+    card.style.animationDelay=i*.06+'s';
+    if(c.n===1)card.id='course-card-1';
+    if(c.n===2)card.id='course-card-2';
+    if(c.page)card.onclick=()=>showPage(c.page);
+    card.innerHTML=`<div class="banner" style="background:linear-gradient(90deg,${c.c1},${c.c2t})"></div><div class="body"><div class="tag" style="color:${c.c1}">Course ${c.n} — ${c.s}</div><h3>${c.t}</h3><div class="progress-bar"><div class="progress-fill" id="course-fill-${c.n}" style="width:0%;background:${c.c1}"></div></div><div class="course-meta"><span>${c.h}h</span><span id="course-pct-${c.n}">0%</span></div></div>`;
+    cl.appendChild(card);
+  });
+  getCustomCourses().forEach((c,i)=>{
+    const card=document.createElement('div');
+    card.className='course-card anim-item';
+    card.style.animationDelay=(cData.length+i)*.06+'s';
+    card.innerHTML=`<div class="banner" style="background:linear-gradient(90deg,${c.color},${c.color}88)"></div><div class="body"><div class="tag" style="color:${c.color}">Custom</div><h3>${esc(c.title)}</h3><div class="progress-bar"><div class="progress-fill" style="width:0%;background:${c.color}"></div></div><div class="course-meta"><span>${c.hours}h</span><span>—</span></div></div>`;
+    cl.appendChild(card);
+  });
+}
+renderCourseCards();
+
+window.updateCourseCards=function(){
+  const all=document.querySelectorAll('#modules-container input[type=checkbox]');
+  let ch=0;all.forEach(cb=>{if(cb.checked)ch++;});
+  const pct=totalItems>0?Math.round((ch/totalItems)*100):0;
+  const f=document.getElementById('course-fill-1'),p=document.getElementById('course-pct-1');
+  if(f)f.style.width=pct+'%';if(p)p.textContent=pct+'%';
+  const card=document.getElementById('course-card-1');
+  if(card){const tag=card.querySelector('.tag');if(tag)tag.textContent='Course 1 — '+(pct===100?'Complete ✓':'Active');}
+  const all2=document.querySelectorAll('#modules-container2 input[type=checkbox]');
+  let ch2=0,tot2=all2.length;all2.forEach(cb=>{if(cb.checked)ch2++;});
+  const pct2=tot2>0?Math.round((ch2/tot2)*100):0;
+  const f2=document.getElementById('course-fill-2'),p2=document.getElementById('course-pct-2');
+  if(f2)f2.style.width=pct2+'%';if(p2)p2.textContent=pct2+'%';
 };
+
+// Custom course modal
+window.openCourseModal=function(){
+  renderCustomCoursesList();
+  document.getElementById('cc-title-input').value='';
+  document.getElementById('cc-hours-input').value='';
+  document.getElementById('course-modal-overlay').classList.add('show');
+  setTimeout(()=>document.getElementById('cc-title-input').focus(),100);
+};
+window.closeCourseModal=function(){document.getElementById('course-modal-overlay').classList.remove('show');};
+function renderCustomCoursesList(){
+  const el=document.getElementById('custom-courses-list');
+  const arr=getCustomCourses();
+  if(!arr.length){el.innerHTML='<div style="font-size:13px;color:var(--text3);text-align:center;padding:8px">No custom courses yet</div>';return;}
+  el.innerHTML=arr.map((c,i)=>`<div class="custom-course-item"><span class="cc-num">#${i+1}</span><span class="cc-title">${esc(c.title)}</span><span style="font-size:11px;color:var(--text3);margin-right:4px">${c.hours}h</span><button class="cc-del" onclick="deleteCustomCourse(${i})" title="Remove">×</button></div>`).join('');
+}
+window.addCustomCourse=function(){
+  const title=document.getElementById('cc-title-input').value.trim();
+  const hours=parseInt(document.getElementById('cc-hours-input').value)||0;
+  const color=document.getElementById('cc-color-input').value;
+  if(!title)return;
+  const arr=getCustomCourses();
+  arr.push({title,hours,color});
+  saveCustomCourses(arr);
+  renderCourseCards();
+  renderCustomCoursesList();
+  document.getElementById('cc-title-input').value='';
+  document.getElementById('cc-hours-input').value='';
+};
+window.deleteCustomCourse=function(i){
+  const arr=getCustomCourses();arr.splice(i,1);saveCustomCourses(arr);renderCourseCards();renderCustomCoursesList();
+};
+document.getElementById('course-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeCourseModal();});
+
+// ============ COURSE 2 MODULE DATA ============
+const moduleData2=[
+  {num:1,title:'Ask effective questions',hours:'~4h',days:'Days 1–2',topics:['SMART questions','Structured thinking','Problem types','Data-driven decisions'],sections:[
+    {type:'Videos',tag:'vid',color:'var(--purple)',icon:'M5 3l14 9-14 9V3z',items:[{t:'Course 2 overview',d:'3 min'},{t:'Introduction to problem-solving and effective questioning',d:'4 min'},{t:'Common problem types',d:'5 min'},{t:'SMART questions',d:'5 min'},{t:'More about SMART questions',d:'3 min'},{t:'Evan: Data opens doors',d:'3 min'},{t:'Qualitative and quantitative data',d:'4 min'},{t:'Connecting the data dots',d:'3 min'}]},
+    {type:'Readings',tag:'read',color:'var(--teal)',icon:'M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z',items:[{t:'Course 2 overview',d:'6 min'},{t:'From issue to action: The six problem types',d:'8 min'},{t:'More about SMART questions',d:'6 min'},{t:'Self-reflection: Ask your own SMART questions',d:'20 min'},{t:'Data analysts in different industries',d:'6 min'},{t:'Qualitative and quantitative data in business',d:'8 min'},{t:'Glossary terms from course 2, module 1',d:'4 min'}]},
+    {type:'Assignments',tag:'assign',color:'var(--amber)',icon:'M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11',items:[{t:'Test your knowledge on crafting effective questions',d:'8 min'},{t:'Test your knowledge on taking action with data',d:'8 min'},{t:'Module 1 challenge',d:'40 min'}]}
+  ]},
+  {num:2,title:'Make data-driven decisions',hours:'~4h',days:'Days 3–4',topics:['Quantitative vs qualitative','Data tools','Metrics','Dashboards'],sections:[
+    {type:'Videos',tag:'vid',color:'var(--purple)',icon:'M5 3l14 9-14 9V3z',items:[{t:'Understand the power of data',d:'4 min'},{t:'Data trials and triumphs',d:'4 min'},{t:'Caitlin: Data drives decisions at Google',d:'3 min'},{t:'Qualitative vs. quantitative data',d:'5 min'},{t:'The big reveal: Sharing your findings',d:'4 min'},{t:'Data in action: Presentations and visualizations',d:'4 min'},{t:'Engineering for accessibility',d:'2 min'}]},
+    {type:'Readings',tag:'read',color:'var(--teal)',icon:'M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z',items:[{t:'Qualitative and quantitative data in business',d:'8 min'},{t:'Introduction to metrics for data analytics',d:'8 min'},{t:'Using data in everyday life',d:'6 min'},{t:'Ways to address incomplete or missing data',d:'8 min'},{t:'Glossary terms from course 2, module 2',d:'4 min'}]},
+    {type:'Assignments',tag:'assign',color:'var(--amber)',icon:'M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11',items:[{t:'Test your knowledge on qualitative and quantitative data',d:'8 min'},{t:'Test your knowledge on sharing data with stakeholders',d:'8 min'},{t:'Module 2 challenge',d:'40 min'}]},
+    {type:'Plugins',tag:'plug',color:'var(--text3)',icon:'M12 2a10 10 0 100 20 10 10 0 000-20zM8 12l2 2 4-4',items:[{t:'Engaging with data',d:'10 min'}]}
+  ]},
+  {num:3,title:'Spreadsheet magic',hours:'~4h',days:'Days 5–6',topics:['Spreadsheet basics','Formulas','Functions','Structured data'],sections:[
+    {type:'Videos',tag:'vid',color:'var(--purple)',icon:'M5 3l14 9-14 9V3z',items:[{t:'Working with spreadsheets',d:'3 min'},{t:'Get your head in the spreadsheets',d:'4 min'},{t:'Formulas for success',d:'5 min'},{t:'Functions 101',d:'5 min'},{t:'Save time with structured thinking',d:'4 min'},{t:'Evan: Helping to make a big decision',d:'2 min'}]},
+    {type:'Readings',tag:'read',color:'var(--teal)',icon:'M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z',items:[{t:'Spreadsheet reference guide',d:'8 min'},{t:'Errors and fixes in spreadsheets',d:'8 min'},{t:'More about spreadsheet formulas and functions',d:'8 min'},{t:'Structured thinking and data collection',d:'8 min'},{t:'Glossary terms from course 2, module 3',d:'4 min'}]},
+    {type:'Assignments',tag:'assign',color:'var(--amber)',icon:'M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11',items:[{t:'Hands-On Activity: Working with formulas',d:'45 min'},{t:'Hands-On Activity: Working with functions',d:'45 min'},{t:'Test your knowledge on spreadsheets',d:'8 min'},{t:'Module 3 challenge',d:'40 min'}]}
+  ]},
+  {num:4,title:'Always remember the stakeholder',hours:'~3h',days:'Day 7',topics:['Stakeholder communication','Meetings','Conflict resolution','Presentations'],sections:[
+    {type:'Videos',tag:'vid',color:'var(--purple)',icon:'M5 3l14 9-14 9V3z',items:[{t:'Communication is key',d:'4 min'},{t:'Balancing needs and expectations across your team',d:'5 min'},{t:'Clear communication is a data superpower',d:'4 min'},{t:'Meeting best practices',d:'4 min'},{t:'From conflict to collaboration',d:'4 min'},{t:'Becoming a data-driven business',d:'3 min'},{t:'Course 2 wrap-up',d:'2 min'}]},
+    {type:'Readings',tag:'read',color:'var(--teal)',icon:'M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z',items:[{t:'Data analyst scenarios and responses',d:'8 min'},{t:'Understanding stakeholder roles and goals',d:'8 min'},{t:'Focus on what matters: Speed and accuracy in data',d:'6 min'},{t:'Glossary terms from course 2, module 4',d:'4 min'},{t:'Course 2 glossary',d:'2 min'},{t:'Coming up next...',d:'4 min'}]},
+    {type:'Assignments',tag:'assign',color:'var(--amber)',icon:'M9 11l3 3L22 4M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11',items:[{t:'Self-Reflection: Kaggle and data communities',d:'20 min'},{t:'Test your knowledge on communication and stakeholders',d:'8 min'},{t:'Course 2 challenge',d:'50 min'}]},
+    {type:'Plugins',tag:'plug',color:'var(--text3)',icon:'M12 2a10 10 0 100 20 10 10 0 000-20zM8 12l2 2 4-4',items:[{t:'Test your knowledge on meeting strategies',d:'10 min'}]}
+  ]}
+];
+
+let totalItems2=0; moduleData2.forEach(m=>m.sections.forEach(s=>totalItems2+=s.items.length));
+const container2=document.getElementById('modules-container2'); let gIdx2=0;
+moduleData2.forEach(m=>{
+  let sHtml=''; const catC={};
+  m.sections.forEach(s=>{
+    catC[s.tag]=s.items.length; let iHtml='';
+    const tl=s.type==='Videos'?'Video':s.type==='Readings'?'Read':s.type==='Assignments'?'Quiz':'Plugin';
+    s.items.forEach(item=>{
+      const id='chk2-'+gIdx2;
+      iHtml+=`<label class="check-item" id="item2-${gIdx2}" for="${id}"><input type="checkbox" id="${id}" data-idx="${gIdx2}" onchange="onCheck2(true)"><span class="cat-tag ${s.tag}">${tl}</span><span class="check-text">${item.t}</span><span class="duration">${item.d}</span></label>`;
+      gIdx2++;
+    });
+    sHtml+=`<div class="checklist-section"><div class="checklist-section-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${s.color}" stroke-width="2"><path d="${s.icon}"/></svg>${s.type} (${s.items.length})</div>${iHtml}</div>`;
+  });
+  container2.innerHTML+=`<div class="module-card anim-item" id="mod2-${m.num}">
+    <div class="module-head" onclick="this.parentElement.classList.toggle('open')">
+      <h3><span class="num">M${m.num}</span>${m.title}</h3>
+      <div style="display:flex;align-items:center;gap:12px"><span class="hours">${m.hours} · ${m.days}</span><svg class="module-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </div>
+    <div class="module-progress-row"><div class="module-progress-track"><div class="module-progress-fill" id="mfull2-${m.num}"></div></div><span class="module-progress-pct" id="mfull-pct2-${m.num}">0%</span></div>
+    <div class="module-body"><div class="checklist">${sHtml}</div><div class="module-topics"><h4>Key topics</h4><div class="topic-list">${m.topics.map(t=>`<span class="topic-tag">${t}</span>`).join('')}</div></div></div>
+  </div>`;
+});
+document.getElementById('remaining-count2').textContent=totalItems2;
+
+window.onCheck2=function(save=true){
+  const all=document.querySelectorAll('#modules-container2 input[type=checkbox]');
+  let checked=0; const state=[];
+  all.forEach(cb=>{const l=cb.closest('.check-item');if(cb.checked){l.classList.add('done');checked++;}else l.classList.remove('done');state.push(cb.checked);});
+  const pct=Math.round((checked/totalItems2)*100);
+  const op=document.getElementById('overall-pct2'),ob=document.getElementById('overall-bar2');
+  if(op)op.textContent=pct+'%'; if(ob)ob.style.width=pct+'%';
+  const cc=document.getElementById('completed-count2'),rc=document.getElementById('remaining-count2');
+  if(cc)cc.textContent=checked; if(rc)rc.textContent=totalItems2-checked;
+  let idx=0;
+  moduleData2.forEach(m=>{
+    let mT=0,mC=0;
+    m.sections.forEach(s=>{s.items.forEach(()=>{if(all[idx]&&all[idx].checked)mC++;mT++;idx++;});});
+    const mp=mT>0?Math.round((mC/mT)*100):0;
+    const fb=document.getElementById('mfull2-'+m.num),fp=document.getElementById('mfull-pct2-'+m.num);
+    if(fb)fb.style.width=mp+'%'; if(fp){fp.textContent=mp+'%';fp.style.color=mp===100?'var(--accent)':mp>0?'var(--text2)':'var(--text3)';}
+  });
+  if(save&&window.saveProgress2) window.saveProgress2(state);
+  if(typeof window.updateCourseCards==='function') window.updateCourseCards();
+};
+
+// ============ POMODORO ============
+let pomoInterval=null,pomoSecondsLeft=25*60,pomoPhase='focus',pomoSessions=0,pomoRunning=false;
+const POMO_TIMES={focus:25*60,shortBreak:5*60,longBreak:15*60};
+window.togglePomo=function(){
+  const w=document.getElementById('pomo-widget');
+  w.classList.toggle('show');
+  document.getElementById('pomo-fab').classList.toggle('active',w.classList.contains('show'));
+};
+function pomoFmt(s){const m=Math.floor(s/60);return String(m).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function pomoRender(){
+  document.getElementById('pomo-time').textContent=pomoFmt(pomoSecondsLeft);
+  const phases={focus:'Focus session',shortBreak:'Short break ☕',longBreak:'Long break 🌿'};
+  document.getElementById('pomo-phase').textContent=phases[pomoPhase];
+  document.getElementById('pomo-start-btn').textContent=pomoRunning?'Pause':'Start';
+  document.getElementById('pomo-sessions').textContent='Sessions today: '+pomoSessions;
+  document.getElementById('pomo-time').style.color=pomoPhase==='focus'?'var(--accent)':pomoPhase==='shortBreak'?'var(--teal)':'var(--blue)';
+}
+window.pomoBtnClick=function(){
+  if(pomoRunning){clearInterval(pomoInterval);pomoInterval=null;pomoRunning=false;}
+  else{
+    pomoRunning=true;
+    pomoInterval=setInterval(()=>{
+      pomoSecondsLeft--;
+      if(pomoSecondsLeft<=0){
+        clearInterval(pomoInterval);pomoInterval=null;pomoRunning=false;
+        if(pomoPhase==='focus'){pomoSessions++;pomoPhase=pomoSessions%4===0?'longBreak':'shortBreak';}
+        else{pomoPhase='focus';}
+        pomoSecondsLeft=POMO_TIMES[pomoPhase];
+        try{new Notification('⏱ Pomodoro',{body:pomoPhase==='focus'?'Break over — back to work! 💪':'Time for a break! ☕'});}catch(e){}
+        document.getElementById('pomo-widget').classList.add('show');
+        document.getElementById('pomo-fab').classList.add('active');
+      }
+      pomoRender();
+    },1000);
+  }
+  pomoRender();
+};
+window.pomoReset=function(){clearInterval(pomoInterval);pomoInterval=null;pomoRunning=false;pomoPhase='focus';pomoSecondsLeft=POMO_TIMES.focus;pomoRender();};
+pomoRender();
+try{if(Notification.permission==='default')Notification.requestPermission();}catch(e){}
 
 // Settings
 function loadSettings(){
