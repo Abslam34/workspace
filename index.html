@@ -773,7 +773,7 @@ window.saveProgress = function(checks) {
   }, 600);
 };
 
-// Notes
+// Notes / Tasks / Streak
 window.FB = {
   addNote: async (d) => addDoc(collection(db,'notes'), d),
   updateNote: async (id,d) => { await updateDoc(doc(db,'notes',id),d); syncStatus('saved','Saved ✓'); },
@@ -781,6 +781,9 @@ window.FB = {
   addTask: async (d) => addDoc(collection(db,'tasks'), d),
   updateTask: async (id,d) => { await updateDoc(doc(db,'tasks',id),d); syncStatus('saved','Saved ✓'); },
   deleteTask: async (id) => deleteDoc(doc(db,'tasks',id)),
+  saveStreak: async (history) => {
+    try { await setDoc(doc(db,'streak','history'), {data:history, t:Date.now()}); } catch(e) {}
+  },
 };
 
 onAuthStateChanged(auth, user => {
@@ -790,8 +793,26 @@ onAuthStateChanged(auth, user => {
     // Listeners
     let firstProgress = true;
     onSnapshot(doc(db,'progress','main'), snap => {
-      if (snap.exists() && snap.data().checks) { applyChecks(snap.data().checks); if(!firstProgress)syncStatus('saved','Synced ✓'); }
+      if (snap.exists() && snap.data().checks) {
+        applyChecks(snap.data().checks);
+        if(!firstProgress) syncStatus('saved','Synced ✓');
+      }
       firstProgress = false;
+    });
+    // Streak history from Firestore — merge with localStorage for offline resilience
+    onSnapshot(doc(db,'streak','history'), snap => {
+      if (snap.exists() && snap.data().data) {
+        let remote = snap.data().data;
+        // Merge with any local-only days (in case offline edits happened)
+        let local = {};
+        try { local = JSON.parse(localStorage.getItem('ws-progress-history')||'{}'); } catch(e) {}
+        const merged = Object.assign({}, remote, local);
+        window._streakHistory = merged;
+        try { localStorage.setItem('ws-progress-history', JSON.stringify(merged)); } catch(e) {}
+      } else {
+        // No Firestore streak yet — seed from localStorage
+        try { window._streakHistory = JSON.parse(localStorage.getItem('ws-progress-history')||'{}'); } catch(e) { window._streakHistory = {}; }
+      }
     });
     onSnapshot(query(collection(db,'notes'),orderBy('createdAt','desc')), snap => {
       window._notes = snap.docs.map(d => ({id:d.id,...d.data()}));
@@ -811,6 +832,8 @@ function applyChecks(saved) {
   if (!all.length) { setTimeout(() => applyChecks(saved), 200); return; }
   all.forEach((cb,i) => cb.checked = !!saved[i]);
   window.onCheck(false);
+  // Ensure dashboard analytics refresh after Firestore load
+  if (typeof updateDashStats === 'function') updateDashStats();
 }
 
 window.doLogin = async function() {
@@ -1084,6 +1107,9 @@ function updateDashStats() {
 
   // Update AI context
   updateAiContext();
+
+  // Sync Course 1 card on Courses page
+  if(typeof window.updateCourseCards === 'function') window.updateCourseCards();
 }
 
 function renderModuleBarChart() {
@@ -1172,20 +1198,28 @@ function renderMilestones(pct, checked) {
 
 function renderStreak() {
   const el=document.getElementById('streak-grid'); if(!el) return;
-  // Load progress history from localStorage
-  let history={};
-  try{history=JSON.parse(localStorage.getItem('ws-progress-history')||'{}');}catch(e){}
+  // Use Firestore-synced history (falls back to localStorage if not loaded yet)
+  let history = window._streakHistory || {};
+  if (!Object.keys(history).length) {
+    try { history = JSON.parse(localStorage.getItem('ws-progress-history')||'{}'); } catch(e) {}
+  }
   // Mark today if there's any progress
   const all=document.querySelectorAll('#modules-container input[type=checkbox]');
   let checked=0; all.forEach(cb=>{if(cb.checked)checked++;});
   const today=new Date().toISOString().slice(0,10);
-  if(checked>0) history[today]=checked;
-  try{localStorage.setItem('ws-progress-history',JSON.stringify(history));}catch(e){}
+  if(checked>0 && !history[today]) {
+    history[today]=checked;
+    window._streakHistory = history;
+    try { localStorage.setItem('ws-progress-history',JSON.stringify(history)); } catch(e) {}
+    // Persist to Firestore (debounced via FB)
+    if(window.FB && window.FB.saveStreak) window.FB.saveStreak(history);
+  } else if(checked>0) {
+    history[today]=checked;
+    window._streakHistory = history;
+  }
 
   // Render 70 days (10 weeks)
   const days=70;
-  let html='';
-  let streak=0; let countingStreak=true;
   const cells=[];
   for(let i=days-1;i>=0;i--){
     const d=new Date(); d.setDate(d.getDate()-i);
@@ -1195,6 +1229,7 @@ function renderStreak() {
     cells.push({key,active,isToday});
   }
   // Calculate current streak (from today backwards)
+  let streak=0;
   for(let i=cells.length-1;i>=0;i--){
     if(cells[i].active){streak++;}
     else if(i<cells.length-1){break;}
@@ -1313,6 +1348,7 @@ window.onCheck = function(save=true) {
     });
   });
   if(save&&window.saveProgress) window.saveProgress(state);
+  if(typeof window.updateCourseCards === 'function') window.updateCourseCards();
 };
 
 // Navigation
@@ -1333,7 +1369,31 @@ function showPage(id){
 // Courses
 const cData=[{n:1,t:'Foundations: Data, Data, Everywhere',h:13,c1:'var(--accent)',c2:'var(--teal)',s:'Active'},{n:2,t:'Ask Questions to Make Data-Driven Decisions',h:15,c1:'var(--blue)',c2:'var(--purple)',s:'Locked'},{n:3,t:'Prepare Data for Exploration',h:19,c1:'var(--amber)',c2:'var(--red)',s:'Locked'},{n:4,t:'Process Data from Dirty to Clean',h:16,c1:'var(--teal)',c2:'var(--blue)',s:'Locked'},{n:5,t:'Analyze Data to Answer Questions',h:26,c1:'var(--purple)',c2:'var(--accent)',s:'Locked'},{n:6,t:'Share Data Through the Art of Visualization',h:19,c1:'var(--red)',c2:'var(--amber)',s:'Locked'},{n:7,t:'Introduction to Data Analysis Using Python',h:27,c1:'var(--blue)',c2:'var(--teal)',s:'Locked'},{n:8,t:'Google Data Analytics Capstone',h:11,c1:'var(--accent)',c2:'var(--purple)',s:'Locked'},{n:9,t:'Accelerate Your Job Search with AI',h:6,c1:'var(--amber)',c2:'var(--teal)',s:'Locked'}];
 const cl=document.getElementById('courses-list');
-cData.forEach((c,i)=>{ cl.innerHTML+=`<div class="course-card anim-item" style="animation-delay:${i*.06}s" ${c.n===1?'onclick="showPage(\'timeline\')"':''}><div class="banner" style="background:linear-gradient(90deg,${c.c1},${c.c2})"></div><div class="body"><div class="tag" style="color:${c.c1}">Course ${c.n} — ${c.s}</div><h3>${c.t}</h3><div class="progress-bar"><div class="progress-fill" style="width:0%;background:${c.c1}"></div></div><div class="course-meta"><span>${c.h} hours</span><span>0%</span></div></div></div>`; });
+cData.forEach((c,i)=>{
+  const card = document.createElement('div');
+  card.className = 'course-card anim-item';
+  card.style.animationDelay = i*.06+'s';
+  if(c.n===1) { card.id='course-card-1'; card.onclick=()=>showPage('timeline'); }
+  card.innerHTML=`<div class="banner" style="background:linear-gradient(90deg,${c.c1},${c.c2})"></div><div class="body"><div class="tag" style="color:${c.c1}">Course ${c.n} — ${c.s}</div><h3>${c.t}</h3><div class="progress-bar"><div class="progress-fill" id="course-fill-${c.n}" style="width:0%;background:${c.c1}"></div></div><div class="course-meta"><span>${c.h} hours</span><span id="course-pct-${c.n}">0%</span></div></div>`;
+  cl.appendChild(card);
+});
+
+// Called by updateDashStats to keep Course 1 card in sync
+window.updateCourseCards = function() {
+  const all = document.querySelectorAll('#modules-container input[type=checkbox]');
+  let checked = 0; all.forEach(cb=>{if(cb.checked)checked++;});
+  const pct = totalItems>0 ? Math.round((checked/totalItems)*100) : 0;
+  const fill = document.getElementById('course-fill-1');
+  const pctEl = document.getElementById('course-pct-1');
+  if(fill) fill.style.width = pct+'%';
+  if(pctEl) pctEl.textContent = pct+'%';
+  // Update status tag if complete
+  const card = document.getElementById('course-card-1');
+  if(card) {
+    const tag = card.querySelector('.tag');
+    if(tag) tag.textContent = 'Course 1 — '+(pct===100?'Complete ✓':'Active');
+  }
+};
 
 // Settings
 function loadSettings(){
