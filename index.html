@@ -92,7 +92,45 @@ html.light .topbar{background:rgba(245,244,240,.85)}
 .stat-card .label{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
 .stat-card .value{font-size:28px;font-weight:600;letter-spacing:-.03em}
 .stat-card .change{font-size:12px;margin-top:6px}.stat-card .change.up{color:var(--teal)}.stat-card .change.down{color:var(--red)}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+
+/* ANALYTICS */
+.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.analytics-grid.three{grid-template-columns:1fr 1fr 1fr}
+.chart-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:22px}
+.chart-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.chart-card-title{font-size:13px;font-weight:600;letter-spacing:-.01em}
+.chart-card-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.chart-card-val{font-size:22px;font-weight:700;color:var(--accent);font-family:var(--mono)}
+/* SVG bar chart */
+.bar-chart{width:100%;overflow:visible}
+.bar-chart .bar-fill{transition:height .6s cubic-bezier(.4,0,.2,1),y .6s cubic-bezier(.4,0,.2,1)}
+.bar-chart .bar-label{font-size:9px;fill:var(--text3);font-family:'DM Sans',sans-serif}
+.bar-chart .bar-val{font-size:9px;fill:var(--text2);font-family:'DM Sans',sans-serif;font-weight:600}
+/* Streak row */
+.streak-grid{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.streak-cell{width:14px;height:14px;border-radius:3px;background:var(--bg4);transition:background .3s;cursor:default}
+.streak-cell.active{background:var(--accent)}
+.streak-cell.today{box-shadow:0 0 0 2px var(--accent)}
+/* Milestone */
+.milestone-list{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.milestone-item{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text2);padding:8px 12px;background:var(--bg3);border-radius:var(--radius-sm);border:1px solid var(--border)}
+.milestone-item.done{border-color:rgba(200,255,0,.2);background:var(--accent-dim)}
+.milestone-item.done .ms-icon{color:var(--accent)}
+.milestone-item.next{border-color:rgba(77,159,255,.2);background:rgba(77,159,255,.05)}
+.milestone-item.next .ms-icon{color:var(--blue)}
+.ms-icon{font-size:16px;flex-shrink:0;width:20px;text-align:center}
+.ms-label{flex:1}.ms-pct{font-size:11px;font-family:var(--mono);font-weight:600;color:var(--text3)}
+/* Progress ring */
+.progress-ring-wrap{display:flex;align-items:center;gap:20px}
+.progress-ring-info{flex:1}
+.progress-ring-stat{margin-bottom:10px}
+.progress-ring-stat .prs-val{font-size:20px;font-weight:700;color:var(--accent);font-family:var(--mono)}
+.progress-ring-stat .prs-lbl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+/* Pace bar */
+.pace-row{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:12px;color:var(--text2)}
+.pace-bar-track{flex:1;height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.pace-bar-fill{height:100%;border-radius:3px;background:var(--accent);transition:width .6s}
+@media(max-width:900px){.analytics-grid,.analytics-grid.three{grid-template-columns:1fr}}.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .section-title{font-size:16px;font-weight:600;letter-spacing:-.01em}
 .section-action{font-size:13px;color:var(--accent);cursor:pointer}
 .section-action:hover{color:var(--accent2)}
@@ -391,21 +429,120 @@ html.light .topbar{background:rgba(245,244,240,.85)}
     <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <h1 class="page-title anim-item" id="greeting">Good evening</h1>
-      <p class="page-subtitle anim-item">Here's your workspace overview.</p>
+      <p class="page-subtitle anim-item" id="dash-subtitle">Here's your workspace overview.</p>
+
+      <!-- STAT CARDS -->
       <div class="stats-grid">
-        <div class="stat-card anim-item"><div class="label">Active courses</div><div class="value">9</div><div class="change up">Google certificate</div></div>
-        <div class="stat-card anim-item"><div class="label">Course 1 progress</div><div class="value" style="color:var(--accent)" id="dash-progress">0%</div><div class="change" id="dash-progress-sub">Not started</div></div>
-        <div class="stat-card anim-item"><div class="label">Open tasks</div><div class="value" id="dash-tasks-count">0</div><div class="change up">Kanban board</div></div>
-        <div class="stat-card anim-item"><div class="label">Notes saved</div><div class="value" id="dash-notes-count">0</div><div class="change up">All synced</div></div>
+        <div class="stat-card anim-item" style="cursor:pointer" onclick="showPage('timeline')">
+          <div class="label">Course 1 progress</div>
+          <div class="value" style="color:var(--accent)" id="dash-progress">0%</div>
+          <div class="change" id="dash-progress-sub">Not started</div>
+        </div>
+        <div class="stat-card anim-item">
+          <div class="label">Est. finish date</div>
+          <div class="value" style="font-size:18px;padding-top:4px" id="dash-finish">—</div>
+          <div class="change up" id="dash-finish-sub">at current pace</div>
+        </div>
+        <div class="stat-card anim-item" style="cursor:pointer" onclick="showPage('tasks')">
+          <div class="label">Open tasks</div>
+          <div class="value" id="dash-tasks-count">0</div>
+          <div class="change up">Kanban board</div>
+        </div>
+        <div class="stat-card anim-item" style="cursor:pointer" onclick="showPage('notes')">
+          <div class="label">Notes saved</div>
+          <div class="value" id="dash-notes-count">0</div>
+          <div class="change up">All synced</div>
+        </div>
       </div>
-      <div class="section-header anim-item"><div class="section-title">Recent courses</div><div class="section-action" onclick="showPage('courses')">View all →</div></div>
-      <div class="courses-grid">
-        <div class="course-card anim-item" onclick="showPage('timeline')"><div class="banner" style="background:linear-gradient(90deg,var(--accent),var(--teal))"></div><div class="body"><div class="tag" style="color:var(--accent)">Course 1 — Active</div><h3>Foundations: Data, Data, Everywhere</h3><p>Key concepts, analytical thinking, tools overview</p><div class="progress-bar"><div class="progress-fill" id="dash-c1-bar" style="width:0%;background:var(--accent)"></div></div><div class="course-meta"><span>13 hours</span><span id="dash-c1-pct">0%</span></div></div></div>
-        <div class="course-card anim-item"><div class="banner" style="background:linear-gradient(90deg,var(--blue),var(--purple))"></div><div class="body"><div class="tag" style="color:var(--blue)">Course 2 — Locked</div><h3>Ask Questions to Make Data-Driven Decisions</h3><p>Problem-solving, spreadsheets, structured thinking</p><div class="progress-bar"><div class="progress-fill" style="width:0%;background:var(--blue)"></div></div><div class="course-meta"><span>15 hours</span><span>0%</span></div></div></div>
-        <div class="course-card anim-item"><div class="banner" style="background:linear-gradient(90deg,var(--amber),var(--red))"></div><div class="body"><div class="tag" style="color:var(--amber)">Course 3 — Locked</div><h3>Prepare Data for Exploration</h3><p>Data collection, databases, bias, organization</p><div class="progress-bar"><div class="progress-fill" style="width:0%;background:var(--amber)"></div></div><div class="course-meta"><span>19 hours</span><span>0%</span></div></div></div>
+
+      <!-- ROW 1: Progress ring + Module breakdown -->
+      <div class="analytics-grid anim-item">
+        <!-- Progress ring -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div><div class="chart-card-title">Course 1 overview</div><div class="chart-card-sub">Foundations: Data, Data, Everywhere</div></div>
+          </div>
+          <div class="progress-ring-wrap">
+            <svg width="110" height="110" viewBox="0 0 110 110">
+              <circle cx="55" cy="55" r="46" fill="none" stroke="var(--bg4)" stroke-width="10"/>
+              <circle id="dash-ring" cx="55" cy="55" r="46" fill="none" stroke="var(--accent)" stroke-width="10"
+                stroke-dasharray="289" stroke-dashoffset="289" stroke-linecap="round"
+                transform="rotate(-90 55 55)" style="transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)"/>
+              <text x="55" y="51" text-anchor="middle" font-size="18" font-weight="700" fill="var(--accent)" font-family="JetBrains Mono,monospace" id="dash-ring-pct">0%</text>
+              <text x="55" y="65" text-anchor="middle" font-size="9" fill="var(--text3)" font-family="DM Sans,sans-serif">complete</text>
+            </svg>
+            <div class="progress-ring-info">
+              <div class="progress-ring-stat"><div class="prs-val" id="dash-ring-done">0/62</div><div class="prs-lbl">items done</div></div>
+              <div class="progress-ring-stat"><div class="prs-val" id="dash-ring-remain">62</div><div class="prs-lbl">remaining</div></div>
+              <div class="pace-row">
+                <span id="dash-pace-label">2h/day</span>
+                <div class="pace-bar-track"><div class="pace-bar-fill" id="dash-pace-bar" style="width:0%"></div></div>
+                <span id="dash-pace-days">— days left</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module breakdown bar chart -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div><div class="chart-card-title">Module progress</div><div class="chart-card-sub">Course 1 — 4 modules</div></div>
+          </div>
+          <svg class="bar-chart" height="120" id="module-bar-chart" viewBox="0 0 260 120" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
       </div>
-      <div class="section-header anim-item"><div class="section-title">Recent notes</div><div class="section-action" onclick="showPage('notes')">View all →</div></div>
-      <div id="dash-notes-preview" class="notes-grid" style="margin-bottom:0"></div>
+
+      <!-- ROW 2: Activity heatmap + Milestones -->
+      <div class="analytics-grid anim-item">
+        <!-- Activity heatmap (streak) -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div><div class="chart-card-title">Study activity</div><div class="chart-card-sub">Last 10 weeks — days you made progress</div></div>
+            <div style="text-align:right"><div class="chart-card-val" id="dash-streak-num">0</div><div style="font-size:10px;color:var(--text3)">day streak</div></div>
+          </div>
+          <div class="streak-grid" id="streak-grid"></div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--text3)">
+            <span>10 weeks ago</span><span>Today</span>
+          </div>
+        </div>
+
+        <!-- Milestones -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div><div class="chart-card-title">Milestones</div><div class="chart-card-sub">Course 1 checkpoints</div></div>
+          </div>
+          <div class="milestone-list" id="milestone-list"></div>
+        </div>
+      </div>
+
+      <!-- ROW 3: Category breakdown + Recent notes -->
+      <div class="analytics-grid three anim-item">
+        <!-- Category breakdown -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div><div class="chart-card-title">By category</div><div class="chart-card-sub">Videos · Readings · Assignments</div></div>
+          </div>
+          <div id="cat-breakdown" style="display:flex;flex-direction:column;gap:10px;margin-top:4px"></div>
+        </div>
+
+        <!-- Recent tasks -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div><div class="chart-card-title">Tasks</div></div>
+            <div class="section-action" onclick="showPage('tasks')">View all →</div>
+          </div>
+          <div id="dash-tasks-preview" style="display:flex;flex-direction:column;gap:8px"></div>
+        </div>
+
+        <!-- Recent notes -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div><div class="chart-card-title">Recent notes</div></div>
+            <div class="section-action" onclick="showPage('notes')">View all →</div>
+          </div>
+          <div id="dash-notes-preview" style="display:flex;flex-direction:column;gap:8px"></div>
+        </div>
+      </div>
     </div>
 
     <!-- COURSES -->
@@ -436,15 +573,15 @@ html.light .topbar{background:rgba(245,244,240,.85)}
         <button class="btn btn-primary" onclick="openTaskModal()">+ Add task</button>
       </div>
       <div class="kanban-board anim-item">
-        <div class="kanban-col" id="col-todo" ondragover="ev.preventDefault();this.classList.add('drag-over')" ondrop="dropTask(event,'todo')" ondragleave="this.classList.remove('drag-over')">
+        <div class="kanban-col" id="col-todo" ondragover="event.preventDefault();this.classList.add('drag-over')" ondrop="dropTask(event,'todo')" ondragleave="this.classList.remove('drag-over')">
           <div class="kanban-col-header"><div class="kanban-col-title"><span style="color:var(--amber)">●</span>To do<span class="kanban-cnt" id="cnt-todo">0</span></div><button class="kanban-add-btn" onclick="openTaskModal('todo')">+</button></div>
           <div id="tasks-todo"></div><div class="task-empty" id="empty-todo">No tasks yet</div>
         </div>
-        <div class="kanban-col" id="col-inprogress" ondragover="ev.preventDefault();this.classList.add('drag-over')" ondrop="dropTask(event,'inprogress')" ondragleave="this.classList.remove('drag-over')">
+        <div class="kanban-col" id="col-inprogress" ondragover="event.preventDefault();this.classList.add('drag-over')" ondrop="dropTask(event,'inprogress')" ondragleave="this.classList.remove('drag-over')">
           <div class="kanban-col-header"><div class="kanban-col-title"><span style="color:var(--blue)">●</span>In progress<span class="kanban-cnt" id="cnt-inprogress">0</span></div><button class="kanban-add-btn" onclick="openTaskModal('inprogress')">+</button></div>
           <div id="tasks-inprogress"></div><div class="task-empty" id="empty-inprogress">No tasks yet</div>
         </div>
-        <div class="kanban-col" id="col-done" ondragover="ev.preventDefault();this.classList.add('drag-over')" ondrop="dropTask(event,'done')" ondragleave="this.classList.remove('drag-over')">
+        <div class="kanban-col" id="col-done" ondragover="event.preventDefault();this.classList.add('drag-over')" ondrop="dropTask(event,'done')" ondragleave="this.classList.remove('drag-over')">
           <div class="kanban-col-header"><div class="kanban-col-title"><span style="color:var(--teal)">●</span>Done<span class="kanban-cnt" id="cnt-done">0</span></div><button class="kanban-add-btn" onclick="openTaskModal('done')">+</button></div>
           <div id="tasks-done"></div><div class="task-empty" id="empty-done">No tasks yet</div>
         </div>
@@ -883,14 +1020,210 @@ window.dropTask = async function(e, status) {
 };
 
 // ============ DASHBOARD ============
+// ============ ANALYTICS DASHBOARD ============
 function updateDashStats() {
-  document.getElementById('dash-notes-count').textContent=window._notes.length;
-  document.getElementById('dash-tasks-count').textContent=window._tasks.filter(t=>t.status!=='done').length;
-  // Preview notes
-  const preview=document.getElementById('dash-notes-preview');
-  preview.innerHTML='';
-  if(!window._notes.length){preview.innerHTML='<p style="font-size:13px;color:var(--text3);grid-column:1/-1">No notes yet — <a style="color:var(--accent);cursor:pointer" onclick="showPage(\'notes\')">create your first note</a></p>';return;}
-  window._notes.slice(0,3).forEach(n=>{const c=makeNoteCard(n);preview.appendChild(c);});
+  // Basic counts
+  const openTasks = (window._tasks||[]).filter(t=>t.status!=='done');
+  document.getElementById('dash-notes-count').textContent = (window._notes||[]).length;
+  document.getElementById('dash-tasks-count').textContent = openTasks.length;
+
+  // Progress
+  const all = document.querySelectorAll('#modules-container input[type=checkbox]');
+  let checked = 0; all.forEach(cb=>{if(cb.checked)checked++;});
+  const pct = totalItems>0 ? Math.round((checked/totalItems)*100) : 0;
+  document.getElementById('dash-progress').textContent = pct+'%';
+  const sub = document.getElementById('dash-progress-sub');
+  if(sub){if(pct===0){sub.textContent='Not started';sub.className='change';}else if(pct===100){sub.textContent='Completed! 🎉';sub.className='change up';}else{sub.textContent='In progress';sub.className='change up';}}
+
+  // Update legacy IDs used by onCheck
+  const cb1=document.getElementById('dash-c1-bar'); if(cb1)cb1.style.width=pct+'%';
+  const cp1=document.getElementById('dash-c1-pct'); if(cp1)cp1.textContent=pct+'%';
+
+  // Progress ring
+  const ring=document.getElementById('dash-ring');
+  const circumference=289;
+  if(ring) ring.style.strokeDashoffset=circumference-(circumference*(pct/100));
+  const rp=document.getElementById('dash-ring-pct'); if(rp)rp.textContent=pct+'%';
+  const rd=document.getElementById('dash-ring-done'); if(rd)rd.textContent=checked+'/'+totalItems;
+  const rr=document.getElementById('dash-ring-remain'); if(rr)rr.textContent=(totalItems-checked);
+
+  // Estimated finish
+  const settings=JSON.parse(localStorage.getItem('ws-settings')||'{}');
+  const pace=parseFloat(settings.pace)||2; // hours/day
+  const hoursPerItem=13/totalItems; // ~0.21h per item
+  const remaining=totalItems-checked;
+  const daysLeft=remaining>0 ? Math.ceil((remaining*hoursPerItem)/pace) : 0;
+  const finishDate=new Date(); finishDate.setDate(finishDate.getDate()+daysLeft);
+  const finishEl=document.getElementById('dash-finish');
+  if(finishEl) finishEl.textContent=remaining===0?'Done! 🎉':finishDate.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const finishSub=document.getElementById('dash-finish-sub');
+  if(finishSub) finishSub.textContent=remaining===0?'Course 1 complete':daysLeft+' days at '+pace+'h/day';
+
+  // Pace bar (progress toward today's goal)
+  const paceLabel=document.getElementById('dash-pace-label'); if(paceLabel)paceLabel.textContent=pace+'h/day';
+  const paceDays=document.getElementById('dash-pace-days'); if(paceDays)paceDays.textContent=daysLeft>0?daysLeft+' days left':'Done!';
+  const paceBar=document.getElementById('dash-pace-bar'); if(paceBar)paceBar.style.width=pct+'%';
+
+  // Module bar chart
+  renderModuleBarChart();
+
+  // Category breakdown
+  renderCatBreakdown(checked, all);
+
+  // Milestones
+  renderMilestones(pct, checked);
+
+  // Streak / heatmap
+  renderStreak();
+
+  // Recent tasks preview
+  renderDashTasks(openTasks);
+
+  // Recent notes preview
+  renderDashNotes();
+
+  // Update AI context
+  updateAiContext();
+}
+
+function renderModuleBarChart() {
+  const svg = document.getElementById('module-bar-chart');
+  if (!svg) return;
+  const all = document.querySelectorAll('#modules-container input[type=checkbox]');
+  const W=260, H=120, padL=28, padB=24, padT=10, barW=32, gap=18;
+  const moduleItems=[32,16,10,4]; // items per module (vid+read+assign+plug counts)
+  // Recalculate from actual checkboxes
+  const modulePcts=[];
+  let idx=0;
+  moduleData.forEach(m=>{
+    let mT=0,mC=0;
+    m.sections.forEach(s=>s.items.forEach(()=>{if(all[idx]&&all[idx].checked)mC++;mT++;idx++;}));
+    modulePcts.push(mT>0?Math.round((mC/mT)*100):0);
+  });
+  const chartH=H-padB-padT;
+  const totalW=(barW+gap)*modulePcts.length-gap;
+  const startX=(W-totalW)/2;
+  const labels=['M1','M2','M3','M4'];
+  const colors=['var(--accent)','var(--teal)','var(--blue)','var(--purple)'];
+  let html='';
+  // Grid lines
+  [0,25,50,75,100].forEach(v=>{
+    const y=padT+chartH-(chartH*v/100);
+    html+=`<line x1="${padL}" y1="${y}" x2="${W-4}" y2="${y}" stroke="var(--border)" stroke-width="0.5"/>`;
+    html+=`<text x="${padL-4}" y="${y+3}" text-anchor="end" class="bar-label">${v}%</text>`;
+  });
+  modulePcts.forEach((pct,i)=>{
+    const x=startX+i*(barW+gap);
+    const barH=Math.max(2,chartH*pct/100);
+    const y=padT+chartH-barH;
+    html+=`<rect x="${x}" y="${padT+chartH}" width="${barW}" height="0" rx="4" fill="${colors[i]}" opacity="0.85" class="bar-fill" id="mbar-dash-${i}"/>`;
+    html+=`<text x="${x+barW/2}" y="${H-6}" text-anchor="middle" class="bar-label">${labels[i]}</text>`;
+    html+=`<text x="${x+barW/2}" y="${y-4}" text-anchor="middle" class="bar-val">${pct>0?pct+'%':''}</text>`;
+    // Animate
+    setTimeout(()=>{
+      const bar=document.getElementById('mbar-dash-'+i);
+      if(bar){bar.setAttribute('y',y);bar.setAttribute('height',barH);}
+    },100+i*80);
+  });
+  svg.innerHTML=html;
+}
+
+function renderCatBreakdown(checked, all) {
+  const el=document.getElementById('cat-breakdown'); if(!el) return;
+  // Count by category across all modules
+  const cats={vid:{label:'Videos',color:'var(--purple)',total:0,done:0},read:{label:'Readings',color:'var(--teal)',total:0,done:0},assign:{label:'Assignments',color:'var(--amber)',total:0,done:0},plug:{label:'Plugins',color:'var(--text3)',total:0,done:0}};
+  let idx=0;
+  moduleData.forEach(m=>m.sections.forEach(s=>{
+    s.items.forEach(()=>{cats[s.tag].total++;if(all[idx]&&all[idx].checked)cats[s.tag].done++;idx++;});
+  }));
+  el.innerHTML=Object.entries(cats).filter(([,v])=>v.total>0).map(([,v])=>{
+    const pct=Math.round((v.done/v.total)*100);
+    return `<div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+        <span style="color:${v.color};font-weight:600">${v.label}</span>
+        <span style="color:var(--text3);font-family:var(--mono)">${v.done}/${v.total} · ${pct}%</span>
+      </div>
+      <div style="height:5px;background:var(--bg4);border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${v.color};border-radius:3px;transition:width .6s"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderMilestones(pct, checked) {
+  const el=document.getElementById('milestone-list'); if(!el) return;
+  const milestones=[
+    {label:'Get started',target:1,icon:'🚀'},
+    {label:'25% complete — Module 1 done',target:25,icon:'⚡'},
+    {label:'Halfway there!',target:50,icon:'🔥'},
+    {label:'75% — almost there',target:75,icon:'💪'},
+    {label:'Course 1 complete!',target:100,icon:'🎓'},
+  ];
+  el.innerHTML=milestones.map((m,i)=>{
+    const done=pct>=m.target;
+    const next=!done&&(i===0||(pct>=milestones[i-1].target));
+    return `<div class="milestone-item ${done?'done':next?'next':''}">
+      <span class="ms-icon">${done?'✅':next?'→':m.icon}</span>
+      <span class="ms-label">${m.label}</span>
+      <span class="ms-pct" style="color:${done?'var(--accent)':next?'var(--blue)':'var(--text3)'}">${m.target}%</span>
+    </div>`;
+  }).join('');
+}
+
+function renderStreak() {
+  const el=document.getElementById('streak-grid'); if(!el) return;
+  // Load progress history from localStorage
+  let history={};
+  try{history=JSON.parse(localStorage.getItem('ws-progress-history')||'{}');}catch(e){}
+  // Mark today if there's any progress
+  const all=document.querySelectorAll('#modules-container input[type=checkbox]');
+  let checked=0; all.forEach(cb=>{if(cb.checked)checked++;});
+  const today=new Date().toISOString().slice(0,10);
+  if(checked>0) history[today]=checked;
+  try{localStorage.setItem('ws-progress-history',JSON.stringify(history));}catch(e){}
+
+  // Render 70 days (10 weeks)
+  const days=70;
+  let html='';
+  let streak=0; let countingStreak=true;
+  const cells=[];
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(); d.setDate(d.getDate()-i);
+    const key=d.toISOString().slice(0,10);
+    const active=!!history[key];
+    const isToday=i===0;
+    cells.push({key,active,isToday});
+  }
+  // Calculate current streak (from today backwards)
+  for(let i=cells.length-1;i>=0;i--){
+    if(cells[i].active){streak++;}
+    else if(i<cells.length-1){break;}
+  }
+  const streakEl=document.getElementById('dash-streak-num');
+  if(streakEl) streakEl.textContent=streak;
+  el.innerHTML=cells.map(c=>`<div class="streak-cell ${c.active?'active':''} ${c.isToday?'today':''}" title="${c.key}"></div>`).join('');
+}
+
+function renderDashTasks(openTasks) {
+  const el=document.getElementById('dash-tasks-preview'); if(!el) return;
+  if(!openTasks.length){el.innerHTML='<p style="font-size:13px;color:var(--text3)">No open tasks — <a style="color:var(--accent);cursor:pointer" onclick="showPage(\'tasks\')">add one</a></p>';return;}
+  el.innerHTML=openTasks.slice(0,4).map(t=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm);cursor:pointer" onclick="showPage('tasks')">
+      <span class="priority-badge priority-${t.priority||'medium'}">${t.priority||'med'}</span>
+      <span style="font-size:12px;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(t.title)}</span>
+      ${t.due?`<span style="font-size:10px;color:var(--text3);font-family:var(--mono)">${esc(t.due)}</span>`:''}
+    </div>`).join('');
+}
+
+function renderDashNotes() {
+  const el=document.getElementById('dash-notes-preview'); if(!el) return;
+  if(!(window._notes||[]).length){el.innerHTML='<p style="font-size:13px;color:var(--text3)">No notes yet — <a style="color:var(--accent);cursor:pointer" onclick="showPage(\'notes\')">create one</a></p>';return;}
+  el.innerHTML=window._notes.slice(0,4).map(n=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm);cursor:pointer" onclick="showPage('notes');openNoteEditor('${n.id}')">
+      <div style="width:8px;height:8px;border-radius:50%;background:${n.color||'var(--accent)'};flex-shrink:0"></div>
+      <span style="font-size:12px;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(n.title||'Untitled')}</span>
+      <span style="font-size:10px;color:var(--text3);font-family:var(--mono)">${fmtDate(n.createdAt)}</span>
+    </div>`).join('');
 }
 
 // ============ MODULE / PROGRESS ============
