@@ -569,18 +569,40 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       <div class="nav-item" onclick="showPage('area-mind')"><span style="width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block;flex-shrink:0"></span>🧠 Mind</div>
     </div>
     <div class="nav-section">
-      <div class="nav-label">Learning</div>
-      <div class="nav-item" onclick="showPage('courses')">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Courses<span class="nav-badge">9</span>
+      <div class="nav-label" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding-right:12px" onclick="toggleLearningNav()">
+        Learning
+        <span id="learning-nav-chevron" style="font-size:10px;color:var(--text3);transition:transform .25s">▾</span>
       </div>
-      <div class="nav-item" onclick="showPage('timeline')">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Course 1 Timeline
-      </div>
-      <div class="nav-item" onclick="showPage('timeline2')">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Course 2 Timeline
-      </div>
-      <div class="nav-item" onclick="showPage('certtracker')">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Certificate Tracker
+      <div id="learning-nav-items">
+        <div class="nav-item" onclick="showPage('courses')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>All Courses<span class="nav-badge">9</span>
+        </div>
+        <!-- Active courses -->
+        <div style="padding:4px 0 2px 20px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);font-weight:600">Active</div>
+        <div class="nav-item" style="padding-left:20px" onclick="showPage('timeline')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">C1 · Foundations</span>
+          <span class="nav-badge" id="nav-c1-pct">0%</span>
+        </div>
+        <div class="nav-item" style="padding-left:20px" onclick="showPage('timeline2')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">C2 · Ask Questions</span>
+          <span class="nav-badge" id="nav-c2-pct">0%</span>
+        </div>
+        <!-- Locked courses -->
+        <div style="padding:4px 0 2px 20px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);font-weight:600">Locked</div>
+        <div class="nav-item" style="padding-left:20px;opacity:.5" onclick="showPage('courses')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          <span style="flex:1">C3–C9</span>
+          <span class="nav-badge">6 left</span>
+        </div>
+        <!-- Certificate -->
+        <div style="padding:4px 0 2px 20px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);font-weight:600">Certificate</div>
+        <div class="nav-item" style="padding-left:20px" onclick="showPage('certtracker')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <span style="flex:1">Tracker</span>
+          <span class="nav-badge" id="nav-cert-pct">0%</span>
+        </div>
       </div>
     </div>
     <div class="nav-section">
@@ -981,10 +1003,10 @@ html.light .topbar{background:rgba(245,244,240,.85)}
         <!-- Quick capture -->
         <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
           <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:14px;font-weight:600">Quick capture</div>
-          <div style="display:flex;gap:8px;margin-bottom:12px">
-            <input type="text" id="capture-input" placeholder="Capture a thought or task..." style="flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;color:var(--text);font-size:13px;font-family:var(--font);outline:none" onkeydown="if(event.key==='Enter')quickCapture()"/>
+          <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+            <input type="text" id="capture-input" placeholder="Capture a thought or task..." style="flex:1;min-width:120px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;color:var(--text);font-size:13px;font-family:var(--font);outline:none" onkeydown="if(event.key==='Enter')quickCapture()"/>
             <select id="capture-area" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 10px;color:var(--text);font-size:12px;font-family:var(--font);outline:none">
-              <option value="personal">Personal</option><option value="work">Work</option><option value="learning">Learning</option><option value="health">Health</option><option value="finance">Finance</option><option value="mind">Mind</option>
+              <option value="personal">🏠 Personal</option><option value="work">💼 Work</option><option value="learning">📚 Learning</option><option value="health">🏃 Health</option><option value="finance">💰 Finance</option><option value="mind">🧠 Mind</option>
             </select>
             <button class="btn btn-primary" onclick="quickCapture()" style="padding:8px 14px">Add</button>
           </div>
@@ -1056,12 +1078,23 @@ html.light .topbar{background:rgba(245,244,240,.85)}
         <button class="btn btn-ghost" id="period-all" onclick="setAnalyticsPeriod('all')">All time</button>
       </div>
 
-      <!-- TODAY AT A GLANCE -->
+      <!-- TODAY AT A GLANCE with date picker -->
       <div class="chart-card anim-item" style="margin-bottom:20px">
-        <div class="chart-card-header" style="margin-bottom:16px">
-          <div><div class="chart-card-title">Today at a glance</div><div class="chart-card-sub" id="analytics-today-date">—</div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+          <div>
+            <div class="chart-card-title">Daily snapshot</div>
+            <div class="chart-card-sub" id="analytics-today-date">—</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <button id="snap-prev" onclick="snapNav(-1)" style="background:var(--bg4);border:none;color:var(--text2);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center">‹</button>
+            <button class="btn btn-ghost" id="snap-today-btn" onclick="snapSetToday()" style="padding:5px 12px;font-size:12px">Today</button>
+            <button class="btn btn-ghost" id="snap-yesterday-btn" onclick="snapSetYesterday()" style="padding:5px 12px;font-size:12px">Yesterday</button>
+            <input type="date" id="snap-date-picker" onchange="snapSetDate(this.value)"
+              style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:5px 10px;color:var(--text);font-size:12px;font-family:var(--font);outline:none;cursor:pointer"/>
+            <button id="snap-next" onclick="snapNav(1)" style="background:var(--bg4);border:none;color:var(--text2);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center">›</button>
+          </div>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px" id="analytics-today-stats"></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px" id="analytics-today-stats"></div>
       </div>
 
       <!-- Summary stats -->
@@ -1515,6 +1548,7 @@ function applyChecks(saved) {
   all.forEach((cb,i) => cb.checked = !!saved[i]);
   window.onCheck(false);
   if (typeof updateDashStats === 'function') updateDashStats();
+  if (typeof updateLearningNavBadges === 'function') updateLearningNavBadges();
 }
 function applyChecks2(saved) {
   const all = document.querySelectorAll('#modules-container2 input[type=checkbox]');
@@ -2094,6 +2128,7 @@ window.onCheck = function(save=true) {
   });
   if(save&&window.saveProgress) window.saveProgress(state);
   if(typeof window.updateCourseCards==='function') window.updateCourseCards();
+  if(typeof updateLearningNavBadges==='function') updateLearningNavBadges();
 };
 
 // Navigation
@@ -2243,7 +2278,33 @@ window.deleteCustomCourse=function(i){
 };
 document.getElementById('course-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeCourseModal();});
 
-// ============ COURSE 2 MODULE DATA ============
+// ============ LEARNING NAV ============
+let _learningNavOpen = true;
+window.toggleLearningNav = function(){
+  _learningNavOpen = !_learningNavOpen;
+  const items = document.getElementById('learning-nav-items');
+  const chev = document.getElementById('learning-nav-chevron');
+  if(items) items.style.display = _learningNavOpen ? '' : 'none';
+  if(chev) chev.style.transform = _learningNavOpen ? '' : 'rotate(-90deg)';
+};
+
+function updateLearningNavBadges(){
+  const all1 = document.querySelectorAll('#modules-container input[type=checkbox]');
+  let ch1=0; all1.forEach(c=>{if(c.checked)ch1++;});
+  const p1 = totalItems>0 ? Math.round((ch1/totalItems)*100) : 0;
+  const all2 = document.querySelectorAll('#modules-container2 input[type=checkbox]');
+  let ch2=0; all2.forEach(c=>{if(c.checked)ch2++;});
+  const tot2 = all2.length || (typeof totalItems2!=='undefined'?totalItems2:0);
+  const p2 = tot2>0 ? Math.round((ch2/tot2)*100) : 0;
+  const hoursDone = (p1/100)*13 + (p2/100)*15;
+  const certPct = Math.round((hoursDone/152)*100);
+  const b1=document.getElementById('nav-c1-pct'); if(b1) b1.textContent=p1+'%';
+  const b2=document.getElementById('nav-c2-pct'); if(b2) b2.textContent=p2+'%';
+  const bc=document.getElementById('nav-cert-pct'); if(bc) bc.textContent=certPct+'%';
+  // Color the badges when making progress
+  if(b1) b1.style.color = p1>0 ? 'var(--accent)' : '';
+  if(b2) b2.style.color = p2>0 ? 'var(--blue)' : '';
+}
 const moduleData2=[
   {num:1,title:'Ask effective questions',hours:'~4h',days:'Days 1–2',topics:['SMART questions','Structured thinking','Problem types','Data-driven decisions'],sections:[
     {type:'Videos',tag:'vid',color:'var(--purple)',icon:'M5 3l14 9-14 9V3z',items:[{t:'Course 2 overview',d:'3 min'},{t:'Introduction to problem-solving and effective questioning',d:'4 min'},{t:'Common problem types',d:'5 min'},{t:'SMART questions',d:'5 min'},{t:'More about SMART questions',d:'3 min'},{t:'Evan: Data opens doors',d:'3 min'},{t:'Qualitative and quantitative data',d:'4 min'},{t:'Connecting the data dots',d:'3 min'}]},
@@ -2313,6 +2374,7 @@ window.onCheck2=function(save=true){
   });
   if(save&&window.saveProgress2) window.saveProgress2(state);
   if(typeof window.updateCourseCards==='function') window.updateCourseCards();
+  if(typeof updateLearningNavBadges==='function') updateLearningNavBadges();
 };
 
 // ============ POMODORO ============
@@ -3079,7 +3141,7 @@ window.toggleHabit=function(id){
   setHabit(id,!td[id]);
   renderTodayHabits();
   renderStreak();
-  if(window.currentPage==='analytics') renderAnalytics();
+  if(window.currentPage==='analytics') renderDailySnapshot(window._snapDate||getTodayKey());
 };
 function getHabitStreak(id){
   const h=getHabits(); let streak=0;
@@ -3097,12 +3159,63 @@ function renderTodayCaptures(){
   const key='captures-'+getTodayKey();
   let caps=[];try{caps=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
   if(!caps.length){el.innerHTML='<div style="font-size:12px;color:var(--text3)">Nothing captured yet today</div>';return;}
-  el.innerHTML=caps.map((c,i)=>`
-    <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm)">
-      <div style="width:6px;height:6px;border-radius:50%;background:${AREA_COLORS[c.area]||'var(--accent)'};flex-shrink:0"></div>
-      <span style="flex:1;font-size:12px">${esc(c.text)}</span>
-      <button onclick="removeCapture(${i})" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px">×</button>
-    </div>`).join('');
+  el.innerHTML=caps.map((c,i)=>{
+    const color=AREA_COLORS[c.area]||'var(--accent)';
+    const emoji={personal:'🏠',work:'💼',learning:'📚',health:'🏃',finance:'💰',mind:'🧠'}[c.area]||'📋';
+    return `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <div style="width:6px;height:6px;border-radius:50%;background:${color};flex-shrink:0"></div>
+        <span style="flex:1;font-size:13px;color:var(--text)">${esc(c.text)}</span>
+        <button onclick="removeCapture(${i})" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:0 2px;line-height:1">×</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;background:${color}22;color:${color}">${emoji} ${c.area||'personal'}</span>
+        <button onclick="captureToTask(${i})" title="Move to Tasks" style="display:flex;align-items:center;gap:4px;background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--text2);cursor:pointer;font-family:var(--font);transition:all .15s" onmouseenter="this.style.borderColor='var(--amber)';this.style.color='var(--amber)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+          ✅ → Task
+        </button>
+        <button onclick="captureToNote(${i})" title="Move to Notes" style="display:flex;align-items:center;gap:4px;background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--text2);cursor:pointer;font-family:var(--font);transition:all .15s" onmouseenter="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+          📝 → Note
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.captureToTask=async function(i){
+  const key='captures-'+getTodayKey();
+  let caps=[];try{caps=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
+  const c=caps[i]; if(!c) return;
+  // Create task with area
+  await window.FB.addTask({title:c.text,area:c.area||'personal',priority:'medium',status:'todo',desc:'Captured from Today',createdAt:Date.now()});
+  // Remove from captures
+  caps.splice(i,1); localStorage.setItem(key,JSON.stringify(caps));
+  if(window.FB&&window.FB.saveDaily) window.FB.saveDaily(getTodayKey()+'-captures',{captures:caps});
+  renderTodayCaptures();
+  // Brief confirm flash
+  showCaptureAction('Moved to Tasks ✓');
+};
+
+window.captureToNote=async function(i){
+  const key='captures-'+getTodayKey();
+  let caps=[];try{caps=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
+  const c=caps[i]; if(!c) return;
+  // Create note with area
+  await window.FB.addNote({title:c.text,body:'',tag:'',area:c.area||'personal',color:AREA_COLORS[c.area]||'#c8ff00',createdAt:Date.now(),updatedAt:Date.now()});
+  // Remove from captures
+  caps.splice(i,1); localStorage.setItem(key,JSON.stringify(caps));
+  if(window.FB&&window.FB.saveDaily) window.FB.saveDaily(getTodayKey()+'-captures',{captures:caps});
+  renderTodayCaptures();
+  showCaptureAction('Moved to Notes ✓');
+};
+
+function showCaptureAction(msg){
+  const el=document.getElementById('today-captures');
+  if(!el) return;
+  const toast=document.createElement('div');
+  toast.style.cssText='padding:8px 12px;background:var(--accent-dim);border:1px solid rgba(200,255,0,.2);border-radius:var(--radius-sm);font-size:12px;color:var(--accent);font-weight:600;text-align:center;animation:fadeIn .2s ease';
+  toast.textContent=msg;
+  el.insertBefore(toast,el.firstChild);
+  setTimeout(()=>toast.remove(),2000);
 }
 window.quickCapture=function(){
   const input=document.getElementById('capture-input');
@@ -3385,39 +3498,118 @@ window.setAnalyticsPeriod=function(p){
   renderAnalytics();
 };
 
-window.renderAnalytics=function(){
-  // ── TODAY AT A GLANCE ──
-  const todayDate=document.getElementById('analytics-today-date');
-  if(todayDate) todayDate.textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+// ── DAILY SNAPSHOT DATE STATE ──
+window._snapDate = getTodayKey();
 
-  const td=getTodayHabits();
-  const prayers=['fajr','dhuhr','asr','maghrib','isha'];
-  const prayerDone=prayers.filter(p=>td[p]).length;
-  const todayPomo=(window._pomoHistory||{})[getTodayKey()]||0;
-  const todayTasks=(window._tasks||[]).filter(t=>{
-    const d=new Date(t.createdAt||0);
-    return t.status==='done' && d.toISOString().slice(0,10)===getTodayKey();
+window.snapSetToday = function(){
+  window._snapDate = getTodayKey();
+  document.getElementById('snap-date-picker').value = window._snapDate;
+  renderDailySnapshot(window._snapDate);
+  updateSnapButtons();
+};
+window.snapSetYesterday = function(){
+  const d = new Date(); d.setDate(d.getDate()-1);
+  window._snapDate = d.toISOString().slice(0,10);
+  document.getElementById('snap-date-picker').value = window._snapDate;
+  renderDailySnapshot(window._snapDate);
+  updateSnapButtons();
+};
+window.snapSetDate = function(val){
+  if(!val) return;
+  window._snapDate = val;
+  renderDailySnapshot(val);
+  updateSnapButtons();
+};
+window.snapNav = function(dir){
+  const d = new Date(window._snapDate+'T00:00:00');
+  d.setDate(d.getDate()+dir);
+  const max = new Date(); max.setHours(0,0,0,0);
+  if(d > max) return; // can't go to future
+  window._snapDate = d.toISOString().slice(0,10);
+  document.getElementById('snap-date-picker').value = window._snapDate;
+  renderDailySnapshot(window._snapDate);
+  updateSnapButtons();
+};
+function updateSnapButtons(){
+  const isToday = window._snapDate === getTodayKey();
+  const d = new Date(); d.setDate(d.getDate()-1);
+  const isYesterday = window._snapDate === d.toISOString().slice(0,10);
+  const tb = document.getElementById('snap-today-btn');
+  const yb = document.getElementById('snap-yesterday-btn');
+  const nb = document.getElementById('snap-next');
+  if(tb) tb.className = isToday ? 'btn btn-primary' : 'btn btn-ghost';
+  if(tb) tb.style.cssText = 'padding:5px 12px;font-size:12px';
+  if(yb) yb.className = isYesterday ? 'btn btn-primary' : 'btn btn-ghost';
+  if(yb) yb.style.cssText = 'padding:5px 12px;font-size:12px';
+  if(nb) nb.style.opacity = isToday ? '0.3' : '1';
+  if(nb) nb.style.pointerEvents = isToday ? 'none' : '';
+}
+
+function renderDailySnapshot(dateKey){
+  const todayLabel = document.getElementById('analytics-today-date');
+  const statsEl = document.getElementById('analytics-today-stats');
+  if(!todayLabel||!statsEl) return;
+
+  // Format date label
+  const d = new Date(dateKey+'T00:00:00');
+  const today = getTodayKey();
+  const yest = new Date(); yest.setDate(yest.getDate()-1);
+  let label = d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  if(dateKey===today) label = 'Today · '+label;
+  else if(dateKey===yest.toISOString().slice(0,10)) label = 'Yesterday · '+label;
+  todayLabel.textContent = label;
+
+  // Get habits for this date
+  const h = getHabits();
+  const dayHabits = h[dateKey] || {};
+  const prayers = ['fajr','dhuhr','asr','maghrib','isha'];
+  const prayerDone = prayers.filter(p=>dayHabits[p]).length;
+
+  // Pomodoro sessions for this date
+  const dayPomo = (window._pomoHistory||{})[dateKey] || 0;
+
+  // Tasks completed on this date (use createdAt as proxy — not perfect but best we have)
+  const dayTasks = (window._tasks||[]).filter(t=>{
+    if(t.status!=='done') return false;
+    const td = new Date(t.updatedAt||t.createdAt||0);
+    return td.toISOString().slice(0,10)===dateKey;
   }).length;
-  const todayCaptures=JSON.parse(localStorage.getItem('captures-'+getTodayKey())||'[]').length;
-  const todayPriorities=JSON.parse(localStorage.getItem('priorities-'+getTodayKey())||'[]');
-  const prioritiesDone=todayPriorities.length;
 
-  const statsEl=document.getElementById('analytics-today-stats');
-  if(statsEl) statsEl.innerHTML=[
-    {icon:'🕌',label:'Prayer',val:prayerDone+'/5',color:prayerDone===5?'var(--accent)':'var(--amber)'},
-    {icon:'⏱',label:'Focus sessions',val:todayPomo+' sessions',color:'var(--accent)'},
-    {icon:'✅',label:'Tasks done today',val:todayTasks,color:'var(--teal)'},
-    {icon:'🎯',label:'Priorities set',val:prioritiesDone+'/3',color:'var(--blue)'},
-    {icon:'📋',label:'Captures',val:todayCaptures,color:'var(--purple)'},
-    {icon:'💪',label:'Exercise',val:td.exercise?'Done ✓':'Not yet',color:td.exercise?'var(--teal)':'var(--text3)'},
-    {icon:'💧',label:'Water',val:td.water?'Done ✓':'Not yet',color:td.water?'var(--teal)':'var(--text3)'},
-    {icon:'📚',label:'Study habit',val:td.study?'Done ✓':'Not yet',color:td.study?'var(--teal)':'var(--text3)'},
+  // Captures and priorities from localStorage
+  const dayCaps = JSON.parse(localStorage.getItem('captures-'+dateKey)||'[]').length;
+  const dayPri = JSON.parse(localStorage.getItem('priorities-'+dateKey)||'[]').length;
+
+  statsEl.innerHTML=[
+    {icon:'🕌',label:'Prayer',val:prayerDone+'/5',color:prayerDone===5?'var(--accent)':prayerDone>=3?'var(--amber)':'var(--red)',bar:prayerDone/5},
+    {icon:'⏱',label:'Focus sessions',val:dayPomo,color:'var(--accent)',bar:Math.min(dayPomo/8,1)},
+    {icon:'✅',label:'Tasks done',val:dayTasks,color:'var(--teal)',bar:Math.min(dayTasks/10,1)},
+    {icon:'🎯',label:'Priorities',val:dayPri+'/3',color:'var(--blue)',bar:dayPri/3},
+    {icon:'📋',label:'Captures',val:dayCaps,color:'var(--purple)',bar:Math.min(dayCaps/10,1)},
+    {icon:'💪',label:'Exercise',val:dayHabits.exercise?'Done ✓':'—',color:dayHabits.exercise?'var(--teal)':'var(--text3)',bar:dayHabits.exercise?1:0},
+    {icon:'💧',label:'Water',val:dayHabits.water?'Done ✓':'—',color:dayHabits.water?'var(--teal)':'var(--text3)',bar:dayHabits.water?1:0},
+    {icon:'📚',label:'Study habit',val:dayHabits.study?'Done ✓':'—',color:dayHabits.study?'var(--teal)':'var(--text3)',bar:dayHabits.study?1:0},
   ].map(s=>`
-    <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px;text-align:center">
-      <div style="font-size:20px;margin-bottom:4px">${s.icon}</div>
-      <div style="font-size:18px;font-weight:700;color:${s.color};font-family:var(--mono)">${s.val}</div>
-      <div style="font-size:11px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:.06em">${s.label}</div>
+    <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+        <span style="font-size:16px">${s.icon}</span>
+        <span style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">${s.label}</span>
+      </div>
+      <div style="font-size:20px;font-weight:700;color:${s.color};font-family:var(--mono);margin-bottom:6px">${s.val}</div>
+      <div style="height:3px;background:var(--bg4);border-radius:2px;overflow:hidden">
+        <div style="height:100%;width:${Math.round(s.bar*100)}%;background:${s.color};border-radius:2px;transition:width .5s"></div>
+      </div>
     </div>`).join('');
+}
+
+window.renderAnalytics=function(){
+  // Init date picker
+  const picker = document.getElementById('snap-date-picker');
+  if(picker && !picker.value) {
+    picker.value = window._snapDate || getTodayKey();
+    picker.max = getTodayKey();
+  }
+  updateSnapButtons();
+  renderDailySnapshot(window._snapDate || getTodayKey());
   // Habit heatmap
   const habitEl=document.getElementById('analytics-habit-grid'); if(!habitEl) return;
   const h=getHabits(); const habitsToShow=[{id:'fajr',label:'Prayer'},{id:'exercise',label:'Exercise'},{id:'water',label:'Water'},{id:'study',label:'Study'}];
