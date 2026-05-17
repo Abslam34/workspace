@@ -1056,18 +1056,26 @@ html.light .topbar{background:rgba(245,244,240,.85)}
         <button class="btn btn-ghost" id="period-all" onclick="setAnalyticsPeriod('all')">All time</button>
       </div>
 
+      <!-- TODAY AT A GLANCE -->
+      <div class="chart-card anim-item" style="margin-bottom:20px">
+        <div class="chart-card-header" style="margin-bottom:16px">
+          <div><div class="chart-card-title">Today at a glance</div><div class="chart-card-sub" id="analytics-today-date">—</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px" id="analytics-today-stats"></div>
+      </div>
+
       <!-- Summary stats -->
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px" class="anim-item">
-        <div class="stat-card"><div class="label">Study sessions</div><div class="value" id="an-sessions" style="color:var(--accent)">0</div><div class="change up">Pomodoros</div></div>
-        <div class="stat-card"><div class="label">Tasks completed</div><div class="value" id="an-tasks">0</div><div class="change up">This period</div></div>
+        <div class="stat-card"><div class="label">Focus sessions</div><div class="value" id="an-sessions" style="color:var(--accent)">0</div><div class="change up">Total Pomodoros</div></div>
+        <div class="stat-card"><div class="label">Tasks completed</div><div class="value" id="an-tasks">0</div><div class="change up">All time</div></div>
         <div class="stat-card"><div class="label">Habit rate</div><div class="value" id="an-habits" style="color:var(--teal)">0%</div><div class="change">Days tracked</div></div>
-        <div class="stat-card"><div class="label">Best streak</div><div class="value" id="an-streak">🔥 0</div><div class="change">Prayer/Study</div></div>
+        <div class="stat-card"><div class="label">Best streak</div><div class="value" id="an-streak">🔥 0</div><div class="change">Study sessions</div></div>
       </div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px" class="anim-item">
         <!-- Habit heatmap -->
         <div class="chart-card">
-          <div class="chart-card-header"><div><div class="chart-card-title">Habit tracker</div><div class="chart-card-sub">Prayer · Exercise · Water · Study · Reading</div></div></div>
+          <div class="chart-card-header"><div><div class="chart-card-title">Habit tracker</div><div class="chart-card-sub">Prayer · Exercise · Water · Study</div></div></div>
           <div id="analytics-habit-grid" style="margin-top:8px"></div>
         </div>
         <!-- Course progress -->
@@ -1080,7 +1088,7 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="anim-item">
         <!-- Tasks by area -->
         <div class="chart-card">
-          <div class="chart-card-header"><div><div class="chart-card-title">Tasks by life area</div></div></div>
+          <div class="chart-card-header"><div><div class="chart-card-title">Tasks by life area</div><div class="chart-card-sub">Completed tasks</div></div></div>
           <div id="analytics-tasks-area" style="margin-top:8px"></div>
         </div>
         <!-- Focus bar chart -->
@@ -2093,15 +2101,16 @@ const pageNames={today:'Today',dashboard:'Dashboard','area-work':'Work','area-le
 window.showPage=function(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const pg=document.getElementById('page-'+id); if(pg) pg.classList.add('active');
-  document.querySelectorAll('.sidebar-nav .nav-item,.sidebar-footer .nav-item').forEach(n=>n.classList.remove('active'));
-  const ni=document.querySelectorAll('.sidebar-nav .nav-item,.sidebar-footer .nav-item');
-  const map={today:0,dashboard:1,'area-work':3,'area-learning':4,'area-health':5,'area-personal':6,'area-finance':7,'area-mind':8,courses:10,timeline:11,timeline2:12,certtracker:13,analytics:15,review:16,tasks:18,notes:19,ai:20,settings:21};
-  if(map[id]!==undefined&&ni[map[id]])ni[map[id]].classList.add('active');
+  // Highlight nav item by matching onclick value
+  document.querySelectorAll('.sidebar-nav .nav-item,.sidebar-footer .nav-item').forEach(n=>{
+    n.classList.remove('active');
+    const oc=n.getAttribute('onclick')||'';
+    if(oc.includes("'"+id+"'") || oc.includes('"'+id+'"')) n.classList.add('active');
+  });
   document.getElementById('breadcrumb').innerHTML='Home / <span>'+(pageNames[id]||id)+'</span>';
   document.getElementById('sidebar').classList.remove('open');
   window.currentPage=id;
   document.querySelectorAll('#page-'+id+' .anim-item').forEach(el=>{el.style.animation='none';el.offsetHeight;el.style.animation='';});
-  // Render page-specific content
   if(id==='certtracker') renderCertTracker();
   if(id==='today') renderToday();
   if(id==='analytics') renderAnalytics();
@@ -3070,6 +3079,7 @@ window.toggleHabit=function(id){
   setHabit(id,!td[id]);
   renderTodayHabits();
   renderStreak();
+  if(window.currentPage==='analytics') renderAnalytics();
 };
 function getHabitStreak(id){
   const h=getHabits(); let streak=0;
@@ -3376,6 +3386,38 @@ window.setAnalyticsPeriod=function(p){
 };
 
 window.renderAnalytics=function(){
+  // ── TODAY AT A GLANCE ──
+  const todayDate=document.getElementById('analytics-today-date');
+  if(todayDate) todayDate.textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+
+  const td=getTodayHabits();
+  const prayers=['fajr','dhuhr','asr','maghrib','isha'];
+  const prayerDone=prayers.filter(p=>td[p]).length;
+  const todayPomo=(window._pomoHistory||{})[getTodayKey()]||0;
+  const todayTasks=(window._tasks||[]).filter(t=>{
+    const d=new Date(t.createdAt||0);
+    return t.status==='done' && d.toISOString().slice(0,10)===getTodayKey();
+  }).length;
+  const todayCaptures=JSON.parse(localStorage.getItem('captures-'+getTodayKey())||'[]').length;
+  const todayPriorities=JSON.parse(localStorage.getItem('priorities-'+getTodayKey())||'[]');
+  const prioritiesDone=todayPriorities.length;
+
+  const statsEl=document.getElementById('analytics-today-stats');
+  if(statsEl) statsEl.innerHTML=[
+    {icon:'🕌',label:'Prayer',val:prayerDone+'/5',color:prayerDone===5?'var(--accent)':'var(--amber)'},
+    {icon:'⏱',label:'Focus sessions',val:todayPomo+' sessions',color:'var(--accent)'},
+    {icon:'✅',label:'Tasks done today',val:todayTasks,color:'var(--teal)'},
+    {icon:'🎯',label:'Priorities set',val:prioritiesDone+'/3',color:'var(--blue)'},
+    {icon:'📋',label:'Captures',val:todayCaptures,color:'var(--purple)'},
+    {icon:'💪',label:'Exercise',val:td.exercise?'Done ✓':'Not yet',color:td.exercise?'var(--teal)':'var(--text3)'},
+    {icon:'💧',label:'Water',val:td.water?'Done ✓':'Not yet',color:td.water?'var(--teal)':'var(--text3)'},
+    {icon:'📚',label:'Study habit',val:td.study?'Done ✓':'Not yet',color:td.study?'var(--teal)':'var(--text3)'},
+  ].map(s=>`
+    <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:12px;text-align:center">
+      <div style="font-size:20px;margin-bottom:4px">${s.icon}</div>
+      <div style="font-size:18px;font-weight:700;color:${s.color};font-family:var(--mono)">${s.val}</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:2px;text-transform:uppercase;letter-spacing:.06em">${s.label}</div>
+    </div>`).join('');
   // Habit heatmap
   const habitEl=document.getElementById('analytics-habit-grid'); if(!habitEl) return;
   const h=getHabits(); const habitsToShow=[{id:'fajr',label:'Prayer'},{id:'exercise',label:'Exercise'},{id:'water',label:'Water'},{id:'study',label:'Study'}];
