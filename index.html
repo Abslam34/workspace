@@ -562,48 +562,36 @@ html.light .topbar{background:rgba(245,244,240,.85)}
     <div class="nav-section">
       <div class="nav-label">Life Areas</div>
       <div class="nav-item" onclick="showPage('area-work')"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;flex-shrink:0"></span>💼 Work</div>
-      <div class="nav-item" onclick="showPage('area-learning')"><span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;flex-shrink:0"></span>📚 Learning</div>
+
+      <!-- Learning — expandable with sub-pages -->
+      <div class="nav-item" id="nav-learning-main" onclick="showPage('area-learning');toggleLearningNav()">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;flex-shrink:0"></span>
+        📚 Learning
+        <span id="learning-nav-chevron" style="margin-left:auto;font-size:10px;color:var(--text3);transition:transform .25s">▾</span>
+      </div>
+      <div id="learning-nav-items" style="padding-left:16px">
+        <div class="nav-item" style="font-size:12.5px" onclick="showLearningTab('courses')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          All Courses<span class="nav-badge">9</span>
+        </div>
+        <div class="nav-item" style="font-size:12.5px" onclick="showLearningTab('timeline')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          C1 Timeline<span class="nav-badge" id="nav-c1-pct">0%</span>
+        </div>
+        <div class="nav-item" style="font-size:12.5px" onclick="showLearningTab('timeline2')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          C2 Timeline<span class="nav-badge" id="nav-c2-pct">0%</span>
+        </div>
+        <div class="nav-item" style="font-size:12.5px" onclick="showLearningTab('certtracker')">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Certificate<span class="nav-badge" id="nav-cert-pct">0%</span>
+        </div>
+      </div>
+
       <div class="nav-item" onclick="showPage('area-health')"><span style="width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block;flex-shrink:0"></span>🏃 Health</div>
       <div class="nav-item" onclick="showPage('area-personal')"><span style="width:8px;height:8px;border-radius:50%;background:var(--purple);display:inline-block;flex-shrink:0"></span>🏠 Personal</div>
       <div class="nav-item" onclick="showPage('area-finance')"><span style="width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block;flex-shrink:0"></span>💰 Finance</div>
       <div class="nav-item" onclick="showPage('area-mind')"><span style="width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block;flex-shrink:0"></span>🧠 Mind</div>
-    </div>
-    <div class="nav-section">
-      <div class="nav-label" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding-right:12px" onclick="toggleLearningNav()">
-        Learning
-        <span id="learning-nav-chevron" style="font-size:10px;color:var(--text3);transition:transform .25s">▾</span>
-      </div>
-      <div id="learning-nav-items">
-        <div class="nav-item" onclick="showPage('courses')">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>All Courses<span class="nav-badge">9</span>
-        </div>
-        <!-- Active courses -->
-        <div style="padding:4px 0 2px 20px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);font-weight:600">Active</div>
-        <div class="nav-item" style="padding-left:20px" onclick="showPage('timeline')">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">C1 · Foundations</span>
-          <span class="nav-badge" id="nav-c1-pct">0%</span>
-        </div>
-        <div class="nav-item" style="padding-left:20px" onclick="showPage('timeline2')">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">C2 · Ask Questions</span>
-          <span class="nav-badge" id="nav-c2-pct">0%</span>
-        </div>
-        <!-- Locked courses -->
-        <div style="padding:4px 0 2px 20px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);font-weight:600">Locked</div>
-        <div class="nav-item" style="padding-left:20px;opacity:.5" onclick="showPage('courses')">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-          <span style="flex:1">C3–C9</span>
-          <span class="nav-badge">6 left</span>
-        </div>
-        <!-- Certificate -->
-        <div style="padding:4px 0 2px 20px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);font-weight:600">Certificate</div>
-        <div class="nav-item" style="padding-left:20px" onclick="showPage('certtracker')">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-          <span style="flex:1">Tracker</span>
-          <span class="nav-badge" id="nav-cert-pct">0%</span>
-        </div>
-      </div>
     </div>
     <div class="nav-section">
       <div class="nav-label">Insights</div>
@@ -1021,9 +1009,46 @@ html.light .topbar{background:rgba(245,244,240,.85)}
       </div>
     </div>
 
-    <!-- LIFE AREA PAGES (Work, Learning, Health, Personal, Finance placeholder, Mind) -->
+    <!-- LIFE AREA PAGES -->
     <div class="page" id="page-area-work"><div id="area-work-content"></div></div>
-    <div class="page" id="page-area-learning"><div id="area-learning-content"></div></div>
+
+    <!-- LEARNING HUB — tabs for Overview, Courses, C1, C2, Certificate -->
+    <div class="page" id="page-area-learning">
+      <div class="page-header anim-item">
+        <div><h1 class="page-title" style="margin-bottom:4px">📚 Learning</h1><p class="page-subtitle" style="margin-bottom:0">Google Data Analytics Certificate + tasks + notes</p></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-ghost" onclick="openNoteEditor(null,'learning')">+ Note</button>
+          <button class="btn btn-primary" onclick="openTaskModal('todo',null,'learning')">+ Task</button>
+        </div>
+      </div>
+
+      <!-- Tab bar -->
+      <div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:0" class="anim-item" id="learning-tab-bar">
+        <div class="learning-tab active" id="ltab-overview" onclick="showLearningTab('overview')" style="padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2px solid var(--accent);color:var(--accent);margin-bottom:-1px">Overview</div>
+        <div class="learning-tab" id="ltab-courses" onclick="showLearningTab('courses')" style="padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;color:var(--text2);margin-bottom:-1px">Courses</div>
+        <div class="learning-tab" id="ltab-timeline" onclick="showLearningTab('timeline')" style="padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;color:var(--text2);margin-bottom:-1px">C1 Timeline</div>
+        <div class="learning-tab" id="ltab-timeline2" onclick="showLearningTab('timeline2')" style="padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;color:var(--text2);margin-bottom:-1px">C2 Timeline</div>
+        <div class="learning-tab" id="ltab-certtracker" onclick="showLearningTab('certtracker')" style="padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;color:var(--text2);margin-bottom:-1px">Certificate</div>
+      </div>
+
+      <!-- Tab panels -->
+      <div id="lpanel-overview">
+        <div id="learning-overview-content"></div>
+      </div>
+      <div id="lpanel-courses" style="display:none">
+        <div id="courses-list-inner"></div>
+      </div>
+      <div id="lpanel-timeline" style="display:none">
+        <div id="timeline-inner"></div>
+      </div>
+      <div id="lpanel-timeline2" style="display:none">
+        <div id="timeline2-inner"></div>
+      </div>
+      <div id="lpanel-certtracker" style="display:none">
+        <div id="certtracker-inner"></div>
+      </div>
+    </div>
+
     <div class="page" id="page-area-health"><div id="area-health-content"></div></div>
     <div class="page" id="page-area-personal"><div id="area-personal-content"></div></div>
     <div class="page" id="page-area-mind"><div id="area-mind-content"></div></div>
@@ -2151,7 +2176,13 @@ window.showPage=function(id){
   if(id==='analytics') renderAnalytics();
   if(id==='review') renderReview();
   if(id==='area-finance') renderFinance();
-  if(id.startsWith('area-')&&id!=='area-finance') renderAreaPage(id.replace('area-',''));
+  if(id.startsWith('area-')&&id!=='area-finance') {
+    if(id==='area-learning') {
+      showLearningTab(_currentLearningTab||'overview');
+    } else {
+      renderAreaPage(id.replace('area-',''));
+    }
+  }
 }
 
 // Courses
@@ -2278,8 +2309,10 @@ window.deleteCustomCourse=function(i){
 };
 document.getElementById('course-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeCourseModal();});
 
-// ============ LEARNING NAV ============
+// ============ LEARNING NAV + HUB ============
 let _learningNavOpen = true;
+let _currentLearningTab = 'overview';
+
 window.toggleLearningNav = function(){
   _learningNavOpen = !_learningNavOpen;
   const items = document.getElementById('learning-nav-items');
@@ -2287,6 +2320,216 @@ window.toggleLearningNav = function(){
   if(items) items.style.display = _learningNavOpen ? '' : 'none';
   if(chev) chev.style.transform = _learningNavOpen ? '' : 'rotate(-90deg)';
 };
+
+window.showLearningTab = function(tab){
+  _currentLearningTab = tab;
+  // Hide all panels
+  ['overview','courses','timeline','timeline2','certtracker'].forEach(t=>{
+    const p = document.getElementById('lpanel-'+t);
+    if(p) p.style.display = t===tab ? '' : 'none';
+    const tb = document.getElementById('ltab-'+t);
+    if(tb){
+      tb.style.borderBottom = t===tab ? '2px solid var(--accent)' : '2px solid transparent';
+      tb.style.color = t===tab ? 'var(--accent)' : 'var(--text2)';
+    }
+  });
+  // Make sure we're on the learning page
+  if(window.currentPage !== 'area-learning') showPage('area-learning');
+  // Render content
+  if(tab==='overview') renderLearningOverview();
+  if(tab==='courses') renderLearningCourses();
+  if(tab==='timeline') renderLearningTimeline();
+  if(tab==='timeline2') renderLearningTimeline2();
+  if(tab==='certtracker') renderLearningCert();
+};
+
+function renderLearningOverview(){
+  const el = document.getElementById('learning-overview-content'); if(!el) return;
+  const all1 = document.querySelectorAll('#modules-container input[type=checkbox]');
+  let ch1=0; all1.forEach(c=>{if(c.checked)ch1++;});
+  const p1 = totalItems>0?Math.round((ch1/totalItems)*100):0;
+  const all2 = document.querySelectorAll('#modules-container2 input[type=checkbox]');
+  let ch2=0; all2.forEach(c=>{if(c.checked)ch2++;});
+  const tot2 = all2.length||(typeof totalItems2!=='undefined'?totalItems2:0);
+  const p2 = tot2>0?Math.round((ch2/tot2)*100):0;
+  const settings = JSON.parse(localStorage.getItem('ws-settings')||'{}');
+  const pace = parseFloat(settings.pace)||2;
+  const rem1 = totalItems-ch1;
+  const daysLeft = rem1>0?Math.ceil((rem1*(13/totalItems))/pace):0;
+  const finish = new Date(); finish.setDate(finish.getDate()+daysLeft);
+  const areaTasks = (window._tasks||[]).filter(t=>t.area==='learning');
+  const areaNotes = (window._notes||[]).filter(n=>n.area==='learning');
+
+  el.innerHTML=`
+    <!-- Progress summary -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px">
+      <div class="stat-card" style="cursor:pointer" onclick="showLearningTab('timeline')">
+        <div class="label">Course 1</div>
+        <div class="value" style="color:var(--accent)">${p1}%</div>
+        <div class="change up">${ch1}/${totalItems} items</div>
+      </div>
+      <div class="stat-card" style="cursor:pointer" onclick="showLearningTab('timeline2')">
+        <div class="label">Course 2</div>
+        <div class="value" style="color:var(--blue)">${p2}%</div>
+        <div class="change up">${ch2}/${tot2} items</div>
+      </div>
+      <div class="stat-card" style="cursor:pointer" onclick="showLearningTab('certtracker')">
+        <div class="label">Certificate</div>
+        <div class="value" style="font-size:18px">${rem1===0?'Done 🎉':finish.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
+        <div class="change up">${rem1===0?'Complete':daysLeft+' days at '+pace+'h/day'}</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Open tasks</div>
+        <div class="value">${areaTasks.filter(t=>t.status!=='done').length}</div>
+        <div class="change up">Learning area</div>
+      </div>
+    </div>
+
+    <!-- C1 + C2 progress bars -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;cursor:pointer" onclick="showLearningTab('timeline')">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px">
+          <span style="font-weight:600">Course 1 · Foundations</span>
+          <span style="color:var(--accent);font-family:var(--mono);font-weight:600">${p1}%</span>
+        </div>
+        <div style="height:6px;background:var(--bg4);border-radius:3px;overflow:hidden">
+          <div style="height:100%;width:${p1}%;background:var(--accent);border-radius:3px;transition:width .5s"></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:6px">4 modules · ~13 hours</div>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;cursor:pointer" onclick="showLearningTab('timeline2')">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px">
+          <span style="font-weight:600">Course 2 · Ask Questions</span>
+          <span style="color:var(--blue);font-family:var(--mono);font-weight:600">${p2}%</span>
+        </div>
+        <div style="height:6px;background:var(--bg4);border-radius:3px;overflow:hidden">
+          <div style="height:100%;width:${p2}%;background:var(--blue);border-radius:3px;transition:width .5s"></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:6px">4 modules · ~15 hours</div>
+      </div>
+    </div>
+
+    <!-- Tasks + Notes -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+        <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:12px;font-weight:600">Tasks</div>
+        ${areaTasks.filter(t=>t.status!=='done').length===0
+          ? '<div style="font-size:13px;color:var(--text3)">No open tasks</div>'
+          : areaTasks.filter(t=>t.status!=='done').slice(0,5).map(t=>`
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg3);border-radius:var(--radius-sm);margin-bottom:6px;cursor:pointer" onclick="openTaskModal(null,'${t.id}')">
+              <span style="font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;text-transform:uppercase;background:${t.priority==='high'?'rgba(255,77,79,.12)':t.priority==='low'?'rgba(0,212,170,.12)':'rgba(255,176,32,.12)'};color:${t.priority==='high'?'var(--red)':t.priority==='low'?'var(--teal)':'var(--amber)'}">${t.priority||'med'}</span>
+              <span style="flex:1;font-size:13px">${esc(t.title)}</span>
+            </div>`).join('')}
+        <button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:12px" onclick="openTaskModal('todo',null,'learning')">+ Add task</button>
+      </div>
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px">
+        <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:12px;font-weight:600">Notes</div>
+        ${areaNotes.length===0
+          ? '<div style="font-size:13px;color:var(--text3)">No notes yet</div>'
+          : areaNotes.slice(0,5).map(n=>`
+            <div style="padding:8px 12px;background:var(--bg3);border-radius:var(--radius-sm);margin-bottom:6px;cursor:pointer" onclick="openNoteEditor('${n.id}')">
+              <div style="font-size:13px;font-weight:500">${esc(n.title||'Untitled')}</div>
+              <div style="font-size:11px;color:var(--text3);margin-top:2px">${esc((n.body||'').slice(0,50))}${(n.body||'').length>50?'...':''}</div>
+            </div>`).join('')}
+        <button class="btn btn-ghost" style="width:100%;margin-top:8px;font-size:12px" onclick="openNoteEditor(null,'learning')">+ Add note</button>
+      </div>
+    </div>`;
+}
+
+function renderLearningCourses(){
+  const el = document.getElementById('courses-list-inner'); if(!el) return;
+  // Re-render the courses grid inside the learning tab
+  const all1=document.querySelectorAll('#modules-container input[type=checkbox]');
+  let ch1=0; all1.forEach(c=>{if(c.checked)ch1++;});
+  const p1=totalItems>0?Math.round((ch1/totalItems)*100):0;
+  const all2=document.querySelectorAll('#modules-container2 input[type=checkbox]');
+  let ch2=0; all2.forEach(c=>{if(c.checked)ch2++;});
+  const tot2=all2.length||(typeof totalItems2!=='undefined'?totalItems2:0);
+  const p2=tot2>0?Math.round((ch2/tot2)*100):0;
+  const CDLIST=[
+    {n:1,t:'Foundations: Data, Data, Everywhere',h:13,c1:'var(--accent)',c2t:'var(--teal)',pct:p1,tab:'timeline'},
+    {n:2,t:'Ask Questions to Make Data-Driven Decisions',h:15,c1:'var(--blue)',c2t:'var(--purple)',pct:p2,tab:'timeline2'},
+    {n:3,t:'Prepare Data for Exploration',h:19,c1:'var(--amber)',c2t:'var(--red)',pct:0,tab:null},
+    {n:4,t:'Process Data from Dirty to Clean',h:16,c1:'var(--teal)',c2t:'var(--blue)',pct:0,tab:null},
+    {n:5,t:'Analyze Data to Answer Questions',h:26,c1:'var(--purple)',c2t:'var(--accent)',pct:0,tab:null},
+    {n:6,t:'Share Data Through the Art of Visualization',h:19,c1:'var(--red)',c2t:'var(--amber)',pct:0,tab:null},
+    {n:7,t:'Introduction to Data Analysis Using Python',h:27,c1:'var(--blue)',c2t:'var(--teal)',pct:0,tab:null},
+    {n:8,t:'Google Data Analytics Capstone',h:11,c1:'var(--accent)',c2t:'var(--purple)',pct:0,tab:null},
+    {n:9,t:'Accelerate Your Job Search with AI',h:6,c1:'var(--amber)',c2t:'var(--teal)',pct:0,tab:null},
+  ];
+  const custom = getCustomCourses();
+  el.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="font-size:13px;color:var(--text2)">9 courses · 152 hours total</div>
+      <button class="btn btn-ghost" onclick="openCourseModal()" style="font-size:12px">+ Add course</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
+      ${CDLIST.map(c=>`
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:${c.tab?'pointer':'default'};transition:all .2s"
+          ${c.tab?`onclick="showLearningTab('${c.tab}')" onmouseenter="this.style.transform='translateY(-2px)'" onmouseleave="this.style.transform=''"`:''}>
+          <div style="height:5px;background:linear-gradient(90deg,${c.c1},${c.c2t})"></div>
+          <div style="padding:16px">
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:${c.c1};margin-bottom:6px">Course ${c.n} · ${c.n<=2?'Active':'Locked'}</div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px">${c.t}</div>
+            <div style="height:4px;background:var(--bg4);border-radius:2px;overflow:hidden;margin-bottom:6px">
+              <div style="height:100%;width:${c.pct}%;background:${c.c1};border-radius:2px"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3)">
+              <span>${c.h}h</span><span style="color:${c.c1};font-family:var(--mono);font-weight:600">${c.pct}%</span>
+            </div>
+          </div>
+        </div>`).join('')}
+      ${custom.map(c=>`
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+          <div style="height:5px;background:linear-gradient(90deg,${c.color},${c.color}88)"></div>
+          <div style="padding:16px">
+            <div style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:${c.color};margin-bottom:6px">Custom</div>
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px">${esc(c.title)}</div>
+            <div style="font-size:11px;color:var(--text3)">${c.hours}h</div>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+function renderLearningTimeline(){
+  const el = document.getElementById('timeline-inner'); if(!el) return;
+  // Move the existing timeline content into this panel
+  const src = document.getElementById('page-timeline');
+  if(src) el.innerHTML = src.innerHTML;
+  // Re-attach checkbox listeners
+  el.querySelectorAll('input[type=checkbox]').forEach((cb,i)=>{
+    cb.addEventListener('change',()=>{
+      const all=document.querySelectorAll('#modules-container input[type=checkbox]');
+      all[i].checked=cb.checked;
+      window.onCheck(true);
+      cb.checked=all[i].checked;
+    });
+  });
+}
+
+function renderLearningTimeline2(){
+  const el = document.getElementById('timeline2-inner'); if(!el) return;
+  const src = document.getElementById('page-timeline2');
+  if(src) el.innerHTML = src.innerHTML;
+}
+
+function renderLearningCert(){
+  const el = document.getElementById('certtracker-inner'); if(!el) return;
+  if(typeof renderCertTracker==='function'){
+    // Temporarily point cert render at inner div
+    el.innerHTML='';
+    const grid=document.createElement('div');
+    const sum=document.createElement('div');
+    el.appendChild(sum);
+    el.appendChild(grid);
+    // Just reuse renderCertTracker output
+    renderCertTracker();
+    const srcGrid=document.getElementById('cert-tracker-grid');
+    const srcSum=document.getElementById('cert-summary-stats');
+    if(srcGrid) grid.innerHTML=srcGrid.innerHTML;
+    if(srcSum) sum.innerHTML=srcSum.innerHTML;
+  }
+}
 
 function updateLearningNavBadges(){
   const all1 = document.querySelectorAll('#modules-container input[type=checkbox]');
