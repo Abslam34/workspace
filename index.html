@@ -1354,11 +1354,13 @@ onAuthStateChanged(auth, user => {
     });
     onSnapshot(query(collection(db,'notes'),orderBy('createdAt','desc')), snap => {
       window._notes = snap.docs.map(d => ({id:d.id,...d.data()}));
-      renderNotes(); updateDashStats();
+      if(typeof renderNotes==='function') renderNotes();
+      if(typeof updateDashStats==='function') updateDashStats();
     });
     onSnapshot(query(collection(db,'tasks'),orderBy('createdAt','asc')), snap => {
       window._tasks = snap.docs.map(d => ({id:d.id,...d.data()}));
-      renderTasks(); updateDashStats();
+      if(typeof renderTasks==='function') renderTasks();
+      if(typeof updateDashStats==='function') updateDashStats();
     });
     // Course 2 progress
     onSnapshot(doc(db,'progress','course2'), snap => {
@@ -1986,7 +1988,7 @@ window.onCheck = function(save=true) {
 
 // Navigation
 const pageNames={today:'Today',dashboard:'Dashboard','area-work':'Work','area-learning':'Learning','area-health':'Health','area-personal':'Personal','area-finance':'Finance','area-mind':'Mind',courses:'Courses',timeline:'Course 1 Timeline',timeline2:'Course 2 Timeline',certtracker:'Certificate Tracker',analytics:'Analytics',review:'Weekly Review',tasks:'Tasks',notes:'Notes',ai:'AI Assistant',settings:'Settings'};
-function showPage(id){
+window.showPage=function(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const pg=document.getElementById('page-'+id); if(pg) pg.classList.add('active');
   document.querySelectorAll('.sidebar-nav .nav-item,.sidebar-footer .nav-item').forEach(n=>n.classList.remove('active'));
@@ -3407,8 +3409,7 @@ window._trackPomoSession=function(){
 };
 
 // Init Today page
-const h=new Date().getHours();
-document.getElementById('today-greeting').textContent=(h<12?'Good morning':h<18?'Good afternoon':'Good evening');
+document.getElementById('today-greeting').textContent=(new Date().getHours()<12?'Good morning':new Date().getHours()<18?'Good afternoon':'Good evening');
 
 // Update keyboard shortcuts for new pages
 // ============ KEYBOARD SHORTCUTS ============
@@ -3441,8 +3442,8 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-const h=new Date().getHours();
-document.getElementById('greeting').textContent=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
+{const h=new Date().getHours();
+document.getElementById('greeting').textContent=h<12?'Good morning':h<18?'Good afternoon':'Good evening';}
 loadSettings();
 checkOnboarding();
 // Start on Today page
