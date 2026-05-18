@@ -1540,8 +1540,70 @@ onAuthStateChanged(auth, user => {
       }
     });
 
-    // Custom courses
-    onSnapshot(doc(db,'user','customCourses'), snap => {
+    // Daily data — priorities + captures (listen to today + yesterday)
+    window._daily = {};
+    window._reviews = {};
+    const listenDaily = (dateKey) => {
+      onSnapshot(doc(db,'daily',dateKey), snap => {
+        if(snap.exists()) {
+          window._daily[dateKey] = snap.data();
+          try { localStorage.setItem('priorities-'+dateKey, JSON.stringify(snap.data().priorities||[])); } catch(e) {}
+        } else {
+          // No data in Firestore yet — seed from localStorage if available
+          const local = localStorage.getItem('priorities-'+dateKey);
+          if(local) {
+            try {
+              const parsed = JSON.parse(local);
+              if(parsed.length > 0) {
+                if(!window._daily[dateKey]) window._daily[dateKey] = {};
+                window._daily[dateKey].priorities = parsed;
+                // Push local data to Firestore
+                if(window.FB&&window.FB.saveDaily) window.FB.saveDaily(dateKey,{priorities:parsed});
+              }
+            } catch(e) {}
+          }
+        }
+        // Always re-render regardless of current state
+        if(typeof renderTodayPriorities==='function') renderTodayPriorities();
+        if(window.currentPage==='analytics') renderDailySnapshot(window._snapDate||getTodayKey());
+      });
+      onSnapshot(doc(db,'daily',dateKey+'-captures'), snap => {
+        if(snap.exists()) {
+          window._daily[dateKey+'-captures'] = snap.data();
+          try { localStorage.setItem('captures-'+dateKey, JSON.stringify(snap.data().captures||[])); } catch(e) {}
+        } else {
+          const local = localStorage.getItem('captures-'+dateKey);
+          if(local) {
+            try {
+              const parsed = JSON.parse(local);
+              if(parsed.length > 0) {
+                window._daily[dateKey+'-captures'] = {captures:parsed};
+                if(window.FB&&window.FB.saveDaily) window.FB.saveDaily(dateKey+'-captures',{captures:parsed});
+              }
+            } catch(e) {}
+          }
+        }
+        if(typeof renderTodayCaptures==='function') renderTodayCaptures();
+        if(window.currentPage==='analytics') renderDailySnapshot(window._snapDate||getTodayKey());
+      });
+    };
+    // Listen to today and yesterday
+    listenDaily(new Date().toISOString().slice(0,10));
+    const yest = new Date(); yest.setDate(yest.getDate()-1);
+    listenDaily(yest.toISOString().slice(0,10));
+
+    // Weekly reviews
+    const thisMonth = new Date().toISOString().slice(0,7);
+    onSnapshot(doc(db,'reviews',thisMonth), snap => {
+      if(snap.exists() && snap.data().text !== undefined) {
+        window._reviews[thisMonth] = snap.data().text;
+        try { localStorage.setItem('review-'+thisMonth, snap.data().text); } catch(e) {}
+        if(window.currentPage==='review') {
+          const ta = document.getElementById('review-text');
+          if(ta) ta.value = snap.data().text;
+        }
+      }
+    });
       if (snap.exists() && snap.data().data) {
         try { localStorage.setItem('ws-custom-courses', JSON.stringify(snap.data().data)); } catch(e) {}
         if(typeof renderCourseCards==='function') renderCourseCards();
@@ -3321,9 +3383,14 @@ function renderToday(){
 
 function renderTodayPriorities(){
   const el=document.getElementById('today-priorities'); if(!el) return;
-  const key='priorities-'+getTodayKey();
+  const key=getTodayKey();
   let priorities=[];
-  try{priorities=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
+  // Firestore first, then localStorage
+  if(window._daily&&window._daily[key]&&window._daily[key].priorities) {
+    priorities=window._daily[key].priorities;
+  } else {
+    try{priorities=JSON.parse(localStorage.getItem('priorities-'+key)||'[]');}catch(e){}
+  }
   if(!priorities.length){el.innerHTML='<div style="font-size:13px;color:var(--text3);padding:8px 0">No priorities set yet — add up to 3 below</div>';return;}
   el.innerHTML=priorities.map((p,i)=>`
     <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border-radius:var(--radius-sm);margin-bottom:8px">
@@ -3337,20 +3404,30 @@ window.addPriority=function(){
   const input=document.getElementById('priority-input');
   const area=document.getElementById('priority-area').value;
   const text=input.value.trim(); if(!text) return;
-  const key='priorities-'+getTodayKey();
+  const key=getTodayKey();
   let priorities=[];
-  try{priorities=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
+  if(window._daily&&window._daily[key]&&window._daily[key].priorities) priorities=[...window._daily[key].priorities];
+  else try{priorities=JSON.parse(localStorage.getItem('priorities-'+key)||'[]');}catch(e){}
   if(priorities.length>=3){alert('Max 3 priorities per day');return;}
   priorities.push({text,area});
-  localStorage.setItem(key,JSON.stringify(priorities));
-  if(window.FB&&window.FB.saveDaily) window.FB.saveDaily(getTodayKey(),{priorities});
+  if(!window._daily) window._daily={};
+  if(!window._daily[key]) window._daily[key]={};
+  window._daily[key].priorities=priorities;
+  localStorage.setItem('priorities-'+key,JSON.stringify(priorities));
+  if(window.FB&&window.FB.saveDaily) window.FB.saveDaily(key,{priorities});
   input.value=''; renderTodayPriorities();
 };
 window.removePriority=function(i){
-  const key='priorities-'+getTodayKey();
-  let p=[];try{p=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
-  p.splice(i,1); localStorage.setItem(key,JSON.stringify(p));
-  if(window.FB&&window.FB.saveDaily) window.FB.saveDaily(getTodayKey(),{priorities:p});
+  const key=getTodayKey();
+  let p=[];
+  if(window._daily&&window._daily[key]&&window._daily[key].priorities) p=[...window._daily[key].priorities];
+  else try{p=JSON.parse(localStorage.getItem('priorities-'+key)||'[]');}catch(e){}
+  p.splice(i,1);
+  if(!window._daily) window._daily={};
+  if(!window._daily[key]) window._daily[key]={};
+  window._daily[key].priorities=p;
+  localStorage.setItem('priorities-'+key,JSON.stringify(p));
+  if(window.FB&&window.FB.saveDaily) window.FB.saveDaily(key,{priorities:p});
   renderTodayPriorities();
 };
 
@@ -3464,18 +3541,29 @@ window.quickCapture=function(){
   const input=document.getElementById('capture-input');
   const area=document.getElementById('capture-area').value;
   const text=input.value.trim(); if(!text) return;
-  const key='captures-'+getTodayKey();
-  let caps=[];try{caps=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
+  const key=getTodayKey();
+  const capKey=key+'-captures';
+  let caps=[];
+  if(window._daily&&window._daily[capKey]&&window._daily[capKey].captures) caps=[...window._daily[capKey].captures];
+  else try{caps=JSON.parse(localStorage.getItem('captures-'+key)||'[]');}catch(e){}
   caps.unshift({text,area,ts:Date.now()});
-  localStorage.setItem(key,JSON.stringify(caps));
-  if(window.FB&&window.FB.saveDaily) window.FB.saveDaily(getTodayKey()+'-captures',{captures:caps});
+  if(!window._daily) window._daily={};
+  window._daily[capKey]={captures:caps};
+  localStorage.setItem('captures-'+key,JSON.stringify(caps));
+  if(window.FB&&window.FB.saveDaily) window.FB.saveDaily(capKey,{captures:caps});
   input.value=''; renderTodayCaptures();
 };
 window.removeCapture=function(i){
-  const key='captures-'+getTodayKey();
-  let c=[];try{c=JSON.parse(localStorage.getItem(key)||'[]');}catch(e){}
-  c.splice(i,1); localStorage.setItem(key,JSON.stringify(c));
-  if(window.FB&&window.FB.saveDaily) window.FB.saveDaily(getTodayKey()+'-captures',{captures:c});
+  const key=getTodayKey();
+  const capKey=key+'-captures';
+  let c=[];
+  if(window._daily&&window._daily[capKey]&&window._daily[capKey].captures) c=[...window._daily[capKey].captures];
+  else try{c=JSON.parse(localStorage.getItem('captures-'+key)||'[]');}catch(e){}
+  c.splice(i,1);
+  if(!window._daily) window._daily={};
+  window._daily[capKey]={captures:c};
+  localStorage.setItem('captures-'+key,JSON.stringify(c));
+  if(window.FB&&window.FB.saveDaily) window.FB.saveDaily(capKey,{captures:c});
   renderTodayCaptures();
 };
 
@@ -3818,9 +3906,13 @@ function renderDailySnapshot(dateKey){
     return td.toISOString().slice(0,10)===dateKey;
   }).length;
 
-  // Captures and priorities from localStorage
-  const dayCaps = JSON.parse(localStorage.getItem('captures-'+dateKey)||'[]').length;
-  const dayPri = JSON.parse(localStorage.getItem('priorities-'+dateKey)||'[]').length;
+  // Captures and priorities from window._daily (Firestore) or localStorage fallback
+  const dayCaps = (window._daily&&window._daily[dateKey+'-captures']&&window._daily[dateKey+'-captures'].captures
+    ? window._daily[dateKey+'-captures'].captures
+    : JSON.parse(localStorage.getItem('captures-'+dateKey)||'[]')).length;
+  const dayPri = (window._daily&&window._daily[dateKey]&&window._daily[dateKey].priorities
+    ? window._daily[dateKey].priorities
+    : JSON.parse(localStorage.getItem('priorities-'+dateKey)||'[]')).length;
 
   statsEl.innerHTML=[
     {icon:'🕌',label:'Prayer',val:prayerDone+'/5',color:prayerDone===5?'var(--accent)':prayerDone>=3?'var(--amber)':'var(--red)',bar:prayerDone/5},
@@ -3981,9 +4073,11 @@ window.renderReview=function(){
   }
   sgEl.innerHTML=cells;
 
-  // Load saved reflection
+  // Load saved reflection — Firestore first, localStorage fallback
   const key='review-'+getTodayKey().slice(0,7);
-  const saved=localStorage.getItem(key)||'';
+  const saved=window._reviews&&window._reviews[getTodayKey().slice(0,7)]!==undefined
+    ? window._reviews[getTodayKey().slice(0,7)]
+    : (localStorage.getItem(key)||'');
   const ta=document.getElementById('review-text'); if(ta)ta.value=saved;
 };
 
