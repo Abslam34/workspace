@@ -1604,6 +1604,9 @@ onAuthStateChanged(auth, user => {
         }
       }
     });
+
+    // Custom courses
+    onSnapshot(doc(db,'user','customCourses'), snap => {
       if (snap.exists() && snap.data().data) {
         try { localStorage.setItem('ws-custom-courses', JSON.stringify(snap.data().data)); } catch(e) {}
         if(typeof renderCourseCards==='function') renderCourseCards();
